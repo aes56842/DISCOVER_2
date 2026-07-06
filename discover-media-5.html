@@ -1,0 +1,1385 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Media — DISCoVER Expedition</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,500;8..60,600;8..60,700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0A0A0F; --bg-raised:#100F18; --bg-card:#14131C;
+    --line:#2A2832; --line-soft:#1E1C26;
+    --cardinal:#C43D4E; --gold:#C99B3C; --violet:#6B74E0;
+    --white:#F2F0EC; --slate:#9A95A6; --slate-dim:#67627a;
+    --font-display:'Source Serif 4',Georgia,serif;
+    --font-body:'Inter',sans-serif;
+    --font-mono:'IBM Plex Mono',monospace;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{background:var(--bg);color:var(--white);font-family:var(--font-body);line-height:1.5;-webkit-font-smoothing:antialiased;overflow-x:hidden;}
+  a{color:inherit;text-decoration:none;}
+  @media(prefers-reduced-motion:reduce){*{animation-duration:.001ms!important;transition-duration:.001ms!important;}}
+  :focus-visible{outline:2px solid var(--cardinal);outline-offset:3px;border-radius:2px;}
+  .wrap{max-width:1200px;margin:0 auto;padding:0 32px;}
+
+  /* BULLETIN */
+  .bulletin{background:#0D0C12;border-bottom:1px solid var(--line);font-family:var(--font-mono);font-size:11.5px;color:var(--slate-dim);}
+  .bulletin .wrap{display:flex;align-items:center;gap:12px;padding:7px 32px;flex-wrap:nowrap;overflow:hidden;}
+  .bulletin .tag{color:var(--cardinal);border:1px solid var(--line);border-radius:2px;padding:1px 6px;font-size:10px;letter-spacing:.05em;flex-shrink:0;}
+  .bulletin a{color:var(--slate);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0;flex-shrink:1;}
+  .bulletin a:hover{color:var(--white);text-decoration:underline;}
+  .bulletin .sep{color:var(--line);flex-shrink:0;}
+  .bulletin .wrap span:not(.tag):not(.sep){flex-shrink:0;white-space:nowrap;}
+
+  /* MASTHEAD */
+  header{position:sticky;top:0;z-index:40;background:rgba(10,10,15,.98);border-bottom:1px solid var(--line);}
+  .masthead-row{display:flex;align-items:center;justify-content:space-between;padding:14px 32px 10px;}
+  .masthead-spacer{width:170px;flex-shrink:0;}
+  .logo{display:flex;align-items:center;gap:10px;font-family:var(--font-display);font-weight:600;font-size:24px;letter-spacing:.005em;margin:0 auto;}
+  .logo small{display:block;font-family:var(--font-mono);font-weight:400;font-size:8.5px;letter-spacing:.1em;color:var(--slate);margin-top:2px;text-align:center;}
+  .masthead-utility{display:flex;align-items:center;gap:14px;flex-shrink:0;width:170px;justify-content:flex-end;}
+  .nav-row{border-top:1px solid var(--line-soft);}
+  .nav-links{display:flex;align-items:center;justify-content:center;gap:38px;font-size:13px;font-weight:500;padding:13px 32px;text-transform:uppercase;letter-spacing:.04em;}
+  .nav-links a{color:var(--slate);padding:4px 0;border-bottom:2px solid transparent;transition:color .2s,border-color .2s;}
+  .nav-links a:hover{color:var(--white);}
+  .nav-links a.active{color:var(--white);border-bottom-color:var(--cardinal);}
+
+  /* BUTTONS */
+  .btn{font-family:var(--font-body);font-weight:600;font-size:12.5px;padding:7px 14px;border-radius:4px;cursor:pointer;border:1px solid transparent;transition:background .15s,border-color .15s,color .15s;display:inline-flex;align-items:center;gap:8px;white-space:nowrap;}
+  .btn-primary{background:var(--cardinal);color:#FBF8F4;}
+  .btn-primary:hover{background:#AC3140;}
+  .btn-outline{border-color:var(--line);color:var(--white);}
+  .btn-outline:hover{border-color:var(--cardinal);color:var(--cardinal);}
+  .btn-ghost{color:var(--slate);font-weight:500;font-size:13px;}
+  .btn-ghost:hover{color:var(--white);}
+  .btn-sm{padding:5px 11px;font-size:12px;}
+  .link-arrow{display:inline-flex;align-items:center;gap:7px;font-weight:600;font-size:14px;color:var(--white);border-bottom:1px solid var(--slate-dim);padding-bottom:2px;transition:border-color .2s;}
+  .link-arrow:hover{border-color:var(--cardinal);}
+  .link-arrow svg{width:13px;height:13px;}
+
+  /* PAGE HEADER */
+  .page-header{padding:64px 32px 40px;border-bottom:1px solid var(--line);}
+  .page-header .eyebrow-label{font-family:var(--font-mono);font-size:12px;color:var(--cardinal);letter-spacing:.1em;text-transform:uppercase;display:block;margin-bottom:16px;}
+  .page-header h1{font-family:var(--font-display);font-size:clamp(48px,7vw,84px);font-weight:600;letter-spacing:-.02em;line-height:1;margin-bottom:18px;}
+  .page-header p{color:var(--slate);font-size:17px;max-width:560px;line-height:1.6;}
+
+  /* GLOBAL SEARCH BAR */
+  .global-search{padding:20px 32px;background:var(--bg-raised);border-bottom:1px solid var(--line);}
+  .assistant-reply{font-family:var(--font-mono);font-size:12.5px;color:var(--slate);margin-top:12px;line-height:1.6;display:none;}
+  .assistant-reply.visible{display:block;}
+  .assistant-reply strong{color:var(--white);font-weight:600;}
+  .assistant-reply .ar-icon{color:var(--cardinal);margin-right:6px;}
+  .search-box{display:flex;align-items:center;gap:12px;max-width:640px;}
+  .search-box svg{width:16px;height:16px;color:var(--slate-dim);flex-shrink:0;}
+  .search-box input{background:transparent;border:none;outline:none;font-family:var(--font-body);font-size:15px;color:var(--white);width:100%;caret-color:var(--cardinal);}
+  .search-box input::placeholder{color:var(--slate-dim);}
+  .search-wrap{display:flex;align-items:center;gap:12px;border:1px solid var(--line);border-radius:6px;padding:10px 16px;background:var(--bg-card);flex:1;transition:border-color .2s;}
+  .search-wrap:focus-within{border-color:var(--cardinal);}
+  .search-count{font-family:var(--font-mono);font-size:11.5px;color:var(--slate-dim);white-space:nowrap;}
+
+  /* SECTION SHELLS */
+  section{padding:72px 32px;position:relative;}
+  .sec-head{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:36px;gap:24px;flex-wrap:wrap;border-bottom:1px solid var(--line);padding-bottom:22px;}
+  .sec-label{font-family:var(--font-mono);font-size:11.5px;letter-spacing:.08em;color:var(--cardinal);text-transform:uppercase;margin-bottom:10px;display:block;}
+  .sec-head h2{
+    font-family:var(--font-display);font-weight:600;
+    font-size:clamp(28px,3.2vw,38px);letter-spacing:-.005em;
+    position:relative;padding-left:20px;
+  }
+  .sec-head h2::before{
+    content:'';position:absolute;left:0;top:0.1em;bottom:0.1em;
+    width:4px;background:var(--cardinal);border-radius:2px;
+  }
+  .sec-head .sec-sub{color:var(--slate);font-size:14.5px;max-width:380px;line-height:1.5;}
+
+  /* FILTER BAR (shared) */
+  .filter-bar{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:28px;}
+  .filter-btn{font-family:var(--font-mono);font-size:11.5px;padding:6px 13px;border-radius:3px;border:1px solid var(--line);color:var(--slate);cursor:pointer;background:transparent;transition:background .15s,border-color .15s,color .15s;white-space:nowrap;}
+  .filter-btn:hover{border-color:var(--slate-dim);color:var(--white);}
+  .filter-btn.active{background:var(--cardinal);border-color:var(--cardinal);color:#FBF8F4;}
+  .filter-sep{width:1px;height:20px;background:var(--line);flex-shrink:0;}
+
+  /* FEATURED VIDEO */
+  .featured-video{display:grid;grid-template-columns:1.5fr 1fr;gap:24px;margin-bottom:32px;}
+  .video-card{position:relative;border-radius:8px;overflow:hidden;border:1px solid var(--line);background:var(--bg-card);aspect-ratio:16/10;cursor:pointer;transition:border-color .2s;}
+  .video-card:hover{border-color:var(--slate-dim);}
+  .video-card .thumb{position:absolute;inset:0;background:linear-gradient(155deg,#181620,#0c0b11);background-size:cover;background-position:center;}
+  .video-card .thumb img{width:100%;height:100%;object-fit:cover;display:block;}
+  .video-card .thumb::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,transparent 35%,rgba(10,10,15,.94) 100%);}
+  .play-btn{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:52px;height:52px;border-radius:50%;background:var(--white);display:flex;align-items:center;justify-content:center;z-index:2;transition:transform .2s;}
+  .video-card:hover .play-btn{transform:translate(-50%,-50%) scale(1.06);}
+  .play-btn svg{width:17px;height:17px;fill:#0A0A0F;margin-left:2px;}
+  .video-meta{position:absolute;bottom:0;left:0;right:0;z-index:2;padding:18px;}
+  .format-badge{display:inline-flex;align-items:center;gap:6px;font-family:var(--font-mono);font-size:10.5px;letter-spacing:.04em;border:1px solid var(--line);padding:4px 9px;border-radius:3px;margin-bottom:10px;text-transform:uppercase;color:var(--slate);}
+  .format-badge .dot{width:5px;height:5px;border-radius:50%;}
+  .format-badge.video .dot{background:var(--gold);}
+  .format-badge.podcast .dot{background:var(--cardinal);}
+  .format-badge.paper .dot{background:var(--violet);}
+  .video-meta h3{font-family:var(--font-display);font-size:19px;font-weight:600;line-height:1.3;margin-bottom:6px;}
+  .video-meta .sub{font-size:13px;color:var(--slate);display:flex;align-items:center;gap:8px;}
+  .duration-chip{font-family:var(--font-mono);font-size:11px;border:1px solid var(--line);padding:2px 8px;border-radius:3px;color:var(--slate);}
+  .featured-aside{display:flex;flex-direction:column;gap:14px;}
+  .aside-item{display:flex;gap:14px;padding:14px;border:1px solid var(--line);border-radius:8px;background:var(--bg-card);cursor:pointer;transition:border-color .2s;}
+  .aside-item:hover{border-color:var(--slate-dim);}
+  .aside-thumb{width:60px;height:60px;border-radius:6px;flex-shrink:0;display:flex;align-items:center;justify-content:center;background:var(--bg-raised);border:1px solid var(--line-soft);}
+  .aside-thumb svg{width:18px;height:18px;}
+  .aside-body h4{font-family:var(--font-display);font-size:14px;font-weight:600;line-height:1.35;margin-bottom:4px;}
+  .aside-body .sub{font-size:12px;color:var(--slate);}
+
+  /* MEDIA GRID */
+  .media-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;}
+  .mcard{border:1px solid var(--line);border-radius:8px;background:var(--bg-card);overflow:hidden;cursor:pointer;transition:border-color .2s;}
+  .mcard:hover{border-color:var(--slate-dim);}
+  .mcard[data-hidden="true"]{display:none;}
+  .mcard-thumb{aspect-ratio:16/9;position:relative;display:flex;align-items:center;justify-content:center;background:linear-gradient(155deg,#15131b,#0c0b11);background-size:cover;background-position:center;border-bottom:1px solid var(--line);overflow:hidden;}
+  .mcard-thumb img{width:100%;height:100%;object-fit:cover;display:block;position:absolute;inset:0;}
+  .mcard-thumb .play-sm{width:38px;height:38px;border-radius:50%;background:var(--white);display:flex;align-items:center;justify-content:center;position:relative;z-index:2;}
+  .mcard-thumb .play-sm svg{width:13px;height:13px;fill:#0A0A0F;margin-left:1px;}
+  .mcard-body{padding:16px;}
+  .mcard-body h4{font-family:var(--font-display);font-weight:600;font-size:14.5px;margin-bottom:8px;line-height:1.35;}
+  .mcard-body .sub{font-size:12px;color:var(--slate);display:flex;justify-content:space-between;}
+  .no-results{grid-column:1/-1;text-align:center;padding:48px 0;color:var(--slate-dim);font-family:var(--font-mono);font-size:13px;display:none;}
+  .no-results.visible{display:block;}
+
+  /* PODCASTS */
+  .podcasts{background:var(--bg-raised);border-top:1px solid var(--line);border-bottom:1px solid var(--line);}
+  .podcast-list{border-top:1px solid var(--line);}
+  .podcast-row{display:flex;align-items:center;gap:18px;padding:20px 0;border-bottom:1px solid var(--line);}
+  .podcast-icon{width:48px;height:48px;border-radius:8px;flex-shrink:0;display:flex;align-items:center;justify-content:center;background:var(--bg-card);border:1px solid var(--line-soft);}
+  .podcast-icon svg{width:18px;height:18px;}
+  .podcast-body{flex:1;min-width:0;}
+  .podcast-body h4{font-family:var(--font-display);font-size:16px;font-weight:600;margin-bottom:4px;line-height:1.35;}
+  .podcast-body .sub{font-size:12.5px;color:var(--slate);}
+
+  /* SUBSTACK */
+  .substack{border-bottom:1px solid var(--line);}
+  .substack-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;}
+  .post-card{border:1px solid var(--line);border-radius:8px;background:var(--bg-card);padding:20px;cursor:pointer;transition:border-color .2s;}
+  .post-card:hover{border-color:var(--slate-dim);}
+  .post-meta-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;}
+  .post-date{font-family:var(--font-mono);font-size:11px;color:var(--slate-dim);}
+  .post-card h4{font-family:var(--font-display);font-size:16.5px;font-weight:600;margin-bottom:10px;line-height:1.35;}
+  .post-card p{font-size:13px;color:var(--slate);line-height:1.6;margin-bottom:16px;}
+  .read-time{font-family:var(--font-mono);font-size:11px;color:var(--slate-dim);}
+
+  /* SEMINAR ARCHIVE */
+  .seminars{background:var(--bg-raised);border-top:1px solid var(--line);}
+  .seminar-list{border-top:1px solid var(--line);}
+  .seminar-row{display:grid;grid-template-columns:80px 1fr auto;gap:24px;align-items:center;padding:22px 0;border-bottom:1px solid var(--line);transition:background .15s;}
+  .seminar-row[data-hidden="true"]{display:none;}
+  .seminar-row:hover{background:rgba(255,255,255,.015);}
+  .s-date{text-align:center;}
+  .s-date .day{font-family:var(--font-display);font-size:20px;font-weight:500;color:var(--white);display:block;line-height:1;}
+  .s-date .mon{font-family:var(--font-mono);font-size:10px;color:var(--slate-dim);letter-spacing:.06em;text-transform:uppercase;}
+  .s-date .yr{font-family:var(--font-mono);font-size:10px;color:var(--slate-dim);}
+  .s-body h4{font-family:var(--font-display);font-size:16px;font-weight:600;line-height:1.3;margin-bottom:6px;}
+  .s-meta{font-size:12.5px;color:var(--slate);display:flex;gap:14px;flex-wrap:wrap;margin-bottom:8px;}
+  .s-abstract{font-size:13px;color:var(--slate-dim);line-height:1.55;max-height:0;overflow:hidden;transition:max-height .3s ease;}
+  .s-abstract.open{max-height:200px;}
+  .s-expand{font-family:var(--font-mono);font-size:11px;color:var(--slate-dim);cursor:pointer;border:none;background:none;padding:0;display:inline-flex;align-items:center;gap:4px;transition:color .15s;}
+  .s-expand:hover{color:var(--white);}
+  .s-expand .chevron{transition:transform .2s;display:inline-block;}
+  .s-expand.open .chevron{transform:rotate(180deg);}
+  .s-actions{display:flex;gap:8px;flex-shrink:0;align-items:center;flex-wrap:wrap;}
+  .seminar-no-results{text-align:center;padding:40px 0;color:var(--slate-dim);font-family:var(--font-mono);font-size:13px;display:none;}
+  .seminar-no-results.visible{display:block;}
+
+  /* PUBLICATIONS */
+  .pubs{border-top:1px solid var(--line);}
+  .pub-list{list-style:none;border-top:1px solid var(--line);margin-bottom:0;}
+  .pub-scroll-wrap{position:relative;margin-bottom:28px;}
+  .pub-scroll{max-height:420px;overflow-y:auto;scrollbar-width:thin;scrollbar-color:var(--line) transparent;}
+  .pub-scroll::-webkit-scrollbar{width:8px;}
+  .pub-scroll::-webkit-scrollbar-track{background:transparent;}
+  .pub-scroll::-webkit-scrollbar-thumb{background:var(--line);border-radius:4px;}
+  .pub-scroll::-webkit-scrollbar-thumb:hover{background:var(--slate-dim);}
+  .pub-fade{position:absolute;left:0;right:8px;bottom:0;height:44px;background:linear-gradient(180deg, rgba(10,10,15,0) 0%, var(--bg) 85%);pointer-events:none;transition:opacity .2s ease;}
+  .pub-fade.hidden{opacity:0;}
+  .pub-list li{display:grid;grid-template-columns:1fr 2fr 1fr;gap:24px;padding:18px 0;border-bottom:1px solid var(--line);align-items:baseline;}
+  .pub-list li[data-hidden="true"]{display:none;}
+  .pub-list li:hover{border-bottom-color:var(--slate-dim);}
+  .pub-link{display:contents;cursor:pointer;text-decoration:none;}
+  .pub-list li:hover .pub-title{color:var(--cardinal);}
+  .pub-authors{font-size:13px;color:var(--slate);}
+  .pub-title{font-size:14.5px;color:var(--white);font-weight:500;line-height:1.4;transition:color .15s;}
+  .pub-venue{font-family:var(--font-mono);font-size:11.5px;color:var(--slate-dim);text-align:right;}
+  .pub-no-results{text-align:center;padding:40px 0;color:var(--slate-dim);font-family:var(--font-mono);font-size:13px;display:none;}
+  .pub-no-results.visible{display:block;}
+
+  /* FOOTER */
+  footer{border-top:1px solid var(--line);background:var(--bg-raised);padding:56px 32px 28px;}
+  .footer-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:48px;padding-bottom:40px;border-bottom:1px solid var(--line);}
+  .footer-brand .logo{margin-bottom:14px;}
+  .footer-brand p{color:var(--slate);font-size:13px;line-height:1.7;max-width:280px;}
+  .footer-col h5{font-family:var(--font-mono);font-size:11px;letter-spacing:.06em;color:var(--slate-dim);text-transform:uppercase;margin-bottom:15px;}
+  .footer-col a{display:block;font-size:13.5px;color:var(--slate);margin-bottom:11px;transition:color .2s;}
+  .footer-col a:hover{color:var(--white);}
+  .footer-bottom{display:flex;justify-content:space-between;align-items:center;padding-top:24px;flex-wrap:wrap;gap:16px;}
+  .footer-bottom p{font-size:12px;color:var(--slate-dim);}
+  .socials{display:flex;gap:12px;}
+  .socials a{width:32px;height:32px;border-radius:5px;border:1px solid var(--line);display:flex;align-items:center;justify-content:center;color:var(--slate);transition:color .2s,border-color .2s;}
+  .socials a:hover{color:var(--white);border-color:var(--slate-dim);}
+  .socials svg{width:15px;height:15px;}
+
+  /* RESPONSIVE */
+  @media(max-width:880px){
+    .featured-video{grid-template-columns:1fr;}
+    .media-grid{grid-template-columns:1fr 1fr;}
+    .substack-grid{grid-template-columns:1fr 1fr;}
+    .seminar-row{grid-template-columns:56px 1fr;gap:16px;}
+    .s-actions{grid-column:1 / -1;flex-wrap:wrap;margin-top:6px;margin-left:72px;}
+    .pub-list li{grid-template-columns:1fr;gap:6px;}
+    .pub-venue{text-align:left;}
+    .footer-grid{grid-template-columns:1fr 1fr;gap:32px;}
+  }
+  @media(max-width:600px){
+    .nav-links{gap:20px;font-size:11.5px;padding:11px 16px;overflow-x:auto;justify-content:flex-start;}
+    .masthead-row{padding:12px 16px 8px;}
+    .masthead-spacer{display:none;}
+    .logo{font-size:17px;margin:0;}
+    .logo small{display:none;}
+    .masthead-utility .btn-ghost{display:none;}
+    .masthead-utility{width:auto;}
+    .btn-outline{font-size:11.5px;padding:7px 12px;}
+    .bulletin .wrap{padding:7px 16px;}
+    .bulletin a{max-width:50vw;}
+    section{padding:56px 20px;}
+    .page-header{padding:40px 20px 28px;}
+    .global-search{padding:16px 20px;}
+    .wrap{padding:0 20px;}
+    .media-grid{grid-template-columns:1fr;}
+    .substack-grid{grid-template-columns:1fr;}
+    .podcast-row{flex-wrap:wrap;}
+    .podcast-row .btn{margin-left:auto;}
+    .seminar-row{grid-template-columns:1fr;}
+    .s-date{display:none;}
+    .s-actions{margin-left:0;}
+    .s-actions .btn-sm{padding:8px 14px;font-size:13px;}
+    .footer-grid{grid-template-columns:1fr;}
+  }
+</style>
+</head>
+<body>
+
+<!-- BULLETIN STRIP -->
+<div class="bulletin">
+  <div class="wrap">
+    <span class="tag">SEMINAR</span>
+    <span>June 17, 7:12 PM PT</span>
+    <span class="sep">—</span>
+    <a href="#seminars">Reciprocal Quantum Logic: Controlled Dual Rail Qubit Architecture, w/ Dr. Anthony Przybysz →</a>
+  </div>
+</div>
+
+<!-- MASTHEAD -->
+<header>
+  <div class="masthead-row wrap">
+    <span class="masthead-spacer" aria-hidden="true"></span>
+    <a href="index.html" class="logo">      <span>NSF DISCoVER<small>EXPEDITION</small></span>
+    </a>
+    <div class="masthead-utility">
+      <a href="#" class="btn btn-outline">Log in</a>
+    </div>
+  </div>
+  <div class="nav-row">
+    <div class="nav-links">
+      <a href="index.html">About</a>
+      <a href="discover-research.html">Research</a>
+      <a href="discover-media.html" class="active">Media</a>
+      <a href="discover-team.html">Team</a>
+      <a href="discover-impact.html">Impact</a>
+    </div>
+  </div>
+</header>
+
+<!-- PAGE HEADER -->
+<div class="page-header">
+  <div class="wrap">
+    <span class="eyebrow-label">NSF DISCoVER Expedition</span>
+    <h1>Media Hub</h1>
+    <p>Every seminar, video, podcast episode, and paper DISCoVER has published — in one searchable place.</p>
+  </div>
+</div>
+
+<!--
+  ====================================================================
+  HOW TO SWAP MEDIA (videos, podcasts, thumbnails) ON THIS PAGE
+  ====================================================================
+  Every video/podcast card below follows the same pattern:
+
+  1. THUMBNAIL IMAGE
+     Each card has a thumbnail container (class="thumb" for the big
+     featured card, class="mcard-thumb" for grid cards). Inside it,
+     replace the <img> "src" with your image file or URL:
+         <img src="images/your-thumbnail.jpg" alt="...">
+     Recommended size: 1280x720 (16:9) for video cards.
+     If you don't have an image yet, you can delete the <img> tag and
+     the card will fall back to a plain dark gradient automatically.
+
+  2. CLICK-THROUGH LINK (YouTube / Spotify / Substack)
+     Wrap the whole card in an <a href="..."> tag (already done below)
+     pointing at the real YouTube/Spotify/Substack URL. Just replace
+     the href="#" placeholders with the real link.
+
+  3. TEXT FIELDS
+     - Title: edit the text inside the <h4> or <h3> tag.
+     - Byline / speaker / duration: edit the text inside the .sub div.
+     - Badge label (EXPLAINER / SEMINAR / etc.) and filter category:
+       edit the data-topic="..." attribute AND the visible badge text.
+
+  4. FILTER CATEGORY
+     data-topic must be one of: seminar | spotlight | explainer
+     (this determines which filter button shows/hides the card).
+
+  5. ADDING A NEW CARD
+     Copy an existing "mcard" block in its entirety (including the
+     surrounding <a> tag), paste it before the </div> that closes
+     #media-grid, and update steps 1–4 above for the new card.
+
+  6. PODCAST ROWS (below, in the PODCASTS section) follow the same
+     idea but use a small square "podcast-icon" instead of a 16:9
+     thumbnail — see the podcast-icon notes near that section.
+  ====================================================================
+-->
+
+<!-- FEATURED -->
+<section id="featured">
+  <div class="wrap">
+    <div class="sec-head">
+      <div>
+        <h2>Featured</h2>
+      </div>
+      <p class="sec-sub">The latest from across the Media Hub.</p>
+    </div>
+    <div class="featured-video">
+      <!-- FEATURED VIDEO CARD: replace href with the real YouTube link -->
+      <a href="#" class="video-card featured-item" data-topic="explainer" data-title="Single Flux Quantum Logic, explained Dr. Scott Holmes" style="display:block;text-decoration:none;color:inherit;">
+        <div class="thumb">
+          <!-- THUMBNAIL: replace src with your image, or delete this <img> to use the default gradient -->
+          <img src="images/featured-video-thumb.jpg" alt="Single Flux Quantum Logic, explained" onerror="this.remove()">
+        </div>
+        <div class="play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+        <div class="video-meta">
+          <span class="format-badge video"><span class="dot"></span>EXPLAINER · YOUTUBE</span>
+          <h3>Single Flux Quantum Logic, explained</h3>
+          <div class="sub">Dr. Scott Holmes <span class="duration-chip">6:40</span></div>
+        </div>
+      </a>
+      <div class="featured-aside">
+        <!-- FEATURED PODCAST ASIDE: replace href with real Spotify link, icon stays the same -->
+        <a href="#" class="aside-item featured-item" data-title="NSF DISCoVER Podcast Episode 12" style="text-decoration:none;color:inherit;">
+          <div class="aside-thumb">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#C43D4E" stroke-width="1.6"><path d="M12 1a4 4 0 0 0-4 4v6a4 4 0 0 0 8 0V5a4 4 0 0 0-4-4z"/><path d="M19 10v1a7 7 0 0 1-14 0v-1M12 18v4"/></svg>
+          </div>
+          <div class="aside-body">
+            <h4>NSF DISCoVER Podcast — Ep. 12</h4>
+            <div class="sub">Spotify · 28 min · New this week</div>
+          </div>
+        </a>
+        <!-- FEATURED SUBSTACK ASIDE: replace href with real Substack link -->
+        <a href="#" class="aside-item featured-item" data-title="Why Cold Beats CMOS A Field Guide Substack" style="text-decoration:none;color:inherit;">
+          <div class="aside-thumb">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#6B74E0" stroke-width="1.6"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+          </div>
+          <div class="aside-body">
+            <h4>Why Cold Beats CMOS: A Field Guide</h4>
+            <div class="sub">Substack · 6 min read · New this week</div>
+          </div>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- GLOBAL SEARCH -->
+<div class="global-search">
+  <div class="wrap">
+    <div class="search-box">
+      <div class="search-wrap">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+        <input type="text" id="global-search" placeholder="How can I help? Try “quantum,” “memory,” or “cryogenic”…" autocomplete="off">
+      </div>
+      <span class="search-count" id="search-count"></span>
+    </div>
+    <p class="assistant-reply" id="assistant-reply"></p>
+  </div>
+</div>
+
+<!-- VIDEOS -->
+<section id="videos">
+  <div class="wrap">
+    <div class="sec-head">
+      <div>
+        <h2>Videos</h2>
+      </div>
+      <a href="#" class="link-arrow">
+        Watch on YouTube
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+      </a>
+    </div>
+
+    <!-- Filter bar for videos -->
+    <div class="filter-bar" id="video-filters">
+      <button class="filter-btn active" data-filter="all">All</button>
+      <span class="filter-sep"></span>
+      <button class="filter-btn" data-filter="seminar">Seminar</button>
+      <button class="filter-btn" data-filter="spotlight">Faculty Spotlight</button>
+      <button class="filter-btn" data-filter="explainer">Explainer</button>
+    </div>
+
+    <div class="media-grid" id="media-grid">
+      <!--
+        EACH CARD BELOW = one video tile.
+        To swap: change href, change <img src>, change h4 text, change .sub text.
+        data-topic must be: seminar | spotlight | explainer
+      -->
+      <a href="#" class="mcard" data-topic="seminar" data-title="Reciprocal Quantum Logic Dual Rail Qubit Control Anthony Przybysz Northrop Grumman" style="display:block;text-decoration:none;color:inherit;">
+        <div class="mcard-thumb">
+          <!-- replace src, or delete this <img> to fall back to the default gradient -->
+          <img src="images/video-rql-dual-rail.jpg" alt="Reciprocal Quantum Logic: Dual-Rail Qubit Control" onerror="this.remove()">
+          <div class="play-sm"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+        </div>
+        <div class="mcard-body">
+          <h4>Reciprocal Quantum Logic: Dual-Rail Qubit Control</h4>
+          <div class="sub"><span>Dr. Anthony Przybysz</span><span>Upcoming</span></div>
+        </div>
+      </a>
+      <a href="#" class="mcard" data-topic="explainer" data-title="Octupole Driven Torque Visual Primer Learning Series" style="display:block;text-decoration:none;color:inherit;">
+        <div class="mcard-thumb">
+          <img src="images/video-octupole-torque.jpg" alt="Octupole-Driven Torque: A Visual Primer" onerror="this.remove()">
+          <div class="play-sm"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+        </div>
+        <div class="mcard-body">
+          <h4>Octupole-Driven Torque: A Visual Primer</h4>
+          <div class="sub"><span>Learning Series</span><span>4:02</span></div>
+        </div>
+      </a>
+      <a href="#" class="mcard" data-topic="explainer" data-title="Single Flux Quantum Logic explained Dr Scott Holmes how it works" style="display:block;text-decoration:none;color:inherit;">
+        <div class="mcard-thumb">
+          <img src="images/video-sfq-logic-explained.jpg" alt="Single Flux Quantum Logic, explained" onerror="this.remove()">
+          <div class="play-sm"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+        </div>
+        <div class="mcard-body">
+          <h4>Single Flux Quantum Logic, explained</h4>
+          <div class="sub"><span>Dr. Scott Holmes</span><span>6:40</span></div>
+        </div>
+      </a>
+      <a href="#" class="mcard" data-topic="seminar" data-title="How It Works Single Flux Quantum ERSFQ AQFP logic families" style="display:block;text-decoration:none;color:inherit;">
+        <div class="mcard-thumb">
+          <img src="images/video-logic-families.jpg" alt="How It Works: RSFQ, ERSFQ, and AQFP Logic Families" onerror="this.remove()">
+          <div class="play-sm"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+        </div>
+        <div class="mcard-body">
+          <h4>How It Works: RSFQ, ERSFQ, and AQFP Logic Families</h4>
+          <div class="sub"><span>Seminar</span><span>18:44</span></div>
+        </div>
+      </a>
+      <a href="#" class="mcard" data-topic="spotlight" data-title="Faculty Spotlight Michael Hamilton Auburn ECE" style="display:block;text-decoration:none;color:inherit;">
+        <div class="mcard-thumb">
+          <img src="images/spotlight-michael-hamilton.jpg" alt="Faculty Spotlight: Michael C. Hamilton" onerror="this.remove()">
+          <div class="play-sm"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+        </div>
+        <div class="mcard-body">
+          <h4>Faculty Spotlight: Michael C. Hamilton</h4>
+          <div class="sub"><span>Auburn University · ECE</span><span>9:15</span></div>
+        </div>
+      </a>
+      <a href="#" class="mcard" data-topic="spotlight" data-title="Faculty Spotlight Yanzhi Wang Northeastern socioeconomic impacts" style="display:block;text-decoration:none;color:inherit;">
+        <div class="mcard-thumb">
+          <img src="images/spotlight-yanzhi-wang.jpg" alt="Faculty Spotlight: Yanzhi Wang, Northeastern" onerror="this.remove()">
+          <div class="play-sm"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+        </div>
+        <div class="mcard-body">
+          <h4>Faculty Spotlight: Yanzhi Wang, Northeastern</h4>
+          <div class="sub"><span>Assoc. Prof., ECE</span><span>7:50</span></div>
+        </div>
+      </a>
+      <a href="#" class="mcard" data-topic="seminar" data-title="SuperSoCC cryogenic architecture system on chip Murali Annavaram" style="display:block;text-decoration:none;color:inherit;">
+        <div class="mcard-thumb">
+          <img src="images/video-supersocc-architecture.jpg" alt="SuperSoCC: From Architecture to Cryogenic System" onerror="this.remove()">
+          <div class="play-sm"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+        </div>
+        <div class="mcard-body">
+          <h4>SuperSoCC: From Architecture to Cryogenic System</h4>
+          <div class="sub"><span>Dr. Murali Annavaram · USC</span><span>22:10</span></div>
+        </div>
+      </a>
+      <!-- ADD NEW CARDS HERE: copy one of the <a class="mcard" ...> blocks above -->
+      <div class="no-results" id="media-no-results">No results match your search or filter.</div>
+    </div>
+  </div>
+</section>
+
+<!-- PODCASTS -->
+<section class="podcasts" id="podcasts">
+  <div class="wrap">
+    <div class="sec-head">
+      <div>
+        <h2>Podcasts</h2>
+      </div>
+      <a href="#" class="link-arrow">
+        Listen on Spotify
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+      </a>
+    </div>
+    <div class="podcast-list" id="podcast-list">
+      <!--
+        EACH ROW BELOW = one podcast episode.
+        To swap: change the "▶ Play" href to your real episode link,
+        edit the h4/sub text, and (optional) drop cover art into the
+        podcast-icon div as an <img> — it will replace the SVG mic icon.
+      -->
+      <div class="podcast-row" data-title="NSF DISCoVER Podcast Episode 12">
+        <div class="podcast-icon">
+          <!-- optional cover art override: uncomment and set src to use an image instead of the icon -->
+          <!-- <img src="images/podcast-ep12-cover.jpg" alt="" style="width:100%;height:100%;object-fit:cover;border-radius:8px;"> -->
+          <svg viewBox="0 0 24 24" fill="none" stroke="#C43D4E" stroke-width="1.6"><path d="M12 1a4 4 0 0 0-4 4v6a4 4 0 0 0 8 0V5a4 4 0 0 0-4-4z"/><path d="M19 10v1a7 7 0 0 1-14 0v-1M12 18v4"/></svg>
+        </div>
+        <div class="podcast-body">
+          <h4>Episode 12 — Why Cold Computing Is Having a Moment</h4>
+          <div class="sub">28 min · New this week</div>
+        </div>
+        <a href="#" class="btn btn-outline btn-sm">▶ Play</a>
+      </div>
+      <div class="podcast-row" data-title="NSF DISCoVER Podcast Episode 11 cryogenic computing">
+        <div class="podcast-icon">
+          <!-- <img src="images/podcast-ep11-cover.jpg" alt="" style="width:100%;height:100%;object-fit:cover;border-radius:8px;"> -->
+          <svg viewBox="0 0 24 24" fill="none" stroke="#C43D4E" stroke-width="1.6"><path d="M12 1a4 4 0 0 0-4 4v6a4 4 0 0 0 8 0V5a4 4 0 0 0-4-4z"/><path d="M19 10v1a7 7 0 0 1-14 0v-1M12 18v4"/></svg>
+        </div>
+        <div class="podcast-body">
+          <h4>Episode 11 — Inside a Niobium Fab</h4>
+          <div class="sub">31 min</div>
+        </div>
+        <a href="#" class="btn btn-outline btn-sm">▶ Play</a>
+      </div>
+      <div class="podcast-row" data-title="NSF DISCoVER Podcast Episode 10 students cryogenic research">
+        <div class="podcast-icon">
+          <!-- <img src="images/podcast-ep10-cover.jpg" alt="" style="width:100%;height:100%;object-fit:cover;border-radius:8px;"> -->
+          <svg viewBox="0 0 24 24" fill="none" stroke="#C43D4E" stroke-width="1.6"><path d="M12 1a4 4 0 0 0-4 4v6a4 4 0 0 0 8 0V5a4 4 0 0 0-4-4z"/><path d="M19 10v1a7 7 0 0 1-14 0v-1M12 18v4"/></svg>
+        </div>
+        <div class="podcast-body">
+          <h4>Episode 10 — A Student's First Year in Cryogenics</h4>
+          <div class="sub">24 min</div>
+        </div>
+        <a href="#" class="btn btn-outline btn-sm">▶ Play</a>
+      </div>
+      <!-- ADD NEW EPISODES HERE: copy one of the .podcast-row blocks above -->
+    </div>
+  </div>
+</section>
+
+<!-- SUBSTACK -->
+<section class="substack" id="substack">
+  <div class="wrap">
+    <div class="sec-head">
+      <div>
+        <h2>Substack</h2>
+      </div>
+      <a href="#" class="link-arrow">
+        Read on Substack
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+      </a>
+    </div>
+    <div class="substack-grid" id="substack-grid">
+      <div class="post-card" data-title="Why Cold Beats CMOS Field Guide">
+        <div class="post-meta-top">
+          <span class="format-badge paper"><span class="dot"></span>FIELD GUIDE</span>
+          <span class="post-date">This week</span>
+        </div>
+        <h4>Why Cold Beats CMOS: A Field Guide</h4>
+        <p>A plain-language walkthrough of why superconducting chips waste almost no energy — and what that could mean outside computing.</p>
+        <span class="read-time">6 min read</span>
+      </div>
+      <div class="post-card" data-title="Inside the Niobium Fab Process">
+        <div class="post-meta-top">
+          <span class="format-badge paper"><span class="dot"></span>LAB NOTES</span>
+          <span class="post-date">2 weeks ago</span>
+        </div>
+        <h4>Inside the Niobium Fab Process</h4>
+        <p>What it actually takes to fabricate a Josephson junction — from wafer to working device.</p>
+        <span class="read-time">9 min read</span>
+      </div>
+      <div class="post-card" data-title="What AQFP Logic Means for the Next Decade">
+        <div class="post-meta-top">
+          <span class="format-badge paper"><span class="dot"></span>ANALYSIS</span>
+          <span class="post-date">1 month ago</span>
+        </div>
+        <h4>What AQFP Logic Means for the Next Decade</h4>
+        <p>Adiabatic switching gets us closer to the thermodynamic limit of computing. Here's why that matters.</p>
+        <span class="read-time">7 min read</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SEMINAR ARCHIVE -->
+<section class="seminars" id="seminars">
+  <div class="wrap">
+    <div class="sec-head">
+      <div>
+        <span class="sec-label">Seminar Archive</span>
+        <h2>Past talks &amp; presentations</h2>
+      </div>
+      <p class="sec-sub">Every DISCoVER seminar — with slides and recordings where available.</p>
+    </div>
+
+    <!-- Seminar filters -->
+    <div class="filter-bar" id="seminar-filters">
+      <button class="filter-btn active" data-filter="all">All years</button>
+      <span class="filter-sep"></span>
+      <button class="filter-btn" data-filter="2026">2026</button>
+      <button class="filter-btn" data-filter="2025">2025</button>
+      <button class="filter-btn" data-filter="2024">2024</button>
+      <button class="filter-btn" data-filter="2023">2023</button>
+      <span class="filter-sep"></span>
+      <button class="filter-btn" data-filter="rql">RQL / RSFQ</button>
+      <button class="filter-btn" data-filter="aqfp">AQFP</button>
+      <button class="filter-btn" data-filter="architecture">Architecture</button>
+      <button class="filter-btn" data-filter="devices">Devices</button>
+    </div>
+
+    <div class="seminar-list" id="seminar-list">
+
+      <div class="seminar-row" data-year="2026" data-topic="rql" data-title="Reciprocal Quantum Logic Controlled Dual Rail Qubit Architecture Anthony Przybysz Northrop Grumman">
+        <div class="s-date"><span class="day">17</span><span class="mon">Jun</span><span class="yr">2026</span></div>
+        <div class="s-body">
+          <h4>Reciprocal Quantum Logic (RQL): Controlled Dual Rail Qubit Architecture</h4>
+          <div class="s-meta">
+            <span><strong>Dr. Anthony Przybysz</strong></span>
+            <span>Senior Staff Physicist, Northrop Grumman Corporation</span>
+            <span>7:12 PM PT · Zoom</span>
+          </div>
+          <div class="s-abstract" id="abs-1">
+            This talk presents recent advances in RQL-based qubit control circuits, with a focus on dual-rail qubit architecture and how controlled entanglement operations can be implemented in a cryogenic digital environment. Slides available for download.
+          </div>
+          <button class="s-expand" onclick="toggleAbstract('abs-1', this)">Abstract <span class="chevron">↓</span></button>
+        </div>
+        <div class="s-actions">
+          <a href="#" class="btn btn-primary btn-sm">▶ Watch</a>
+          <a href="#" class="btn btn-outline btn-sm">Slides ↓</a>
+        </div>
+      </div>
+
+      <div class="seminar-row" data-year="2025" data-topic="architecture" data-title="SuperSoCC three stage cryogenic system on chip Murali Annavaram USC">
+        <div class="s-date"><span class="day">08</span><span class="mon">Nov</span><span class="yr">2025</span></div>
+        <div class="s-body">
+          <h4>SuperSoCC: Designing a Three-Stage Cryogenic System-on-Chip</h4>
+          <div class="s-meta">
+            <span><strong>Dr. Murali Annavaram</strong></span>
+            <span>Professor, USC Viterbi School of Engineering</span>
+            <span>12:00 PM PT · Zoom</span>
+          </div>
+          <div class="s-abstract" id="abs-2">
+            Overview of the SuperSoCC architecture — integrating SFQ compute cores, cryogenic SRAM, and DRAM at different temperature tiers. This talk covers the memory subsystem design and the challenges of room-temperature I/O interfacing.
+          </div>
+          <button class="s-expand" onclick="toggleAbstract('abs-2', this)">Abstract <span class="chevron">↓</span></button>
+        </div>
+        <div class="s-actions">
+          <a href="#" class="btn btn-primary btn-sm">▶ Watch</a>
+          <a href="#" class="btn btn-outline btn-sm">Slides ↓</a>
+        </div>
+      </div>
+
+      <div class="seminar-row" data-year="2025" data-topic="aqfp" data-title="AQFP adiabatic quantum flux parametron energy efficiency Nobuyuki Yoshikawa Yokohama">
+        <div class="s-date"><span class="day">22</span><span class="mon">May</span><span class="yr">2025</span></div>
+        <div class="s-body">
+          <h4>AQFP Logic at Scale: Efficiency Limits and Fabrication Progress</h4>
+          <div class="s-meta">
+            <span><strong>Prof. Nobuyuki Yoshikawa</strong></span>
+            <span>Yokohama National University</span>
+            <span>6:00 PM PT · Zoom</span>
+          </div>
+          <div class="s-abstract" id="abs-3">
+            This talk reviews the current state of AQFP (Adiabatic Quantum Flux Parametron) logic, discussing the energy efficiency limits achievable with current Nb fabrication processes and progress toward higher junction-count circuits for general-purpose compute.
+          </div>
+          <button class="s-expand" onclick="toggleAbstract('abs-3', this)">Abstract <span class="chevron">↓</span></button>
+        </div>
+        <div class="s-actions">
+          <a href="#" class="btn btn-primary btn-sm">▶ Watch</a>
+          <a href="#" class="btn btn-outline btn-sm">Slides ↓</a>
+        </div>
+      </div>
+
+      <div class="seminar-row" data-year="2024" data-topic="devices" data-title="Josephson junction niobium fabrication cryogenic devices Grace Xing Cornell">
+        <div class="s-date"><span class="day">14</span><span class="mon">Oct</span><span class="yr">2024</span></div>
+        <div class="s-body">
+          <h4>Niobium Junction Fabrication: From Process to Circuit Performance</h4>
+          <div class="s-meta">
+            <span><strong>Prof. Grace Xing</strong></span>
+            <span>Cornell University, School of ECE</span>
+            <span>12:00 PM PT · Zoom</span>
+          </div>
+          <div class="s-abstract" id="abs-4">
+            Covers the niobium trilayer fabrication process used across DISCoVER partner institutions, with a focus on junction uniformity across wafers and its implications for large-scale SFQ circuit yield. Includes live demo of test-chip measurement data.
+          </div>
+          <button class="s-expand" onclick="toggleAbstract('abs-4', this)">Abstract <span class="chevron">↓</span></button>
+        </div>
+        <div class="s-actions">
+          <a href="#" class="btn btn-primary btn-sm">▶ Watch</a>
+          <a href="#" class="btn btn-outline btn-sm">Slides ↓</a>
+          <a href="#" class="btn btn-outline btn-sm">Paper ↗</a>
+        </div>
+      </div>
+
+      <div class="seminar-row" data-year="2024" data-topic="rql" data-title="ERSFQ energy efficient single flux quantum bias network Krylov Friedman Rochester">
+        <div class="s-date"><span class="day">03</span><span class="mon">Apr</span><span class="yr">2024</span></div>
+        <div class="s-body">
+          <h4>Distributed ERSFQ Bias Networks for Large-Scale Circuits</h4>
+          <div class="s-meta">
+            <span><strong>Dr. Gleb Krylov &amp; Prof. Eby G. Friedman</strong></span>
+            <span>University of Rochester</span>
+            <span>12:00 PM PT · Zoom</span>
+          </div>
+          <div class="s-abstract" id="abs-5">
+            Presents the design methodology developed for distributing bias currents across large ERSFQ circuits without static power loss. This talk accompanies the paper published in IEEE Transactions on VLSI Systems (Vol. 28, No. 11, 2020).
+          </div>
+          <button class="s-expand" onclick="toggleAbstract('abs-5', this)">Abstract <span class="chevron">↓</span></button>
+        </div>
+        <div class="s-actions">
+          <a href="#" class="btn btn-primary btn-sm">▶ Watch</a>
+          <a href="#" class="btn btn-outline btn-sm">Slides ↓</a>
+          <a href="#" class="btn btn-outline btn-sm">Paper ↗</a>
+        </div>
+      </div>
+
+      <div class="seminar-row" data-year="2023" data-topic="architecture" data-title="SFQ spiking neural network alpha soma threshold cell Karamuftuoglu Pedram USC">
+        <div class="s-date"><span class="day">18</span><span class="mon">Sep</span><span class="yr">2023</span></div>
+        <div class="s-body">
+          <h4>α-Soma: SFQ Threshold Cells for Spiking Neural Networks</h4>
+          <div class="s-meta">
+            <span><strong>M. A. Karamuftuoglu &amp; Prof. Massoud Pedram</strong></span>
+            <span>University of Southern California</span>
+            <span>12:00 PM PT · Zoom</span>
+          </div>
+          <div class="s-abstract" id="abs-6">
+            Introduces the α-Soma cell — a single flux quantum threshold gate designed to implement spiking neural network operations at cryogenic temperatures. The design achieves sub-picojoule switching energy per synaptic event.
+          </div>
+          <button class="s-expand" onclick="toggleAbstract('abs-6', this)">Abstract <span class="chevron">↓</span></button>
+        </div>
+        <div class="s-actions">
+          <a href="#" class="btn btn-primary btn-sm">▶ Watch</a>
+          <a href="#" class="btn btn-outline btn-sm">Paper ↗</a>
+        </div>
+      </div>
+
+    </div>
+    <div class="seminar-no-results" id="seminar-no-results">No seminars match your search or filter.</div>
+  </div>
+</section>
+
+<!-- PUBLICATIONS -->
+<section class="pubs" id="publications">
+  <div class="wrap">
+    <div class="sec-head">
+      <div>
+        <span class="sec-label">Peer-Reviewed Output</span>
+        <h2>Publications</h2>
+      </div>
+      <p class="sec-sub">Work from the DISCoVER team in IEEE, DATE, and related proceedings.</p>
+    </div>
+
+    <!-- Publication filters -->
+    <div class="filter-bar" id="pub-filters">
+      <button class="filter-btn active" data-filter="all">All</button>
+      <span class="filter-sep"></span>
+      <button class="filter-btn" data-filter="ieee">IEEE Transactions</button>
+      <button class="filter-btn" data-filter="conference">Conference</button>
+      <button class="filter-btn" data-filter="circuits">Circuits</button>
+      <button class="filter-btn" data-filter="architecture">Architecture</button>
+      <button class="filter-btn" data-filter="devices">Devices</button>
+    </div>
+
+    <!--
+      Each <li> below has a data-url attribute — replace "#" with the real
+      DOI or publisher link for that paper (e.g. https://doi.org/10.1109/...
+      or the IEEE Xplore URL). That's the only edit needed per entry.
+    -->
+    <div class="pub-scroll-wrap">
+      <div class="pub-scroll" id="pub-scroll">
+        <ul class="pub-list" id="pub-list">
+      <li data-topic="circuits ieee" data-title="alpha soma single flux quantum threshold spiking neural networks Karamuftuoglu Pedram" data-url="#">
+        <a class="pub-link" href="#" target="_blank" rel="noopener noreferrer">
+          <span class="pub-authors">Karamuftuoglu, M. A. &amp; Pedram, M.</span>
+          <span class="pub-title">α-Soma: Single Flux Quantum Threshold Cell for Spiking Neural Networks</span>
+          <span class="pub-venue">IEEE Trans. Applied Superconductivity, Vol. 33, No. 5, 2023</span>
+        </a>
+      </li>
+      <li data-topic="circuits ieee" data-title="All JJ Logic Bistable Josephson Junctions Jabbari Bocko Friedman" data-url="#">
+        <a class="pub-link" href="#" target="_blank" rel="noopener noreferrer">
+          <span class="pub-authors">Jabbari, T., Bocko, M. &amp; Friedman, E. G.</span>
+          <span class="pub-title">All-JJ Logic Based on Bistable JJs</span>
+          <span class="pub-venue">IEEE Trans. Applied Superconductivity, Vol. 33, No. 5, 2023</span>
+        </a>
+      </li>
+      <li data-topic="circuits ieee" data-title="Design Methodology Distributed Large Scale ERSFQ Bias Networks Krylov Friedman VLSI" data-url="#">
+        <a class="pub-link" href="#" target="_blank" rel="noopener noreferrer">
+          <span class="pub-authors">Krylov, G. &amp; Friedman, E. G.</span>
+          <span class="pub-title">Design Methodology for Distributed Large-Scale ERSFQ Bias Networks</span>
+          <span class="pub-venue">IEEE Trans. VLSI Systems, Vol. 28, No. 11, pp. 2438–2447, 2020</span>
+        </a>
+      </li>
+      <li data-topic="devices ieee" data-title="Pipelined SFQ Logic Architecture Clocks Reduces Area Power Pedram Pasandi" data-url="https://doi.org/10.1109/TASC.2019.2955095">
+        <a class="pub-link" href="https://doi.org/10.1109/TASC.2019.2955095" target="_blank" rel="noopener noreferrer">
+          <span class="pub-authors">Pasandi, G. &amp; Pedram, M.</span>
+          <span class="pub-title">Pipelined SFQ Logic Architecture with Implicit Clocks Reduces Area and Power Overhead</span>
+          <span class="pub-venue">IEEE Trans. Applied Superconductivity, Vol. 30, No. 2, Art. 1300412, 2020</span>
+        </a>
+      </li>
+      <li data-topic="architecture conference" data-title="path balancing placement algorithm superconducting logic circuits DATE" data-url="#">
+        <a class="pub-link" href="#" target="_blank" rel="noopener noreferrer">
+          <span class="pub-authors">Katam, N. K. &amp; Pedram, M.</span>
+          <span class="pub-title">A Path-Balancing Placement Algorithm for Superconducting Logic Circuits</span>
+          <span class="pub-venue">Design, Automation &amp; Test in Europe (DATE), 2020</span>
+        </a>
+      </li>
+      <li data-topic="architecture conference" data-title="Challenges Status Superconducting Single Flux Quantum Technology Katam Kawa Pedram DATE" data-url="https://doi.org/10.23919/DATE.2019.8747356">
+        <a class="pub-link" href="https://doi.org/10.23919/DATE.2019.8747356" target="_blank" rel="noopener noreferrer">
+          <span class="pub-authors">Katam, N. K., Kawa, J. &amp; Pedram, M.</span>
+          <span class="pub-title">Challenges and the Status of Superconducting Single Flux Quantum Technology</span>
+          <span class="pub-venue">Design, Automation &amp; Test in Europe (DATE), 2019, pp. 1781–1787</span>
+        </a>
+      </li>
+      <li data-topic="devices ieee" data-title="josephson oscillators amorphous superconductors Nevirkovets Ketterson" data-url="#">
+        <a class="pub-link" href="#" target="_blank" rel="noopener noreferrer">
+          <span class="pub-authors">Nevirkovets, I. P. &amp; Ketterson, J. B.</span>
+          <span class="pub-title">Josephson Oscillators Based on Amorphous Superconductors</span>
+          <span class="pub-venue">IEEE Trans. Applied Superconductivity, Vol. 33, No. 5, Art. 1100405, 2023</span>
+        </a>
+      </li>
+      <li data-topic="devices ieee" data-title="lateral junctions micro squids magnetic multilayers Ahmad Nevirkovets" data-url="#">
+        <a class="pub-link" href="#" target="_blank" rel="noopener noreferrer">
+          <span class="pub-authors">Ahmad, H. G., Di Palma, L., Massarotti, D., Arzeo, M., Pepe, G. P., Tafuri, F., Mukhanov, O. A. &amp; Nevirkovets, I. P.</span>
+          <span class="pub-title">Characterization of Lateral Junctions and Micro-SQUIDs Involving Magnetic Multilayers</span>
+          <span class="pub-venue">IEEE Trans. Applied Superconductivity, Vol. 33, No. 5, Art. 1101205, 2023</span>
+        </a>
+      </li>
+      <li data-topic="circuits ieee" data-title="stripline topology flux mitigation Jabbari Friedman" data-url="#">
+        <a class="pub-link" href="#" target="_blank" rel="noopener noreferrer">
+          <span class="pub-authors">Jabbari, T. &amp; Friedman, E. G.</span>
+          <span class="pub-title">Stripline Topology for Flux Mitigation</span>
+          <span class="pub-venue">IEEE Trans. Applied Superconductivity, Vol. 33, No. 5, 2023</span>
+        </a>
+      </li>
+      <li data-topic="circuits ieee" data-title="SFQ DQFP interface circuits Jabbari Friedman" data-url="#">
+        <a class="pub-link" href="#" target="_blank" rel="noopener noreferrer">
+          <span class="pub-authors">Jabbari, T. &amp; Friedman, E. G.</span>
+          <span class="pub-title">SFQ/DQFP Interface Circuits</span>
+          <span class="pub-venue">IEEE Trans. Applied Superconductivity, Vol. 33, No. 5, 2023</span>
+        </a>
+      </li>
+      <li data-topic="circuits ieee" data-title="Suzuki stack circuit differential output Mustafa Kose" data-url="#">
+        <a class="pub-link" href="#" target="_blank" rel="noopener noreferrer">
+          <span class="pub-authors">Mustafa, Y. &amp; Köse, S.</span>
+          <span class="pub-title">Suzuki Stack Circuit with Differential Output</span>
+          <span class="pub-venue">IEEE Trans. Applied Superconductivity, Vol. 33, No. 2, 2023</span>
+        </a>
+      </li>
+      <li data-topic="circuits ieee" data-title="optimization Suzuki stack circuit power dissipation Mustafa Kose" data-url="#">
+        <a class="pub-link" href="#" target="_blank" rel="noopener noreferrer">
+          <span class="pub-authors">Mustafa, Y. &amp; Köse, S.</span>
+          <span class="pub-title">Optimization of Suzuki Stack Circuit to Reduce Power Dissipation</span>
+          <span class="pub-venue">IEEE Trans. Applied Superconductivity, Vol. 32, No. 8, 2022</span>
+        </a>
+      </li>
+      <li data-topic="circuits ieee" data-title="wave pipelining DSFQ circuits Krylov Friedman" data-url="#">
+        <a class="pub-link" href="#" target="_blank" rel="noopener noreferrer">
+          <span class="pub-authors">Krylov, G. &amp; Friedman, E. G.</span>
+          <span class="pub-title">Wave Pipelining in DSFQ Circuits</span>
+          <span class="pub-venue">IEEE Trans. Applied Superconductivity, Vol. 32, No. 8, Art. 1301506, 2022</span>
+        </a>
+      </li>
+      <li data-topic="architecture ieee" data-title="globally asynchronous locally synchronous clocking shared interconnect large scale SFQ systems Krylov Friedman" data-url="#">
+        <a class="pub-link" href="#" target="_blank" rel="noopener noreferrer">
+          <span class="pub-authors">Krylov, G. &amp; Friedman, E. G.</span>
+          <span class="pub-title">Globally Asynchronous, Locally Synchronous Clocking and Shared Interconnect for Large-Scale SFQ Systems</span>
+          <span class="pub-venue">IEEE Trans. Applied Superconductivity, Vol. 29, No. 5, Art. 3603205, 2019</span>
+        </a>
+      </li>
+      <li data-topic="circuits ieee" data-title="design for testability SFQ circuits Krylov Friedman" data-url="#">
+        <a class="pub-link" href="#" target="_blank" rel="noopener noreferrer">
+          <span class="pub-authors">Krylov, G. &amp; Friedman, E. G.</span>
+          <span class="pub-title">Design for Testability of SFQ Circuits</span>
+          <span class="pub-venue">IEEE Trans. Applied Superconductivity, Vol. 27, No. 8, Art. 1302307, 2017</span>
+        </a>
+      </li>
+      <li data-topic="circuits" data-title="inductive noise coupling multilayer superconductive ICs Krylov Friedman" data-url="#">
+        <a class="pub-link" href="#" target="_blank" rel="noopener noreferrer">
+          <span class="pub-authors">Krylov, G. &amp; Friedman, E. G.</span>
+          <span class="pub-title">Inductive Noise Coupling in Multilayer Superconductive ICs</span>
+          <span class="pub-venue">Microelectronics Journal, Vol. 126, Art. 105336, 2022</span>
+        </a>
+      </li>
+      <li data-topic="architecture ieee" data-title="design automation superconductive digital circuits review Krylov Kawa Friedman" data-url="#">
+        <a class="pub-link" href="#" target="_blank" rel="noopener noreferrer">
+          <span class="pub-authors">Krylov, G., Kawa, J. &amp; Friedman, E. G.</span>
+          <span class="pub-title">Design Automation of Superconductive Digital Circuits: A Review</span>
+          <span class="pub-venue">IEEE Nanotechnology Magazine, Vol. 15, No. 6, pp. 54–67, 2021</span>
+        </a>
+      </li>
+      <li data-topic="circuits ieee" data-title="logic locking single flux quantum circuits Jabbari Friedman" data-url="#">
+        <a class="pub-link" href="#" target="_blank" rel="noopener noreferrer">
+          <span class="pub-authors">Jabbari, T. &amp; Friedman, E. G.</span>
+          <span class="pub-title">Logic Locking in Single Flux Quantum Circuits</span>
+          <span class="pub-venue">IEEE Trans. Applied Superconductivity, Vol. 31, No. 5, Art. 1301605, 2021</span>
+        </a>
+      </li>
+      <li data-topic="circuits ieee" data-title="repeater insertion SFQ interconnect Jabbari Krylov Whiteley Kawa Friedman" data-url="#">
+        <a class="pub-link" href="#" target="_blank" rel="noopener noreferrer">
+          <span class="pub-authors">Jabbari, T., Krylov, G., Whiteley, S., Kawa, J. &amp; Friedman, E. G.</span>
+          <span class="pub-title">Repeater Insertion in SFQ Interconnect</span>
+          <span class="pub-venue">IEEE Trans. Applied Superconductivity, Vol. 30, No. 8, Art. 5400508, 2020</span>
+        </a>
+      </li>
+      <li data-topic="architecture ieee" data-title="partitioning RSFQ circuits current recycling Krylov Friedman" data-url="#">
+        <a class="pub-link" href="#" target="_blank" rel="noopener noreferrer">
+          <span class="pub-authors">Krylov, G. &amp; Friedman, E. G.</span>
+          <span class="pub-title">Partitioning RSFQ Circuits for Current Recycling</span>
+          <span class="pub-venue">IEEE Trans. Applied Superconductivity, Vol. 31, No. 5, Art. 1301706, 2021</span>
+        </a>
+      </li>
+      <li data-topic="circuits ieee" data-title="asynchronous dynamic single flux quantum majority gates Krylov Friedman" data-url="#">
+        <a class="pub-link" href="#" target="_blank" rel="noopener noreferrer">
+          <span class="pub-authors">Krylov, G. &amp; Friedman, E. G.</span>
+          <span class="pub-title">Asynchronous Dynamic Single-Flux Quantum Majority Gates</span>
+          <span class="pub-venue">IEEE Trans. Applied Superconductivity, Vol. 30, No. 5, Art. 1300907, 2020</span>
+        </a>
+      </li>
+      <li data-topic="circuits ieee" data-title="splitter trees SFQ circuits Jabbari Krylov Kawa Friedman" data-url="#">
+        <a class="pub-link" href="#" target="_blank" rel="noopener noreferrer">
+          <span class="pub-authors">Jabbari, T., Krylov, G., Kawa, J. &amp; Friedman, E. G.</span>
+          <span class="pub-title">Splitter Trees in SFQ Circuits</span>
+          <span class="pub-venue">IEEE Trans. Applied Superconductivity, Vol. 31, No. 5, Art. 1302606, 2021</span>
+        </a>
+      </li>
+      <li data-topic="architecture ieee" data-title="QuCTS single flux quantum clock tree synthesis Bairamkulov Jabbari Friedman" data-url="#">
+        <a class="pub-link" href="#" target="_blank" rel="noopener noreferrer">
+          <span class="pub-authors">Bairamkulov, R., Jabbari, T. &amp; Friedman, E. G.</span>
+          <span class="pub-title">QuCTS – Single Flux Quantum Clock Tree Synthesis</span>
+          <span class="pub-venue">IEEE Trans. Computer-Aided Design of Integrated Circuits and Systems, Vol. 41, No. 10, pp. 3346–3358, 2022</span>
+        </a>
+      </li>
+      <li data-topic="circuits ieee" data-title="surface inductance superconductive striplines Jabbari Friedman" data-url="#">
+        <a class="pub-link" href="#" target="_blank" rel="noopener noreferrer">
+          <span class="pub-authors">Jabbari, T. &amp; Friedman, E. G.</span>
+          <span class="pub-title">Surface Inductance of Superconductive Striplines</span>
+          <span class="pub-venue">IEEE Trans. Circuits and Systems II: Express Briefs, Vol. 69, No. 6, pp. 2952–2956, 2022</span>
+        </a>
+      </li>
+      <li data-topic="devices ieee" data-title="superconductive logic 2phi josephson junctions half flux quantum pulses Salameh Friedman Kvatinsky" data-url="#">
+        <a class="pub-link" href="#" target="_blank" rel="noopener noreferrer">
+          <span class="pub-authors">Salameh, I., Friedman, E. G. &amp; Kvatinsky, S.</span>
+          <span class="pub-title">Superconductive Logic Using 2φ-Josephson Junctions with Half Flux Quantum Pulses</span>
+          <span class="pub-venue">IEEE Trans. Circuits and Systems II: Express Briefs, Vol. 69, No. 5, pp. 2533–2537, 2022</span>
+        </a>
+      </li>
+      <li data-topic="devices ieee" data-title="thermal modeling rapid single flux quantum circuit structures Mitrovic Friedman" data-url="#">
+        <a class="pub-link" href="#" target="_blank" rel="noopener noreferrer">
+          <span class="pub-authors">Mitrovic, A. &amp; Friedman, E. G.</span>
+          <span class="pub-title">Thermal Modeling of Rapid Single Flux Quantum Circuit Structures</span>
+          <span class="pub-venue">IEEE Trans. Electron Devices, Vol. 69, No. 5, pp. 2718–2724, 2022</span>
+        </a>
+      </li>
+      <li data-topic="circuits ieee" data-title="flux mitigation wide superconductive striplines Jabbari Friedman" data-url="#">
+        <a class="pub-link" href="#" target="_blank" rel="noopener noreferrer">
+          <span class="pub-authors">Jabbari, T. &amp; Friedman, E. G.</span>
+          <span class="pub-title">Flux Mitigation in Wide Superconductive Striplines</span>
+          <span class="pub-venue">IEEE Trans. Applied Superconductivity, Vol. 32, No. 5, Art. 3800306, 2022</span>
+        </a>
+      </li>
+      <li data-topic="architecture ieee" data-title="ColdFlux superconducting EDA TCAD tools project overview progress Fourie" data-url="https://doi.org/10.1109/TASC.2019.2892115">
+        <a class="pub-link" href="https://doi.org/10.1109/TASC.2019.2892115" target="_blank" rel="noopener noreferrer">
+          <span class="pub-authors">Fourie, C. J. et al.</span>
+          <span class="pub-title">ColdFlux Superconducting EDA and TCAD Tools Project: Overview and Progress</span>
+          <span class="pub-venue">IEEE Trans. Applied Superconductivity, Vol. 29, No. 5, Art. 1300407, 2019</span>
+        </a>
+      </li>
+      <li data-topic="architecture conference" data-title="placement algorithm superconducting logic circuits cell grouping super cell Shahsavani Shafaei Pedram DATE" data-url="https://doi.org/10.23919/DATE.2018.8342242">
+        <a class="pub-link" href="https://doi.org/10.23919/DATE.2018.8342242" target="_blank" rel="noopener noreferrer">
+          <span class="pub-authors">Shahsavani, S. N., Shafaei, A. &amp; Pedram, M.</span>
+          <span class="pub-title">A Placement Algorithm for Superconducting Logic Circuits Based on Cell Grouping and Super-Cell Placement</span>
+          <span class="pub-venue">Design, Automation &amp; Test in Europe (DATE), 2018, pp. 1465–1468</span>
+        </a>
+      </li>
+    </ul>
+      </div>
+      <div class="pub-fade" id="pub-fade"></div>
+    </div>
+    <div class="pub-no-results" id="pub-no-results">No publications match your search or filter.</div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="wrap">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="index.html" class="logo">          NSF DISCoVER
+        </a>
+        <p>An NSF Expeditions in Computing project exploring superconductor electronics as a post-CMOS computing technology.</p>
+      </div>
+      <div class="footer-col">
+        <h5>Media</h5>
+        <a href="#videos">Videos &amp; Podcasts</a>
+        <a href="#seminars">Seminar Archive</a>
+        <a href="#publications">Publications</a>
+      </div>
+      <div class="footer-col">
+        <h5>Site</h5>
+        <a href="index.html">Home</a>
+        <a href="discover-research.html">Research</a>
+        <a href="discover-team.html">Team</a>
+        <a href="discover-impact.html">Impact</a>
+        <a href="index.html#join-us">Join Us</a>
+      </div>
+      <div class="footer-col">
+        <h5>External</h5>
+        <a href="#">YouTube Channel</a>
+        <a href="#">Substack</a>
+        <a href="#">Instagram</a>
+        <a href="#">NSF Award #2124453</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 DISCoVER Expedition · University of Southern California</p>
+      <div class="socials">
+        <a href="#" aria-label="YouTube"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M22 8.5s-.2-1.6-.8-2.3c-.8-.9-1.7-.9-2.1-1C16.3 5 12 5 12 5s-4.3 0-7.1.2c-.4.1-1.3.1-2.1 1C2.2 6.9 2 8.5 2 8.5S1.8 10.4 1.8 12.3v1.8c0 1.9.2 3.8.2 3.8s.2 1.6.8 2.3c.8.9 1.9.9 2.4 1 1.7.2 7.3 0 7.3 0s4.3 0 7.1-.2c.4-.1 1.3-.1 2.1-1 .6-.7.8-2.3.8-2.3s.2-1.9.2-3.8v-1.8c0-1.9-.2-3.8-.2-3.8z"/><path d="M9.7 15.3V9.4l5.1 3z"/></svg></a>
+        <a href="#" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="3.5"/><circle cx="17.5" cy="6.5" r="0.8" fill="currentColor"/></svg></a>
+        <a href="#" aria-label="LinkedIn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M7 10v7M7 7v.5M12 17v-4.5a2.5 2.5 0 0 1 5 0V17M12 12.5V17"/></svg></a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+// ── Utility ──────────────────────────────────────────────────────────────────
+
+function normalize(str) {
+  return str.toLowerCase().replace(/[^a-z0-9 ]/g, ' ');
+}
+
+// ── "Ask DISCoVER" synonym dictionary ─────────────────────────────────────────
+// Maps common plain-language terms to the research vocabulary actually used
+// across our media, seminars, and publications, so a search for a general
+// term like "quantum" also surfaces content tagged with the more specific
+// terms researchers actually use (SFQ, AQFP, RQL, etc). No AI involved —
+// this is a lookup table checked against content already on the page.
+const RESEARCH_SYNONYMS = {
+  quantum:     ['qubit', 'flux quantum', 'sfq', 'aqfp', 'rql', 'flux parametron'],
+  qubit:       ['quantum', 'rql', 'dual rail'],
+  jj:          ['josephson junction', 'josephson junctions', 'junction'],
+  josephson:   ['jj', 'junction'],
+  junction:    ['jj', 'josephson'],
+  chip:        ['soc', 'socc', 'supersocc', 'system on chip', 'die'],
+  socc:        ['chip', 'system on chip', 'supersocc'],
+  supersocc:   ['chip', 'socc', 'system on chip'],
+  memory:      ['bias network', 'storage', 'superconducting memory'],
+  cooling:     ['cryogenic', 'cryostat', 'cryo'],
+  cryogenic:   ['cooling', 'cryostat', 'cryo'],
+  ai:          ['neural network', 'spiking neural network', 'machine learning'],
+  neural:      ['ai', 'spiking', 'machine learning'],
+  efficient:   ['efficiency', 'low power', 'adiabatic'],
+  efficiency:  ['efficient', 'low power', 'adiabatic'],
+  architecture:['design', 'system design'],
+  logic:       ['sfq', 'rql', 'aqfp', 'ersfq'],
+  cmos:        ['post cmos', 'superconducting'],
+};
+
+// Expands a raw search string into the original phrase plus any related
+// research terms, based on RESEARCH_SYNONYMS. Returns [] for an empty query.
+function getSearchTerms(rawQuery) {
+  const q = normalize(rawQuery).trim();
+  if (!q) return [];
+  const terms = new Set([q]);
+  q.split(/\s+/).forEach(word => {
+    if (RESEARCH_SYNONYMS[word]) {
+      RESEARCH_SYNONYMS[word].forEach(syn => terms.add(syn));
+    }
+  });
+  return [...terms];
+}
+
+// ── Abstract toggles ─────────────────────────────────────────────────────────
+
+function toggleAbstract(id, btn) {
+  const el = document.getElementById(id);
+  el.classList.toggle('open');
+  btn.classList.toggle('open');
+  btn.querySelector('.chevron').textContent = el.classList.contains('open') ? '↑' : '↓';
+}
+
+// ── Video / media grid filter ─────────────────────────────────────────────────
+
+let activeVideoFilter = 'all';
+
+document.querySelectorAll('#video-filters .filter-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    activeVideoFilter = btn.dataset.filter;
+    document.querySelectorAll('#video-filters .filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    applyMediaFilter();
+  });
+});
+
+function applyMediaFilter() {
+  const terms = getSearchTerms(currentQuery);
+  const cards = document.querySelectorAll('#media-grid .mcard');
+  let visible = 0;
+  cards.forEach(card => {
+    const topic = card.dataset.topic || '';
+    const visibleText = normalize(card.textContent || '');
+    const topicMatch = activeVideoFilter === 'all' || topic.includes(activeVideoFilter);
+    const queryMatch = terms.length === 0 || terms.some(t => visibleText.includes(t));
+    const show = topicMatch && queryMatch;
+    card.dataset.hidden = show ? 'false' : 'true';
+    if (show) visible++;
+  });
+  document.getElementById('media-no-results').classList.toggle('visible', visible === 0);
+}
+
+// ── Seminar archive filter ────────────────────────────────────────────────────
+
+let activeSeminarFilter = 'all';
+
+document.querySelectorAll('#seminar-filters .filter-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    activeSeminarFilter = btn.dataset.filter;
+    document.querySelectorAll('#seminar-filters .filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    applySeminarFilter();
+  });
+});
+
+function applySeminarFilter() {
+  const terms = getSearchTerms(currentQuery);
+  const rows = document.querySelectorAll('#seminar-list .seminar-row');
+  let visible = 0;
+  rows.forEach(row => {
+    const year = row.dataset.year || '';
+    const topic = row.dataset.topic || '';
+    const visibleText = normalize(row.textContent || '');
+    const yearFilters = ['2026','2025','2024','2023'];
+    const topicFilters = ['rql','aqfp','architecture','devices'];
+    let filterMatch = true;
+    if (activeSeminarFilter !== 'all') {
+      if (yearFilters.includes(activeSeminarFilter)) {
+        filterMatch = year === activeSeminarFilter;
+      } else {
+        filterMatch = topic.includes(activeSeminarFilter);
+      }
+    }
+    const queryMatch = terms.length === 0 || terms.some(t => visibleText.includes(t));
+    const show = filterMatch && queryMatch;
+    row.dataset.hidden = show ? 'false' : 'true';
+    if (show) visible++;
+  });
+  document.getElementById('seminar-no-results').classList.toggle('visible', visible === 0);
+}
+
+// ── Publications filter ───────────────────────────────────────────────────────
+
+let activePubFilter = 'all';
+
+document.querySelectorAll('#pub-filters .filter-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    activePubFilter = btn.dataset.filter;
+    document.querySelectorAll('#pub-filters .filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    applyPubFilter();
+  });
+});
+
+function applyPubFilter() {
+  const terms = getSearchTerms(currentQuery);
+  const items = document.querySelectorAll('#pub-list li');
+  let visible = 0;
+  items.forEach(item => {
+    const topic = item.dataset.topic || '';
+    const visibleText = normalize(item.textContent || '');
+    const filterMatch = activePubFilter === 'all' || topic.includes(activePubFilter);
+    const queryMatch = terms.length === 0 || terms.some(t => visibleText.includes(t));
+    const show = filterMatch && queryMatch;
+    item.dataset.hidden = show ? 'false' : 'true';
+    if (show) visible++;
+  });
+  document.getElementById('pub-no-results').classList.toggle('visible', visible === 0);
+  updatePubFade();
+}
+
+// ── Podcast search ─────────────────────────────────────────────────────────────
+
+function applyPodcastFilter() {
+  const terms = getSearchTerms(currentQuery);
+  const rows = document.querySelectorAll('#podcast-list .podcast-row');
+  rows.forEach(row => {
+    const visibleText = normalize(row.textContent || '');
+    const show = terms.length === 0 || terms.some(t => visibleText.includes(t));
+    row.style.display = show ? '' : 'none';
+  });
+}
+
+// ── Substack search ────────────────────────────────────────────────────────────
+
+function applySubstackFilter() {
+  const terms = getSearchTerms(currentQuery);
+  const cards = document.querySelectorAll('#substack-grid .post-card');
+  cards.forEach(card => {
+    const visibleText = normalize(card.textContent || '');
+    const show = terms.length === 0 || terms.some(t => visibleText.includes(t));
+    card.style.display = show ? '' : 'none';
+  });
+}
+
+// ── Featured section search ───────────────────────────────────────────────────
+
+function applyFeaturedFilter() {
+  const terms = getSearchTerms(currentQuery);
+  const items = document.querySelectorAll('#featured .featured-item');
+  items.forEach(item => {
+    const visibleText = normalize(item.textContent || '');
+    const show = terms.length === 0 || terms.some(t => visibleText.includes(t));
+    item.style.display = show ? '' : 'none';
+  });
+}
+
+// ── Global search ─────────────────────────────────────────────────────────────
+
+let currentQuery = '';
+let searchTimeout;
+
+const searchInput = document.getElementById('global-search');
+const searchCountEl = document.getElementById('search-count');
+
+searchInput.addEventListener('input', () => {
+  clearTimeout(searchTimeout);
+  searchTimeout = setTimeout(() => {
+    currentQuery = searchInput.value.trim();
+    applyFeaturedFilter();
+    applyMediaFilter();
+    applySeminarFilter();
+    applyPubFilter();
+    applyPodcastFilter();
+    applySubstackFilter();
+    updateSearchCount();
+    updateAssistantReply();
+    toggleEmptySections();
+  }, 180);
+});
+
+// Hide an entire section (heading + all) while a search is active and it has
+// zero visible items, so users don't see a dangling heading or an unrelated
+// section that's actually empty of matches.
+function toggleEmptySections() {
+  const sectionsToCheck = [
+    { selector: '#featured', items: '.featured-item' },
+    { selector: '#videos', items: '#media-grid .mcard' },
+    { selector: '#podcasts', items: '#podcast-list .podcast-row' },
+    { selector: '#substack', items: '#substack-grid .post-card' },
+    { selector: '#seminars', items: '#seminar-list .seminar-row' },
+    { selector: '#publications', items: '#pub-list li' },
+  ];
+  sectionsToCheck.forEach(({ selector, items }) => {
+    const section = document.querySelector(selector);
+    if (!section) return;
+    if (!currentQuery) {
+      section.style.display = '';
+      return;
+    }
+    const visibleCount = [...section.querySelectorAll(items)]
+      .filter(el => el.style.display !== 'none' && el.dataset.hidden !== 'true').length;
+    section.style.display = visibleCount === 0 ? 'none' : '';
+  });
+}
+
+function updateSearchCount() {
+  if (!currentQuery) {
+    searchCountEl.textContent = '';
+    return;
+  }
+  const featuredVisible = [...document.querySelectorAll('#featured .featured-item')].filter(el => el.style.display !== 'none').length;
+  const mediaVisible  = [...document.querySelectorAll('#media-grid .mcard')].filter(el => el.dataset.hidden !== 'true').length;
+  const seminarVisible = [...document.querySelectorAll('#seminar-list .seminar-row')].filter(el => el.dataset.hidden !== 'true').length;
+  const pubVisible    = [...document.querySelectorAll('#pub-list li')].filter(el => el.dataset.hidden !== 'true').length;
+  const podcastVisible = [...document.querySelectorAll('#podcast-list .podcast-row')].filter(el => el.style.display !== 'none').length;
+  const substackVisible = [...document.querySelectorAll('#substack-grid .post-card')].filter(el => el.style.display !== 'none').length;
+  const total = featuredVisible + mediaVisible + seminarVisible + pubVisible + podcastVisible + substackVisible;
+  searchCountEl.textContent = total === 0
+    ? 'No results'
+    : `${total} result${total === 1 ? '' : 's'}`;
+}
+
+// ── "Ask DISCoVER" assistant reply ────────────────────────────────────────────
+// A conversational line under the search bar. Purely a display layer over the
+// same search/filter logic above — no AI, nothing invented. It reports what
+// was actually found, and calls out when a related term (not the literal
+// word typed) is what produced a match.
+function updateAssistantReply() {
+  const replyEl = document.getElementById('assistant-reply');
+  const rawQuery = currentQuery.trim();
+
+  if (!rawQuery) {
+    replyEl.classList.remove('visible');
+    replyEl.innerHTML = '';
+    return;
+  }
+
+  const terms = getSearchTerms(rawQuery);
+  const literalTerm = terms[0]; // normalized original phrase is always first
+  const relatedTerms = terms.slice(1);
+
+  const featuredVisible = [...document.querySelectorAll('#featured .featured-item')].filter(el => el.style.display !== 'none').length;
+  const mediaVisible  = [...document.querySelectorAll('#media-grid .mcard')].filter(el => el.dataset.hidden !== 'true').length;
+  const seminarVisible = [...document.querySelectorAll('#seminar-list .seminar-row')].filter(el => el.dataset.hidden !== 'true').length;
+  const pubVisible    = [...document.querySelectorAll('#pub-list li')].filter(el => el.dataset.hidden !== 'true').length;
+  const podcastVisible = [...document.querySelectorAll('#podcast-list .podcast-row')].filter(el => el.style.display !== 'none').length;
+  const substackVisible = [...document.querySelectorAll('#substack-grid .post-card')].filter(el => el.style.display !== 'none').length;
+  const total = featuredVisible + mediaVisible + seminarVisible + pubVisible + podcastVisible + substackVisible;
+
+  replyEl.classList.add('visible');
+
+  if (total === 0) {
+    replyEl.innerHTML = `<span class="ar-icon">→</span>I couldn't find anything on <strong>"${rawQuery}"</strong>. Try browsing Publications or Seminars below.`;
+    return;
+  }
+
+  if (relatedTerms.length > 0) {
+    replyEl.innerHTML = `<span class="ar-icon">→</span>Here's what we have related to <strong>"${rawQuery}"</strong> — including matches for ${relatedTerms.map(t => `<strong>${t}</strong>`).join(', ')}.`;
+  } else {
+    replyEl.innerHTML = `<span class="ar-icon">→</span>Here's what we found for <strong>"${rawQuery}"</strong>.`;
+  }
+}
+
+// ── Publications scroll fade cue ──────────────────────────────────────────────
+
+function updatePubFade() {
+  const scrollBox = document.getElementById('pub-scroll');
+  const fade = document.getElementById('pub-fade');
+  if (!scrollBox || !fade) return;
+  const atBottom = scrollBox.scrollTop + scrollBox.clientHeight >= scrollBox.scrollHeight - 4;
+  const noOverflow = scrollBox.scrollHeight <= scrollBox.clientHeight + 4;
+  fade.classList.toggle('hidden', atBottom || noOverflow);
+}
+
+(function() {
+  const scrollBox = document.getElementById('pub-scroll');
+  if (!scrollBox) return;
+  scrollBox.addEventListener('scroll', updatePubFade, { passive: true });
+  window.addEventListener('resize', updatePubFade);
+  window.addEventListener('DOMContentLoaded', updatePubFade);
+  updatePubFade();
+})();
+
+// ── Hash routing to section ───────────────────────────────────────────────────
+
+window.addEventListener('DOMContentLoaded', () => {
+  if (window.location.hash) {
+    const el = document.querySelector(window.location.hash);
+    if (el) setTimeout(() => el.scrollIntoView({ behavior: 'smooth' }), 200);
+  }
+});
+</script>
+
+</body>
+</html>
