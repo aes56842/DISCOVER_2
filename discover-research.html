@@ -1,0 +1,797 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Research — DISCoVER Expedition</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,500;8..60,600;8..60,700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#16161A; --bg-raised:#1C1C21; --bg-card:#222228;
+    --bg-deep:#131316; --bg-warm:#1A1A1F; --bg-involve:#1E1E24;
+    --line:#323238; --line-soft:#27272D;
+    --cardinal:#C43D4E; --gold:#C99B3C; --violet:#6B74E0;
+    --white:#F2F0EC; --slate:#9A95A6; --slate-dim:#75727F;
+    --font-display:'Source Serif 4',Georgia,serif;
+    --font-body:'Inter',sans-serif;
+    --font-mono:'IBM Plex Mono',monospace;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{background:var(--bg);color:var(--white);font-family:var(--font-body);line-height:1.5;-webkit-font-smoothing:antialiased;overflow-x:hidden;}
+  a{color:inherit;text-decoration:none;}
+  @media(prefers-reduced-motion:reduce){*{animation-duration:.001ms!important;transition-duration:.001ms!important;}}
+  :focus-visible{outline:2px solid var(--cardinal);outline-offset:3px;border-radius:2px;}
+  .wrap{max-width:1200px;margin:0 auto;padding:0 32px;}
+
+  /* BULLETIN */
+  .bulletin{background:linear-gradient(180deg,#201418,var(--bg-raised));border-bottom:1px solid rgba(196,61,78,.3);font-family:var(--font-mono);font-size:13px;color:var(--slate);overflow:hidden;}
+  .bulletin .wrap{display:flex;align-items:center;gap:16px;padding:11px 32px;flex-wrap:nowrap;overflow:hidden;}
+  .bulletin .wrap span:not(.tag):not(.sep){flex-shrink:0;white-space:nowrap;}
+  .bulletin .tag{color:#FBF8F4;background:var(--cardinal);border:1px solid var(--cardinal);border-radius:3px;padding:3px 9px;font-size:10.5px;font-weight:600;letter-spacing:.06em;flex-shrink:0;}
+  .bulletin a{color:var(--white);font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0;flex-shrink:1;}
+  .bulletin a:hover{color:var(--cardinal);text-decoration:underline;}
+  .bulletin .sep{color:var(--line);flex-shrink:0;}
+
+  /* TOPBAR (bulletin + masthead, hides on scroll-down) */
+  .topbar{
+    position:fixed;top:0;left:0;right:0;z-index:50;
+    transition:transform .35s ease;
+    transform:translateY(0);
+  }
+  .topbar.hidden{transform:translateY(-100%);}
+
+  /* MASTHEAD */
+  header{background:rgba(22,22,26,.98);border-bottom:1px solid var(--line);}
+  .masthead-row{display:flex;align-items:center;justify-content:space-between;padding:14px 32px 10px;}
+  .masthead-spacer{width:170px;flex-shrink:0;}
+  .logo{display:flex;align-items:center;gap:10px;font-family:var(--font-display);font-weight:600;font-size:24px;letter-spacing:.005em;margin:0 auto;}
+  .logo-mark{width:24px;height:24px;flex-shrink:0;}
+  .logo-mark svg{width:100%;height:100%;}
+  .logo small{display:block;font-family:var(--font-mono);font-weight:400;font-size:8.5px;letter-spacing:.1em;color:var(--slate);margin-top:2px;text-align:center;}
+  .masthead-utility{display:flex;align-items:center;gap:14px;flex-shrink:0;width:170px;justify-content:flex-end;}
+  .nav-row{border-top:1px solid var(--line-soft);}
+  .nav-links{display:flex;align-items:center;justify-content:center;gap:38px;font-size:13px;font-weight:500;padding:13px 32px;text-transform:uppercase;letter-spacing:.04em;}
+  .nav-links a{color:var(--slate);padding:4px 0;border-bottom:2px solid transparent;transition:color .2s,border-color .2s;}
+  .nav-links a:hover{color:var(--white);}
+  .nav-links a.active{color:var(--white);border-bottom-color:var(--cardinal);}
+
+  .btn{font-family:var(--font-body);font-weight:600;font-size:12.5px;padding:7px 14px;border-radius:4px;cursor:pointer;border:1px solid transparent;transition:background .15s,border-color .15s,color .15s;display:inline-flex;align-items:center;gap:8px;white-space:nowrap;}
+  .btn-outline{border-color:var(--line);color:var(--white);}
+  .btn-outline:hover{border-color:var(--cardinal);color:var(--cardinal);}
+  .btn-solid{background:var(--cardinal);border-color:var(--cardinal);color:#FBF8F4;}
+  .btn-solid:hover{background:#a92f3e;border-color:#a92f3e;}
+  .cta-wrap{margin-top:28px;}
+  .btn-ghost{color:var(--slate);font-weight:500;font-size:13px;}
+  .btn-ghost:hover{color:var(--white);}
+
+  /* ===== SCROLL-SNAP SLIDESHOW ===== */
+  .deck{
+    position:relative;
+    height:100vh;
+    overflow:hidden;
+  }
+  .slide{
+    position:absolute;
+    inset:0;
+    height:100%;
+    display:flex;
+    align-items:center;
+    overflow-y:auto;
+    opacity:0;
+    visibility:hidden;
+    pointer-events:none;
+    padding-top:var(--header-h, 132px);
+    transition:opacity .6s ease,padding-top .35s ease;
+  }
+  .slide.active{
+    opacity:1;
+    visibility:visible;
+    pointer-events:auto;
+  }
+  .topbar.hidden ~ .deck .slide{padding-top:0;}
+  .slide-inner{
+    width:100%;
+    max-width:1400px;
+    margin:0;
+    padding:0 48px 0 80px;
+    display:grid;
+    grid-template-columns:1.05fr 0.95fr;
+    gap:48px;
+    align-items:center;
+  }
+  .slide-inner.text-only{grid-template-columns:1fr;max-width:980px;}
+  .slide-num{
+    font-family:var(--font-mono);font-size:13.5px;color:var(--slate-dim);
+    letter-spacing:.08em;margin-bottom:20px;display:block;
+  }
+  .slide-label{
+    font-family:var(--font-mono);font-size:12.5px;letter-spacing:.1em;
+    color:var(--cardinal);text-transform:uppercase;margin-bottom:16px;display:block;
+  }
+  .slide h2{
+    font-family:var(--font-display);font-weight:600;
+    font-size:clamp(38px,4.6vw,58px);letter-spacing:-.01em;line-height:1.08;
+    margin-bottom:28px;
+  }
+  .slide p.lede{font-size:19px;line-height:1.65;color:var(--slate);margin-bottom:22px;}
+  .slide-list{display:flex;flex-direction:column;gap:16px;}
+  .slide-list li{
+    list-style:none;font-size:16.5px;color:var(--slate);line-height:1.6;
+    padding-left:20px;position:relative;
+  }
+  .slide-list li::before{
+    content:'';position:absolute;left:0;top:0.6em;width:6px;height:6px;
+    background:var(--cardinal);border-radius:50%;
+  }
+  .phase-block{
+    border:1px solid var(--line);border-radius:8px;background:var(--bg-card);
+    padding:20px 22px;margin-bottom:16px;
+  }
+  .phase-block .phase-tag{
+    font-family:var(--font-mono);font-size:12px;color:var(--gold);
+    letter-spacing:.05em;display:block;margin-bottom:10px;
+  }
+  .phase-block p{font-size:15.5px;color:var(--slate);line-height:1.6;}
+  .cross-phase{
+    border-top:1px solid var(--line);padding-top:18px;margin-top:4px;
+    font-size:14.5px;color:var(--slate-dim);line-height:1.6;
+  }
+  .cross-phase strong{color:var(--white);}
+
+  .slide-figure{
+    border:1px solid var(--line);border-radius:8px;overflow:hidden;background:var(--bg-deep);
+    display:flex;align-items:center;justify-content:center;
+    aspect-ratio:1/1;padding:24px;
+  }
+  .fig-caption{
+    text-align:center;font-family:var(--font-mono);font-size:11px;color:var(--slate-dim);
+    margin-top:14px;
+  }
+
+  /* ===== SIDE QUICK-JUMP RAIL ===== */
+  .rail{
+    position:fixed;left:24px;top:50%;transform:translateY(-50%);
+    z-index:40;display:flex;flex-direction:column;gap:10px;
+  }
+  .rail-item{
+    display:flex;align-items:center;gap:0;cursor:pointer;
+    opacity:0.55;transition:opacity .25s ease;
+    padding:7px 8px;border-radius:20px;
+    background:transparent;
+    border:1px solid transparent;
+    transition:opacity .25s ease,background .25s ease,border-color .25s ease;
+  }
+  .rail-item:hover{
+    opacity:1;
+    background:rgba(28,28,33,.96);
+    border-color:var(--line);
+    box-shadow:0 4px 16px rgba(0,0,0,.35);
+  }
+  .rail-item.active{opacity:1;}
+  .rail-dot{
+    width:8px;height:8px;border-radius:50%;background:var(--slate-dim);
+    flex-shrink:0;transition:background .25s ease,transform .25s ease;
+  }
+  .rail-item.active .rail-dot{background:var(--cardinal);transform:scale(1.3);}
+  .rail-label{
+    font-family:var(--font-mono);font-size:11.5px;color:var(--slate);
+    letter-spacing:.03em;white-space:nowrap;
+    max-width:0;overflow:hidden;opacity:0;
+    margin-left:0;
+    transition:max-width .25s ease,opacity .2s ease,margin-left .25s ease;
+  }
+  .rail-item:hover .rail-label{max-width:200px;opacity:1;color:var(--white);font-weight:500;margin-left:12px;}
+
+  /* Scroll progress indicator */
+  .scroll-progress{
+    position:fixed;right:24px;top:50%;transform:translateY(-50%);
+    z-index:40;font-family:var(--font-mono);font-size:11px;color:var(--slate-dim);
+    writing-mode:vertical-rl;letter-spacing:.05em;
+  }
+  .scroll-progress strong{color:var(--cardinal);font-weight:600;}
+
+  /* Slide 1: Basics — text-only, spacious */
+  .slide-basics .slide-inner{padding-left:80px;}
+
+  /* Slide-specific accent bar matching site pattern */
+  .slide h2{position:relative;padding-left:22px;}
+  .slide h2::before{
+    content:'';position:absolute;left:0;top:0.08em;bottom:0.08em;
+    width:4px;background:var(--cardinal);border-radius:2px;
+  }
+
+  @media(max-width:1024px){
+    .rail{display:none;}
+    .scroll-progress{display:none;}
+    .slide-inner{padding-left:32px;grid-template-columns:1fr;}
+    .slide-basics .slide-inner{padding-left:32px;}
+  }
+  @media(max-width:600px){
+    .nav-links{gap:20px;font-size:11.5px;padding:11px 16px;overflow-x:auto;justify-content:flex-start;}
+    .masthead-row{padding:12px 16px 8px;}
+    .masthead-spacer{display:none;}
+    .logo{font-size:17px;margin:0;}
+    .logo small{display:none;}
+    .masthead-utility .btn-ghost{display:none;}
+    .masthead-utility{width:auto;}
+    .bulletin .wrap{padding:9px 16px;overflow:hidden;}
+    .bulletin a{max-width:48vw;}
+    .deck{height:100vh;}
+    .slide{padding:32px 0;align-items:flex-start;}
+    .slide-inner{padding:0 20px;gap:32px;}
+    .slide-figure{aspect-ratio:4/3;}
+  }
+</style>
+</head>
+<body>
+
+<!-- TOPBAR (bulletin + masthead, hides on scroll-down, reveals on scroll-up) -->
+<div class="topbar" id="topbar">
+  <!-- BULLETIN STRIP -->
+  <div class="bulletin">
+    <div class="wrap">
+      <span class="tag">RESEARCH</span>
+      <span>5 Thrusts</span>
+      <span class="sep">—</span>
+      <a href="discover-media.html#seminars">See the seminars where this work gets presented →</a>
+    </div>
+  </div>
+
+  <!-- MASTHEAD -->
+  <header>
+    <div class="masthead-row wrap">
+      <span class="masthead-spacer" aria-hidden="true"></span>
+      <a href="index.html" class="logo">
+        <span class="logo-mark" aria-hidden="true">
+          <svg viewBox="0 0 32 32" fill="none">
+            <rect x="4" y="11" width="11" height="9" rx="1.5" stroke="#C43D4E" stroke-width="2"/>
+            <rect x="17" y="11" width="11" height="9" rx="1.5" stroke="#C99B3C" stroke-width="2"/>
+            <line x1="15" y1="15.5" x2="17" y2="15.5" stroke="#F2F0EC" stroke-width="2"/>
+          </svg>
+        </span>
+        <span>NSF DISCoVER<small>EXPEDITION</small></span>
+      </a>
+      <div class="masthead-utility">
+        <a href="#" class="btn btn-ghost">Log in</a>
+        <a href="#join-us" class="btn btn-outline">Join Us</a>
+      </div>
+    </div>
+    <div class="nav-row">
+      <div class="nav-links">
+        <a href="index.html">About</a>
+        <a href="discover-research.html" class="active">Research</a>
+        <a href="discover-media.html">Media</a>
+        <a href="discover-team.html">Team</a>
+        <a href="discover-impact.html">Impact</a>
+      </div>
+    </div>
+  </header>
+</div>
+
+<!-- SIDE QUICK-JUMP RAIL -->
+<nav class="rail" id="rail" aria-label="Jump to research section">
+  <div class="rail-item active" data-target="slide-0">
+    <span class="rail-dot"></span><span class="rail-label">Basics of SuperSoCC</span>
+  </div>
+  <div class="rail-item" data-target="slide-1">
+    <span class="rail-dot"></span><span class="rail-label">Thrust 1 — Design</span>
+  </div>
+  <div class="rail-item" data-target="slide-2">
+    <span class="rail-dot"></span><span class="rail-label">Thrust 2 — Circuits &amp; Architecture</span>
+  </div>
+  <div class="rail-item" data-target="slide-3">
+    <span class="rail-dot"></span><span class="rail-label">Thrust 3 — Devices &amp; Materials</span>
+  </div>
+  <div class="rail-item" data-target="slide-4">
+    <span class="rail-dot"></span><span class="rail-label">Thrust 4 — Integration &amp; Interfacing</span>
+  </div>
+  <div class="rail-item" data-target="slide-5">
+    <span class="rail-dot"></span><span class="rail-label">Thrust 5 — Business &amp; Impacts</span>
+  </div>
+</nav>
+
+<div class="scroll-progress" id="scroll-progress"><strong>01</strong> / 06</div>
+
+<!-- SLIDESHOW DECK -->
+<div class="deck" id="deck">
+
+  <!-- SLIDE 0: BASICS OF SUPERSOCC -->
+  <section class="slide slide-basics" id="slide-0">
+    <div class="slide-inner text-only">
+      <span class="slide-label">Research Overview</span>
+      <h2>Basics of SuperSoCC</h2>
+      <p class="lede">SuperSoCC stands for Superconductive System of Cryogenic (computing) Cores. It is an essential first step toward ultimately realizing an exascale superconductive supercomputer. The DISCoVER Expedition's goal is to build a fully operational SuperSoCC, a system composed of cryogenic compute cores and superconductive memory running together to execute applications at scale. Our program will leap beyond the existing design capability of current SCE research. Our vertically integrated team will effectively combine new technologies, circuits, architecture, interfaces, and design methodologies into a critically important demonstration vehicle. Our integrated SuperSoCC solution will support a wide range of heretofore unheard-of applications.</p>
+      <div class="cta-wrap">
+        <a href="discover-media.html#publications" class="btn btn-solid">Explore Research</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- SLIDE 1: THRUST 1 — SUPERSOCC DESIGN -->
+  <section class="slide" id="slide-1">
+    <div class="slide-inner">
+      <div>
+        <span class="slide-num">THRUST 01 / 05</span>
+        <h2>SuperSoCC Design</h2>
+        <p class="lede">Produce a SuperSoCC prototype over two design phases spanning the project duration.</p>
+        <div class="phase-block">
+          <span class="phase-tag">PHASE 1</span>
+          <p>Exploit the limited on-chip SoC memory, standard JJ devices, and existing interface technologies in design, validate, and demonstrate a SCE system.</p>
+        </div>
+        <div class="phase-block">
+          <span class="phase-tag">PHASE 2</span>
+          <p>Embark on the more aggressive SuperSoCC design and fabrication with continued innovations from our other research thrusts.</p>
+        </div>
+        <div class="cross-phase">
+          <strong>Cross-Phase Challenges</strong> — Tackle a variety of challenges across the two phases such as devices, circuits, architecture, memory, interfacing and software.
+        </div>
+        <div class="cta-wrap">
+          <a href="discover-media.html#publications" class="btn btn-solid">Explore Research</a>
+        </div>
+      </div>
+      <div>
+        <div class="slide-figure">
+          <svg viewBox="0 0 480 360" width="100%" height="100%">
+            <defs>
+              <linearGradient id="blueTop1" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0%" stop-color="#6BAEEF"/>
+                <stop offset="100%" stop-color="#3D7FCB"/>
+              </linearGradient>
+              <linearGradient id="blueFront1" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#4583C9"/>
+                <stop offset="100%" stop-color="#2C5C9C"/>
+              </linearGradient>
+              <linearGradient id="blueSide1" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#2E5FA0"/>
+                <stop offset="100%" stop-color="#1B3D72"/>
+              </linearGradient>
+            </defs>
+
+            <!-- TOP TIER: 300K I/O Devices — thick rectangular box -->
+            <!-- top face (parallelogram) -->
+            <polygon points="75,72 235,30 385,72 225,114" fill="url(#blueTop1)"/>
+            <!-- front face (true rectangle, sheared) -->
+            <polygon points="75,72 75,100 225,142 225,114" fill="url(#blueFront1)"/>
+            <!-- right side face -->
+            <polygon points="225,114 225,142 385,100 385,72" fill="url(#blueSide1)"/>
+            <text x="105" y="62" font-family="Inter" font-weight="700" font-size="10" fill="#fff">300K</text>
+            <text x="105" y="75" font-family="Inter" font-weight="700" font-size="10" fill="#fff">I/O Devices</text>
+
+            <!-- MIDDLE TIER: Memory — thick box -->
+            <polygon points="90,168 230,124 370,168 230,212" fill="url(#blueTop1)"/>
+            <polygon points="90,168 90,196 230,240 230,212" fill="url(#blueFront1)"/>
+            <polygon points="230,212 230,240 370,196 370,168" fill="url(#blueSide1)"/>
+            <rect x="175" y="148" width="72" height="32" rx="2" fill="#15294A" stroke="#6BAEEF" stroke-width="1.2"/>
+            <text x="211" y="169" font-family="Inter" font-weight="700" font-size="11.5" fill="#fff" text-anchor="middle">DRAM</text>
+            <text x="295" y="184" font-family="Inter" font-weight="600" font-size="9" fill="#F3F8FF">SRAM</text>
+            <text x="112" y="200" font-family="Inter" font-weight="600" font-size="9" fill="#F3F8FF">77K Memory</text>
+
+            <!-- BOTTOM TIER: Compute fabric — thick box -->
+            <polygon points="65,260 230,212 395,260 230,308" fill="url(#blueTop1)"/>
+            <polygon points="65,260 65,288 230,336 230,308" fill="url(#blueFront1)"/>
+            <polygon points="230,308 230,336 395,288 395,260" fill="url(#blueSide1)"/>
+            <rect x="178" y="237" width="36" height="22" rx="1.5" fill="#15294A" stroke="#6BAEEF" stroke-width="1"/>
+            <rect x="222" y="232" width="36" height="22" rx="1.5" fill="#15294A" stroke="#6BAEEF" stroke-width="1"/>
+            <rect x="178" y="263" width="36" height="22" rx="1.5" fill="#15294A" stroke="#6BAEEF" stroke-width="1"/>
+            <rect x="222" y="258" width="36" height="22" rx="1.5" fill="#15294A" stroke="#6BAEEF" stroke-width="1"/>
+            <text x="196" y="251" font-family="Inter" font-weight="700" font-size="7" fill="#fff" text-anchor="middle">CPU</text>
+            <text x="240" y="246" font-family="Inter" font-weight="700" font-size="7" fill="#fff" text-anchor="middle">DNN</text>
+            <text x="196" y="277" font-family="Inter" font-weight="700" font-size="7" fill="#fff" text-anchor="middle">Mem</text>
+            <text x="240" y="272" font-family="Inter" font-weight="700" font-size="7" fill="#fff" text-anchor="middle">IM</text>
+            <text x="95" y="295" font-family="Inter" font-weight="600" font-size="9" fill="#F3F8FF">4K SCE Fabric</text>
+
+
+            <!-- bracket + label -->
+            <line x1="412" y1="40" x2="412" y2="300" stroke="#75727F" stroke-width="1"/>
+            <line x1="406" y1="40" x2="412" y2="40" stroke="#75727F" stroke-width="1"/>
+            <line x1="406" y1="300" x2="412" y2="300" stroke="#75727F" stroke-width="1"/>
+            <text x="420" y="160" font-family="Inter" font-size="10" fill="#F2F0EC">Three-stage</text>
+            <text x="420" y="173" font-family="Inter" font-size="10" fill="#F2F0EC">cryogenic</text>
+            <text x="420" y="186" font-family="Inter" font-size="10" fill="#F2F0EC">interface</text>
+
+            <text x="400" y="350" font-family="Inter" font-weight="700" font-size="15" fill="#F2F0EC" text-anchor="end">SuperSoCC</text>
+          </svg>
+        </div>
+        <p class="fig-caption">Fig. 1 — SuperSoCC three-stage cryogenic architecture</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SLIDE 2: THRUST 2 — CIRCUITS AND ARCHITECTURE -->
+  <section class="slide" id="slide-2">
+    <div class="slide-inner">
+      <div>
+        <span class="slide-num">THRUST 02 / 05</span>
+        <h2>Circuits and Architecture</h2>
+        <ul class="slide-list">
+          <li>Demonstrate the SuperSoCC successfully.</li>
+          <li>Develop novel circuits/architectures in support of evolving superconductor technologies.</li>
+          <li>Produce design techniques that support large-scale high-complexity superconductive systems.</li>
+          <li>Solve the long term issue of superconductor memory.</li>
+          <li>Tackle the development of circuits and architectures for very large scale integration (VLSI) complexity, high-performance, ultra-low power superconductive systems.</li>
+        </ul>
+        <div class="cta-wrap">
+          <a href="discover-media.html#publications" class="btn btn-solid">Explore Research</a>
+        </div>
+      </div>
+      <div>
+        <div class="slide-figure">
+          <svg viewBox="0 0 460 330" width="100%" height="100%">
+            <rect x="30" y="25" width="400" height="280" fill="#0B0B0D" stroke="#3A3A42" stroke-width="1" stroke-dasharray="2 3"/>
+
+            <!-- top row of small blocks -->
+            <rect x="50" y="45" width="44" height="26" fill="none" stroke="#F2F0EC" stroke-width="0.8"/>
+            <text x="72" y="61" font-family="Inter" font-size="6.5" fill="#F2F0EC" text-anchor="middle">Pulses</text>
+            <rect x="110" y="45" width="44" height="26" fill="none" stroke="#F2F0EC" stroke-width="0.8"/>
+            <text x="132" y="61" font-family="Inter" font-size="6.5" fill="#F2F0EC" text-anchor="middle">Clock</text>
+            <rect x="170" y="45" width="50" height="26" fill="none" stroke="#C99B3C" stroke-width="0.9"/>
+            <text x="195" y="58" font-family="Inter" font-size="6" fill="#F2F0EC" text-anchor="middle">Encoder</text>
+            <text x="195" y="66" font-family="Inter" font-size="6" fill="#F2F0EC" text-anchor="middle">/ Decoder</text>
+            <rect x="240" y="45" width="44" height="26" fill="none" stroke="#F2F0EC" stroke-width="0.8"/>
+            <text x="262" y="61" font-family="Inter" font-size="6.5" fill="#F2F0EC" text-anchor="middle">Bias</text>
+            <rect x="300" y="45" width="50" height="26" fill="none" stroke="#6B74E0" stroke-width="0.9"/>
+            <text x="325" y="61" font-family="Inter" font-size="6.5" fill="#F2F0EC" text-anchor="middle">CSR</text>
+            <rect x="368" y="45" width="44" height="26" fill="none" stroke="#F2F0EC" stroke-width="0.8"/>
+            <text x="390" y="61" font-family="Inter" font-size="6.5" fill="#F2F0EC" text-anchor="middle">I/O</text>
+
+            <!-- connecting lines, top row to bus -->
+            <line x1="72" y1="71" x2="72" y2="92" stroke="#9A95A6" stroke-width="0.6"/>
+            <line x1="132" y1="71" x2="132" y2="92" stroke="#9A95A6" stroke-width="0.6"/>
+            <line x1="195" y1="71" x2="195" y2="92" stroke="#9A95A6" stroke-width="0.6"/>
+            <line x1="262" y1="71" x2="262" y2="92" stroke="#9A95A6" stroke-width="0.6"/>
+            <line x1="325" y1="71" x2="325" y2="92" stroke="#9A95A6" stroke-width="0.6"/>
+            <line x1="390" y1="71" x2="390" y2="92" stroke="#9A95A6" stroke-width="0.6"/>
+            <line x1="55" y1="92" x2="405" y2="92" stroke="#9A95A6" stroke-width="0.7"/>
+
+            <!-- central large array block -->
+            <rect x="80" y="115" width="300" height="115" fill="none" stroke="#C43D4E" stroke-width="1.3"/>
+            <text x="230" y="155" font-family="Inter" font-weight="600" font-size="11.5" fill="#F2F0EC" text-anchor="middle">Superconducting</text>
+            <text x="230" y="172" font-family="Inter" font-weight="600" font-size="11.5" fill="#F2F0EC" text-anchor="middle">Logic Array</text>
+            <!-- grid of small cells inside -->
+            <g stroke="#52515C" stroke-width="0.5">
+              <line x1="80" y1="195" x2="380" y2="195"/>
+              <line x1="155" y1="115" x2="155" y2="230"/>
+              <line x1="230" y1="115" x2="230" y2="230"/>
+              <line x1="305" y1="115" x2="305" y2="230"/>
+            </g>
+            <text x="117" y="215" font-family="Inter" font-size="6" fill="#75727F" text-anchor="middle">JJ array</text>
+            <text x="192" y="215" font-family="Inter" font-size="6" fill="#75727F" text-anchor="middle">JJ array</text>
+            <text x="267" y="215" font-family="Inter" font-size="6" fill="#75727F" text-anchor="middle">JJ array</text>
+            <text x="342" y="215" font-family="Inter" font-size="6" fill="#75727F" text-anchor="middle">JJ array</text>
+
+            <line x1="195" y1="92" x2="195" y2="115" stroke="#9A95A6" stroke-width="0.7"/>
+            <line x1="262" y1="92" x2="262" y2="115" stroke="#9A95A6" stroke-width="0.7"/>
+
+            <!-- bottom readout -->
+            <line x1="230" y1="230" x2="230" y2="255" stroke="#9A95A6" stroke-width="0.8"/>
+            <rect x="170" y="255" width="120" height="24" fill="none" stroke="#F2F0EC" stroke-width="0.8"/>
+            <text x="230" y="271" font-family="Inter" font-size="7" fill="#F2F0EC" text-anchor="middle">Output Readout</text>
+          </svg>
+        </div>
+        <p class="fig-caption">Fig. 2 — Superconducting logic and control architecture</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SLIDE 3: THRUST 3 — DEVICES AND MATERIALS -->
+  <section class="slide" id="slide-3">
+    <div class="slide-inner">
+      <div>
+        <span class="slide-num">THRUST 03 / 05</span>
+        <h2>Devices and Materials</h2>
+        <ul class="slide-list">
+          <li>Create accurate models of new devices for use in ongoing CAD development.</li>
+          <li>Incorporate novel materials and device structures.</li>
+          <li>Focus on 2pJ and φ JJs to optimize performance, manufacturability, and scalability.</li>
+          <li>Develop a small, area, energy-efficient, non-volatile, fully addressable memory cell.</li>
+          <li>Demonstrate a scalable, dense RAM array with energy-efficient "Read" and "Write" operations free of a half-select problem.</li>
+          <li>Innovate multi-terminal transistor-like and nanowire-based superconductive devices primarily intended for interface circuits.</li>
+        </ul>
+        <div class="cta-wrap">
+          <a href="discover-media.html#publications" class="btn btn-solid">Explore Research</a>
+        </div>
+      </div>
+      <div>
+        <div class="slide-figure">
+          <svg viewBox="0 0 320 320" width="100%" height="100%">
+            <defs>
+              <linearGradient id="nbTop" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0%" stop-color="#F0AE52"/>
+                <stop offset="100%" stop-color="#D88A2E"/>
+              </linearGradient>
+              <linearGradient id="nbSide" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#B5701F"/>
+                <stop offset="100%" stop-color="#8F5715"/>
+              </linearGradient>
+            </defs>
+
+            <!-- base Nb block -->
+            <polygon points="60,222 230,222 270,198 100,198" fill="url(#nbTop)"/>
+            <polygon points="60,222 60,238 230,238 230,222" fill="url(#nbSide)"/>
+            <polygon points="230,222 230,238 270,214 270,198" fill="#A4671C"/>
+
+            <!-- Al thin layer -->
+            <polygon points="78,200 222,200 254,182 110,182" fill="#5BAE7E"/>
+            <polygon points="78,200 78,206 222,206 222,200" fill="#3D8761"/>
+            <polygon points="222,200 222,206 254,188 254,182" fill="#346F4F"/>
+
+            <!-- AlOx thin layer -->
+            <polygon points="86,184 214,184 242,168 114,168" fill="#EDEAE3"/>
+            <polygon points="86,184 86,189 214,189 214,184" fill="#C7C4BD"/>
+            <polygon points="214,184 214,189 242,173 242,168" fill="#A8A59E"/>
+
+            <!-- Ni layer -->
+            <polygon points="94,168 206,168 232,154 120,154" fill="#6B86D8"/>
+            <polygon points="94,168 94,173 206,173 206,168" fill="#4E66B0"/>
+            <polygon points="206,168 206,173 232,159 232,154" fill="#41568F"/>
+
+            <!-- Py top layer -->
+            <polygon points="102,152 198,152 222,140 126,140" fill="#D87FAE"/>
+            <polygon points="102,152 102,157 198,157 198,152" fill="#B3608A"/>
+            <polygon points="198,152 198,157 222,145 222,140" fill="#955072"/>
+
+            <!-- legend chips -->
+            <rect x="40" y="258" width="30" height="18" rx="2" fill="#D88A2E"/>
+            <text x="55" y="270" font-family="Inter" font-weight="600" font-size="8" fill="#1B1B1F" text-anchor="middle">Nb</text>
+            <rect x="78" y="258" width="30" height="18" rx="2" fill="#5BAE7E"/>
+            <text x="93" y="270" font-family="Inter" font-weight="600" font-size="8" fill="#1B1B1F" text-anchor="middle">Al</text>
+            <rect x="116" y="258" width="38" height="18" rx="2" fill="#EDEAE3"/>
+            <text x="135" y="270" font-family="Inter" font-weight="600" font-size="7.5" fill="#1B1B1F" text-anchor="middle">AlOx</text>
+            <rect x="162" y="258" width="30" height="18" rx="2" fill="#6B86D8"/>
+            <text x="177" y="270" font-family="Inter" font-weight="600" font-size="8" fill="#1B1B1F" text-anchor="middle">Ni</text>
+            <rect x="200" y="258" width="30" height="18" rx="2" fill="#D87FAE"/>
+            <text x="215" y="270" font-family="Inter" font-weight="600" font-size="8" fill="#1B1B1F" text-anchor="middle">Py</text>
+
+            <text x="160" y="298" font-family="Inter" font-weight="500" font-size="11" fill="#F2F0EC" text-anchor="middle">Superconductive memory cell</text>
+          </svg>
+        </div>
+        <p class="fig-caption">Fig. 3 — Multi-layer superconductive memory cell stack</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SLIDE 4: THRUST 4 — INTEGRATION AND INTERFACING -->
+  <section class="slide" id="slide-4">
+    <div class="slide-inner">
+      <div>
+        <span class="slide-num">THRUST 04 / 05</span>
+        <h2>Integration and Interfacing</h2>
+        <ul class="slide-list">
+          <li>Create new technologies for power and data links while considering the challenging electrical and thermo-mechanical aspects of these interfaces.</li>
+          <li>Develop specialized circuitry to transfer data across and between different temperature stages.</li>
+          <li>Apply passive integration technology to cryogenic systems.</li>
+          <li>Evaluate material properties of the interconnect and interface components at cryogenic temperatures.</li>
+          <li>Apply efficient, fast, and high-throughput active interface technology to transfer data between low temperature circuits and from low temperature circuits and multi-chip modules to system components operating at room temperature.</li>
+        </ul>
+        <div class="cta-wrap">
+          <a href="discover-media.html#publications" class="btn btn-solid">Explore Research</a>
+        </div>
+      </div>
+      <div>
+        <div class="slide-figure">
+          <svg viewBox="0 0 320 320" width="100%" height="100%">
+            <defs>
+              <linearGradient id="pcbTop" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0%" stop-color="#3D74C4"/>
+                <stop offset="100%" stop-color="#2A579E"/>
+              </linearGradient>
+              <linearGradient id="pcbSide" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#1F4178"/>
+                <stop offset="100%" stop-color="#16305C"/>
+              </linearGradient>
+              <linearGradient id="ribbon" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#F0A847"/>
+                <stop offset="100%" stop-color="#D6862A"/>
+              </linearGradient>
+            </defs>
+
+            <!-- PCB board, isometric -->
+            <polygon points="55,205 250,205 290,172 95,172" fill="url(#pcbTop)"/>
+            <polygon points="55,205 55,222 250,222 250,205" fill="url(#pcbSide)"/>
+            <polygon points="250,205 250,222 290,189 290,172" fill="#16305C"/>
+
+            <!-- chip pads on board -->
+            <rect x="150" y="183" width="22" height="14" rx="1" fill="#F0A847" transform="skewX(-22)"/>
+            <rect x="185" y="183" width="22" height="14" rx="1" fill="#F0A847" transform="skewX(-22)"/>
+            <rect x="220" y="183" width="22" height="14" rx="1" fill="#F0A847" transform="skewX(-22)"/>
+            <rect x="255" y="183" width="22" height="14" rx="1" fill="#F0A847" transform="skewX(-22)"/>
+
+            <!-- ribbon cables curving up -->
+            <path d="M 165 178 Q 175 130 145 92" fill="none" stroke="url(#ribbon)" stroke-width="9" stroke-linecap="round"/>
+            <path d="M 200 175 Q 210 125 190 88" fill="none" stroke="url(#ribbon)" stroke-width="9" stroke-linecap="round"/>
+            <path d="M 235 172 Q 240 120 225 85" fill="none" stroke="url(#ribbon)" stroke-width="9" stroke-linecap="round"/>
+
+            <!-- ribbon cable end connectors -->
+            <rect x="132" y="80" width="26" height="14" rx="2" fill="#6B86D8"/>
+            <rect x="177" y="76" width="26" height="14" rx="2" fill="#6B86D8"/>
+            <rect x="212" y="73" width="26" height="14" rx="2" fill="#6B86D8"/>
+
+            <text x="80" y="62" font-family="Inter" font-weight="500" font-size="9.5" fill="#F2F0EC">300K</text>
+            <text x="160" y="56" font-family="Inter" font-weight="500" font-size="9.5" fill="#F2F0EC">Room-temp I/O</text>
+            <text x="170" y="248" font-family="Inter" font-weight="500" font-size="10.5" fill="#F2F0EC" text-anchor="middle">4K interface board</text>
+          </svg>
+        </div>
+        <p class="fig-caption">Fig. 4 — Cryogenic-to-room-temperature interface stage</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SLIDE 5: THRUST 5 — BUSINESS AND SOCIOECONOMIC IMPACTS -->
+  <section class="slide" id="slide-5">
+    <div class="slide-inner">
+      <div>
+        <span class="slide-num">THRUST 05 / 05</span>
+        <h2>Business and Socioeconomic Impacts</h2>
+        <ul class="slide-list">
+          <li>Develop and demonstrate computing systems built from superconductive electronics.</li>
+          <li>Capable of yielding ~100x improved energy efficiency compared to CMOS at ISO performance levels.</li>
+          <li>Seminal impact on climate and green environment.</li>
+          <li>Enable novel computing capabilities.</li>
+          <li>Ultra-high-performance computing.</li>
+          <li>Machine learning acceleration.</li>
+          <li>Solve hard combinatorial problems.</li>
+          <li>Broader societal impacts.</li>
+          <li>Accurate models of climate change effect.</li>
+          <li>Enhanced pharmaceutical.</li>
+        </ul>
+        <div class="cta-wrap">
+          <a href="discover-media.html#publications" class="btn btn-solid">Explore Research</a>
+        </div>
+      </div>
+      <div>
+        <div class="slide-figure">
+          <svg viewBox="0 0 320 320" width="100%" height="100%">
+            <!-- flat radial diagram, 5 nodes around a center, no gradients/bubbles -->
+            <circle cx="160" cy="160" r="100" fill="none" stroke="#323238" stroke-width="1" stroke-dasharray="2 4"/>
+            <circle cx="160" cy="160" r="34" fill="none" stroke="#C43D4E" stroke-width="1.6"/>
+            <text x="160" y="156" font-family="IBM Plex Mono" font-size="9" fill="#F2F0EC" text-anchor="middle">DISCoVER</text>
+            <text x="160" y="168" font-family="IBM Plex Mono" font-size="9" fill="#F2F0EC" text-anchor="middle">SuperSoCC</text>
+
+            <!-- 5 nodes -->
+            <circle cx="160" cy="46" r="30" fill="none" stroke="#C99B3C" stroke-width="1.4"/>
+            <text x="160" y="42" font-family="IBM Plex Mono" font-size="7" fill="#F2F0EC" text-anchor="middle">Energy-efficient</text>
+            <text x="160" y="52" font-family="IBM Plex Mono" font-size="7" fill="#F2F0EC" text-anchor="middle">computing</text>
+
+            <circle cx="268" cy="118" r="30" fill="none" stroke="#6B74E0" stroke-width="1.4"/>
+            <text x="268" y="114" font-family="IBM Plex Mono" font-size="7.5" fill="#F2F0EC" text-anchor="middle">Sustainable</text>
+            <text x="268" y="124" font-family="IBM Plex Mono" font-size="7.5" fill="#F2F0EC" text-anchor="middle">development</text>
+
+            <circle cx="228" cy="248" r="30" fill="none" stroke="#75727F" stroke-width="1.4"/>
+            <text x="228" y="240" font-family="IBM Plex Mono" font-size="6.5" fill="#F2F0EC" text-anchor="middle">Algorithms,</text>
+            <text x="228" y="250" font-family="IBM Plex Mono" font-size="6.5" fill="#F2F0EC" text-anchor="middle">methods &amp;</text>
+            <text x="228" y="260" font-family="IBM Plex Mono" font-size="6.5" fill="#F2F0EC" text-anchor="middle">software</text>
+
+            <circle cx="92" cy="248" r="30" fill="none" stroke="#C43D4E" stroke-width="1.4"/>
+            <text x="92" y="240" font-family="IBM Plex Mono" font-size="6.5" fill="#F2F0EC" text-anchor="middle">Balancing</text>
+            <text x="92" y="250" font-family="IBM Plex Mono" font-size="6.5" fill="#F2F0EC" text-anchor="middle">environmental</text>
+            <text x="92" y="260" font-family="IBM Plex Mono" font-size="6.5" fill="#F2F0EC" text-anchor="middle">&amp; econ. needs</text>
+
+            <circle cx="52" cy="118" r="30" fill="none" stroke="#C99B3C" stroke-width="1.4"/>
+            <text x="52" y="114" font-family="IBM Plex Mono" font-size="7" fill="#F2F0EC" text-anchor="middle">Applications &amp;</text>
+            <text x="52" y="124" font-family="IBM Plex Mono" font-size="7" fill="#F2F0EC" text-anchor="middle">use scenarios</text>
+
+            <!-- connecting spokes -->
+            <line x1="160" y1="126" x2="160" y2="76" stroke="#323238" stroke-width="1"/>
+            <line x1="186" y1="180" x2="244" y2="130" stroke="#323238" stroke-width="1"/>
+            <line x1="176" y1="190" x2="216" y2="232" stroke="#323238" stroke-width="1"/>
+            <line x1="144" y1="190" x2="104" y2="232" stroke="#323238" stroke-width="1"/>
+            <line x1="134" y1="180" x2="76" y2="130" stroke="#323238" stroke-width="1"/>
+          </svg>
+        </div>
+        <p class="fig-caption">Fig. 5 — Five domains of impact radiating from the SuperSoCC platform, redrawn from the team's original diagram</p>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<script>
+  // Measure the real header height and expose it as a CSS variable so the
+  // deck and every slide are always sized to exactly fill the remaining
+  // viewport — no hardcoded guess that can drift out of sync.
+  function syncHeaderHeight() {
+    const header = document.querySelector('header');
+    if (!header) return;
+    const h = header.getBoundingClientRect().height;
+    document.documentElement.style.setProperty('--header-h', `${h}px`);
+  }
+  syncHeaderHeight();
+  window.addEventListener('resize', syncHeaderHeight);
+  window.addEventListener('load', syncHeaderHeight);
+
+  // ── Slide deck: each slide is stacked in the same position; only the
+  // active one is visible. Scrolling/swiping/arrow keys advance an index
+  // and crossfade between slides — the page itself never scrolls past them. ──
+
+  const deck = document.getElementById('deck');
+  const topbar = document.getElementById('topbar');
+  const slides = Array.from(document.querySelectorAll('.slide'));
+  const railItems = Array.from(document.querySelectorAll('.rail-item'));
+  const progressEl = document.getElementById('scroll-progress');
+  const TOTAL = slides.length;
+
+  let current = 0;
+  let isTransitioning = false;
+  const TRANSITION_MS = 600;
+
+  function hideTopbar() {
+    topbar.classList.add('hidden');
+  }
+  function showTopbar() {
+    topbar.classList.remove('hidden');
+  }
+
+  function render() {
+    slides.forEach((slide, i) => slide.classList.toggle('active', i === current));
+    railItems.forEach((item, i) => item.classList.toggle('active', i === current));
+    if (progressEl) {
+      progressEl.innerHTML = `<strong>${String(current + 1).padStart(2, '0')}</strong> / ${String(TOTAL).padStart(2, '0')}`;
+    }
+    // Re-sync header height in case the masthead's compact/expanded state
+    // differs between slides (e.g. after a scroll-triggered shrink).
+    syncHeaderHeight();
+  }
+
+  function goTo(index) {
+    const clamped = Math.max(0, Math.min(TOTAL - 1, index));
+    if (clamped === current || isTransitioning) return;
+    current = clamped;
+    isTransitioning = true;
+    render();
+    setTimeout(() => { isTransitioning = false; }, TRANSITION_MS);
+  }
+
+  function next() { hideTopbar(); goTo(current + 1); }
+  function prev() { showTopbar(); goTo(current - 1); }
+
+  // Mouse wheel / trackpad — one tick advances one slide, debounced so a
+  // single gesture doesn't fire multiple slide changes. Scrolling up always
+  // reveals the topbar immediately, even a small nudge, even if already on
+  // the first slide.
+  let wheelLocked = false;
+  deck.addEventListener('wheel', (e) => {
+    e.preventDefault();
+    if (e.deltaY < 0) showTopbar(); // any upward scroll, however small, reveals it right away
+    if (Math.abs(e.deltaY) < 8) return; // ignore tiny/noisy deltas for slide-advancing only
+    if (wheelLocked || isTransitioning) return;
+    wheelLocked = true;
+    if (e.deltaY > 0) next(); else prev();
+    setTimeout(() => { wheelLocked = false; }, TRANSITION_MS + 80);
+  }, { passive: false });
+
+  // Touch swipe (mobile) — swipe down (finger moves down) reveals the topbar
+  // immediately, same as scrolling up on desktop.
+  let touchStartY = null;
+  deck.addEventListener('touchstart', (e) => {
+    touchStartY = e.touches[0].clientY;
+  }, { passive: true });
+  deck.addEventListener('touchend', (e) => {
+    if (touchStartY === null) return;
+    const deltaY = touchStartY - e.changedTouches[0].clientY;
+    if (deltaY < 0) showTopbar(); // finger moved down = revealing gesture
+    if (Math.abs(deltaY) > 50) {
+      if (deltaY > 0) next(); else prev();
+    }
+    touchStartY = null;
+  }, { passive: true });
+
+  // Keyboard: arrow keys / page up-down / space
+  window.addEventListener('keydown', (e) => {
+    if (['ArrowDown', 'PageDown', ' '].includes(e.key)) { e.preventDefault(); next(); }
+    else if (['ArrowUp', 'PageUp'].includes(e.key)) { e.preventDefault(); prev(); }
+  });
+
+  // Rail click-to-jump — also reveals the topbar since the rail itself
+  // is only usable when visible/hovered, but keep it consistent.
+  railItems.forEach((item, i) => {
+    item.addEventListener('click', () => { showTopbar(); goTo(i); });
+  });
+
+  render();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Impact — DISCoVER Expedition</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,500;8..60,600;8..60,700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#16161A; --bg-raised:#1C1C21; --bg-card:#222228; --bg-deep:#131316;
+    --bg-warm:#1A1A1F; --bg-involve:#1E1E24;
+    --line:#323238; --line-soft:#27272D;
+    --cardinal:#C43D4E; --gold:#C99B3C; --violet:#6B74E0;
+    --white:#F2F0EC; --slate:#9A95A6; --slate-dim:#75727F;
+    --font-display:'Source Serif 4',Georgia,serif;
+    --font-body:'Inter',sans-serif;
+    --font-mono:'IBM Plex Mono',monospace;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{background:var(--bg);color:var(--white);font-family:var(--font-body);line-height:1.5;-webkit-font-smoothing:antialiased;overflow-x:hidden;}
+  a{color:inherit;text-decoration:none;}
+  @media(prefers-reduced-motion:reduce){*{animation-duration:.001ms!important;transition-duration:.001ms!important;}}
+  :focus-visible{outline:2px solid var(--cardinal);outline-offset:3px;border-radius:2px;}
+  .wrap{max-width:1200px;margin:0 auto;padding:0 32px;}
+
+  /* BULLETIN */
+  .bulletin{background:linear-gradient(180deg,#201418,var(--bg-raised));border-bottom:1px solid rgba(196,61,78,.3);font-family:var(--font-mono);font-size:13px;color:var(--slate);overflow:hidden;}
+  .bulletin .wrap{display:flex;align-items:center;gap:16px;padding:11px 32px;}
+  .bulletin-track{position:relative;flex:1;min-width:0;height:20px;}
+  .bulletin-slide{position:absolute;inset:0;display:flex;align-items:center;gap:14px;flex-wrap:nowrap;overflow:hidden;opacity:0;visibility:hidden;transition:opacity .5s ease;pointer-events:none;}
+  .bulletin-slide.active{opacity:1;visibility:visible;pointer-events:auto;}
+  .bulletin .tag{color:#FBF8F4;background:var(--cardinal);border:1px solid var(--cardinal);border-radius:3px;padding:3px 9px;font-size:10.5px;font-weight:600;letter-spacing:.06em;flex-shrink:0;}
+  .bulletin a{color:var(--white);font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0;flex-shrink:1;}
+  .bulletin a:hover{color:var(--cardinal);text-decoration:underline;}
+  .bulletin .sep{color:var(--line);flex-shrink:0;}
+  .bulletin-slide span:not(.tag):not(.sep){flex-shrink:0;white-space:nowrap;}
+  .bulletin-dots{display:flex;align-items:center;gap:6px;flex-shrink:0;}
+  .b-dot{width:5px;height:5px;border-radius:50%;background:var(--line);transition:background .3s ease,transform .3s ease;}
+  .b-dot.active{background:var(--cardinal);transform:scale(1.3);}
+
+  /* MASTHEAD */
+  header{position:sticky;top:0;z-index:40;background:rgba(22,22,26,.98);border-bottom:1px solid var(--line);transition:background .3s ease;}
+  .masthead-row{display:flex;align-items:center;justify-content:space-between;padding:24px 32px 18px;position:relative;transition:padding .3s ease;}
+  .masthead-spacer{width:170px;flex-shrink:0;}
+  .logo{display:flex;align-items:center;gap:12px;font-family:var(--font-display);font-weight:600;font-size:30px;letter-spacing:.005em;margin:0 auto;transition:font-size .3s ease;}
+  .logo small{display:block;font-family:var(--font-mono);font-weight:400;font-size:9.5px;letter-spacing:.1em;color:var(--slate);margin-top:2px;text-align:center;transition:font-size .3s ease;}
+  .masthead-utility{display:flex;align-items:center;gap:14px;flex-shrink:0;width:170px;justify-content:flex-end;}
+  .nav-row{border-top:1px solid var(--line-soft);}
+  .nav-links{display:flex;align-items:center;justify-content:center;gap:38px;font-size:13px;font-weight:500;padding:13px 32px;text-transform:uppercase;letter-spacing:.04em;transition:padding .3s ease;}
+  .nav-links a{color:var(--slate);padding:4px 0;border-bottom:2px solid transparent;transition:color .2s,border-color .2s;}
+  .nav-links a:hover{color:var(--white);}
+  .nav-links a.active{color:var(--white);border-bottom-color:var(--cardinal);}
+  header.scrolled .masthead-row{padding:12px 32px 8px;}
+  header.scrolled .logo{font-size:21px;}
+  header.scrolled .logo small{font-size:0;opacity:0;}
+  header.scrolled .nav-links{padding:9px 32px;}
+  header.scrolled{background:rgba(22,22,26,.99);box-shadow:0 4px 20px rgba(0,0,0,.3);}
+
+  /* BUTTONS */
+  .btn{font-family:var(--font-body);font-weight:600;font-size:12.5px;padding:7px 14px;border-radius:4px;cursor:pointer;border:1px solid transparent;transition:background .15s,border-color .15s,color .15s;display:inline-flex;align-items:center;gap:8px;white-space:nowrap;}
+  .btn-primary{background:var(--cardinal);color:#FBF8F4;}
+  .btn-primary:hover{background:#AC3140;}
+  .btn-outline{border-color:var(--line);color:var(--white);}
+  .btn-outline:hover{border-color:var(--cardinal);color:var(--cardinal);}
+  .btn-ghost{color:var(--slate);font-weight:500;font-size:13px;}
+  .btn-ghost:hover{color:var(--white);}
+  .btn-lg{padding:13px 24px;font-size:14.5px;border-radius:6px;}
+  .link-arrow{display:inline-flex;align-items:center;gap:7px;font-weight:600;font-size:14px;color:var(--white);border-bottom:1px solid var(--slate-dim);padding-bottom:2px;transition:border-color .2s;}
+  .link-arrow:hover{border-color:var(--cardinal);}
+  .link-arrow svg{width:13px;height:13px;}
+
+  /* HERO */
+  .hero{padding:64px 32px 0;border-bottom:1px solid var(--line);}
+  .hero .wrap{width:100%;}
+  .eyebrow{display:inline-flex;align-items:center;gap:9px;font-family:var(--font-mono);font-size:11.5px;letter-spacing:.07em;color:var(--slate);border:1px solid var(--line);padding:6px 12px;border-radius:3px;margin-bottom:26px;}
+  .eyebrow .sq{width:6px;height:6px;background:var(--cardinal);flex-shrink:0;}
+  h1{font-family:var(--font-display);font-size:clamp(38px,5vw,60px);line-height:1.08;font-weight:500;letter-spacing:-.02em;margin-bottom:22px;max-width:820px;}
+  .hero p.lede{font-size:18px;line-height:1.62;color:var(--slate);max-width:640px;margin-bottom:32px;}
+  .hero p.lede strong{color:var(--white);font-weight:600;}
+  .hero-actions{display:flex;align-items:center;gap:24px;flex-wrap:wrap;padding-bottom:48px;}
+
+  /* STATS STRIP */
+  .stats{background:var(--bg-raised);border-bottom:1px solid var(--line);}
+  .stats-inner{padding:36px 32px;display:grid;grid-template-columns:repeat(4,1fr);gap:32px;}
+  .stat-num{font-family:var(--font-display);font-size:34px;font-weight:600;color:var(--white);line-height:1;margin-bottom:8px;}
+  .stat-label{font-size:13px;color:var(--slate);line-height:1.5;}
+
+  /* SECTION HEADERS */
+  section{padding:80px 32px;position:relative;}
+  .sec-head{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:44px;gap:24px;flex-wrap:wrap;border-bottom:1px solid var(--line);padding-bottom:24px;}
+  .sec-head h2{font-family:var(--font-display);font-weight:600;font-size:clamp(30px,3.8vw,42px);letter-spacing:-.005em;position:relative;padding-left:24px;}
+  .sec-head h2::before{content:'';position:absolute;left:0;top:0.1em;bottom:0.1em;width:4px;background:var(--cardinal);border-radius:2px;}
+  .sec-head .sec-sub{color:var(--slate);font-size:15px;max-width:420px;line-height:1.55;}
+
+  /* COMMITMENTS (numbered list) */
+  .commitments{border-bottom:1px solid var(--line);background:var(--bg-deep);}
+  .impact-list{border-top:1px solid var(--line);max-width:820px;}
+  .impact-row{display:grid;grid-template-columns:40px 1fr;gap:20px;padding:26px 0;border-bottom:1px solid var(--line);}
+  .impact-num{font-family:var(--font-mono);font-size:12.5px;color:var(--cardinal);padding-top:3px;}
+  .impact-text h4{font-family:var(--font-display);font-size:18px;font-weight:600;margin-bottom:8px;}
+  .impact-text p{font-size:14.5px;color:var(--slate);line-height:1.65;max-width:660px;}
+
+  /* AUDIENCE CARDS */
+  .audience-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;}
+  .audience-card{border:1px solid var(--line);border-radius:8px;background:var(--bg-card);padding:28px;display:flex;flex-direction:column;}
+  .audience-icon{width:38px;height:38px;border-radius:8px;background:var(--bg-raised);border:1px solid var(--line);display:flex;align-items:center;justify-content:center;margin-bottom:18px;}
+  .audience-icon svg{width:19px;height:19px;color:var(--cardinal);}
+  .audience-card h3{font-family:var(--font-display);font-size:20px;font-weight:600;margin-bottom:14px;}
+  .audience-card ul{list-style:none;display:flex;flex-direction:column;gap:12px;margin-bottom:0;}
+  .audience-card li{font-size:13.5px;color:var(--slate);line-height:1.6;padding-left:16px;position:relative;}
+  .audience-card li::before{content:'';position:absolute;left:0;top:8px;width:5px;height:5px;border-radius:50%;background:var(--cardinal);}
+
+  /* PUBLIC / OPEN TO ALL */
+  .public{background:var(--bg-raised);border-bottom:1px solid var(--line);}
+  .public-layout{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:start;}
+  .public-layout p{color:var(--slate);font-size:15.5px;line-height:1.7;margin-bottom:18px;max-width:480px;}
+  .public-list{display:flex;flex-direction:column;gap:16px;}
+  .public-item{display:flex;gap:14px;align-items:flex-start;padding:18px;border:1px solid var(--line);border-radius:8px;background:var(--bg-card);}
+  .public-item .pi-icon{width:32px;height:32px;border-radius:6px;background:var(--bg-raised);border:1px solid var(--line);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+  .public-item .pi-icon svg{width:15px;height:15px;color:var(--gold);}
+  .public-item h4{font-family:var(--font-display);font-size:15.5px;font-weight:600;margin-bottom:5px;}
+  .public-item p{font-size:13px;color:var(--slate);margin:0;max-width:none;}
+
+  /* SEMINAR TEASER */
+  .seminar-teaser{border-bottom:1px solid var(--line);background:var(--bg-warm);border-top:2px solid rgba(196,61,78,.25);}
+  .seminar-card{display:grid;grid-template-columns:auto 1fr auto;gap:28px;align-items:center;padding:28px 32px;border:1px solid var(--line);border-radius:8px;background:var(--bg-card);transition:border-color .2s;}
+  .seminar-card:hover{border-color:var(--slate-dim);}
+  .seminar-date{font-family:var(--font-mono);font-size:11px;color:var(--slate-dim);text-align:center;flex-shrink:0;min-width:52px;}
+  .seminar-date .d-day{font-size:22px;font-weight:500;color:var(--white);display:block;font-family:var(--font-display);}
+  .seminar-date .d-mon{letter-spacing:.05em;}
+  .seminar-body h4{font-family:var(--font-display);font-size:18px;font-weight:600;margin-bottom:6px;line-height:1.3;}
+  .seminar-body .s-meta{font-size:13px;color:var(--slate);display:flex;gap:16px;flex-wrap:wrap;}
+  .seminar-actions{display:flex;gap:10px;flex-shrink:0;}
+
+  /* GET INVOLVED / CTA */
+  .students{background:var(--bg-involve);border-top:1px solid var(--line);}
+  .students-inner{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center;}
+  .students h2{font-family:var(--font-display);font-weight:600;font-size:clamp(32px,4vw,44px);line-height:1.15;margin-bottom:18px;position:relative;padding-left:24px;}
+  .students h2::before{content:'';position:absolute;left:0;top:0.1em;bottom:0.1em;width:4px;background:var(--cardinal);border-radius:2px;}
+  .students p{color:var(--slate);font-size:15.5px;line-height:1.7;margin-bottom:26px;max-width:470px;}
+  .check-list{display:flex;flex-direction:column;gap:14px;margin-bottom:30px;}
+  .check-item{display:flex;gap:11px;align-items:flex-start;}
+  .check-item svg{width:16px;height:16px;flex-shrink:0;margin-top:2px;color:var(--cardinal);}
+  .check-item span{font-size:14px;color:var(--white);}
+  .uni-cloud{display:flex;flex-wrap:wrap;gap:9px;margin-top:28px;}
+  .uni-chip{font-family:var(--font-mono);font-size:11px;color:var(--slate);border:1px solid var(--line);padding:5px 11px;border-radius:3px;}
+  .students-card{border:1px solid var(--line);border-radius:8px;background:var(--bg-card);}
+  .students-card .img-area{aspect-ratio:4/3;border-bottom:1px solid var(--line);background:var(--bg-raised);display:flex;align-items:center;justify-content:center;}
+  .students-card .caption{padding:18px 20px;}
+  .students-card .caption h4{font-family:var(--font-display);font-size:16px;font-weight:600;margin-bottom:5px;}
+  .students-card .caption p{font-size:13px;color:var(--slate);margin:0;}
+
+  /* FOOTER */
+  footer{border-top:1px solid var(--line);background:var(--bg-raised);padding:56px 32px 28px;}
+  .footer-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:48px;padding-bottom:40px;border-bottom:1px solid var(--line);}
+  .footer-brand .logo{margin-bottom:14px;}
+  .footer-brand p{color:var(--slate);font-size:13px;line-height:1.7;max-width:280px;}
+  .footer-col h5{font-family:var(--font-mono);font-size:11px;letter-spacing:.06em;color:var(--slate-dim);text-transform:uppercase;margin-bottom:15px;}
+  .footer-col a{display:block;font-size:13.5px;color:var(--slate);margin-bottom:11px;transition:color .2s;}
+  .footer-col a:hover{color:var(--white);}
+  .footer-bottom{display:flex;justify-content:space-between;align-items:center;padding-top:24px;flex-wrap:wrap;gap:16px;}
+  .footer-bottom p{font-size:12px;color:var(--slate-dim);}
+  .socials{display:flex;gap:12px;}
+  .socials a{width:32px;height:32px;border-radius:5px;border:1px solid var(--line);display:flex;align-items:center;justify-content:center;color:var(--slate);transition:color .2s,border-color .2s;}
+  .socials a:hover{color:var(--white);border-color:var(--slate-dim);}
+  .socials svg{width:15px;height:15px;}
+
+  /* RESPONSIVE */
+  @media(max-width:880px){
+    .stats-inner{grid-template-columns:1fr 1fr;}
+    .impact-row{grid-template-columns:26px 1fr;gap:14px;}
+    .audience-grid{grid-template-columns:1fr;}
+    .public-layout{grid-template-columns:1fr;gap:32px;}
+    .seminar-card{grid-template-columns:1fr;gap:16px;}
+    .seminar-date{display:none;}
+    .seminar-actions{flex-direction:row;}
+    .students-inner{grid-template-columns:1fr;}
+    .footer-grid{grid-template-columns:1fr 1fr;gap:32px;}
+  }
+  @media(max-width:600px){
+    .nav-links{gap:20px;font-size:11.5px;padding:13px 16px;overflow-x:auto;justify-content:flex-start;}
+    .masthead-row{padding:16px 16px 14px;}
+    .masthead-spacer{display:none;}
+    .logo{font-size:17px;margin:0;}
+    .logo small{display:none;}
+    .masthead-utility .btn-ghost{display:none;}
+    .masthead-utility{width:auto;}
+    .btn-outline{font-size:11.5px;padding:8px 13px;}
+    .bulletin .wrap{padding:10px 16px;gap:10px;}
+    .bulletin a{max-width:48vw;}
+    .bulletin-dots{display:none;}
+    section{padding:56px 20px;}
+    .hero{padding:40px 20px 0;}
+    .wrap{padding:0 20px;}
+    .footer-grid{grid-template-columns:1fr;}
+    .hero-actions{flex-direction:column;align-items:flex-start;gap:16px;}
+    .sec-head{margin-bottom:32px;padding-bottom:20px;}
+    h1{margin-bottom:18px;}
+    .hero p.lede{margin-bottom:28px;}
+    .stats-inner{grid-template-columns:1fr 1fr;padding:28px 20px;gap:24px;}
+    .students-inner{gap:40px;}
+  }
+</style>
+</head>
+<body>
+
+<!-- BULLETIN STRIP (rotating carousel) -->
+<div class="bulletin">
+  <div class="wrap">
+    <div class="bulletin-track" id="bulletin-track">
+      <div class="bulletin-slide active">
+        <span class="tag">OPEN NOW</span>
+        <span>Applications rolling</span>
+        <span class="sep">—</span>
+        <a href="#get-involved">Undergraduate research positions across all 7 partner labs →</a>
+      </div>
+      <div class="bulletin-slide">
+        <span class="tag">SEMINAR</span>
+        <span>Monthly · Open to the public</span>
+        <span class="sep">—</span>
+        <a href="discover-media.html#seminars">Join the DISCoVER seminar series →</a>
+      </div>
+      <div class="bulletin-slide">
+        <span class="tag">CONFERENCE</span>
+        <span>Annual</span>
+        <span class="sep">—</span>
+        <a href="#get-involved">DISCoVER Undergraduate &amp; Graduate BPC Conferences →</a>
+      </div>
+    </div>
+    <div class="bulletin-dots" id="bulletin-dots" aria-hidden="true">
+      <span class="b-dot active"></span>
+      <span class="b-dot"></span>
+      <span class="b-dot"></span>
+    </div>
+  </div>
+</div>
+
+<!-- MASTHEAD -->
+<header>
+  <div class="masthead-row wrap">
+    <span class="masthead-spacer" aria-hidden="true"></span>
+    <a href="index.html" class="logo">      <span>NSF DISCoVER<small>EXPEDITION</small></span>
+    </a>
+    <div class="masthead-utility">
+      <a href="#" class="btn btn-ghost">Log in</a>
+      <a href="index.html#join-us" class="btn btn-outline">Join Us</a>
+    </div>
+  </div>
+  <div class="nav-row">
+    <div class="nav-links">
+      <a href="index.html">About</a>
+      <a href="discover-research.html">Research</a>
+      <a href="discover-media.html">Media</a>
+      <a href="discover-team.html">Team</a>
+      <a href="discover-impact.html" class="active">Impact</a>
+    </div>
+  </div>
+</header>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="wrap">
+    <span class="eyebrow"><span class="sq"></span>BROADENING PARTICIPATION IN COMPUTING</span>
+    <h1>Superconductor electronics hasn't had its breakout moment yet. That means there's still room to shape the field.</h1>
+    <p class="lede">DISCoVER is a seven-university collaboration built on the belief that better hardware comes from a wider range of people building it. We open our research, mentorship, and community to <strong>undergraduates, graduate students and postdocs, faculty, and anyone curious about the future of computing.</strong></p>
+    <div class="hero-actions">
+      <a href="#get-involved" class="btn btn-primary btn-lg">See ways to get involved →</a>
+      <a href="discover-media.html#seminars" class="link-arrow">
+        Join a public seminar
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+      </a>
+    </div>
+  </div>
+</div>
+
+<!-- STATS STRIP -->
+<div class="stats">
+  <div class="wrap stats-inner">
+    <div>
+      <div class="stat-num">7</div>
+      <div class="stat-label">Partner universities across the U.S. and Japan</div>
+    </div>
+    <div>
+      <div class="stat-num">3</div>
+      <div class="stat-label">Career stages supported — undergraduate, graduate &amp; postdoc, early-career faculty</div>
+    </div>
+    <div>
+      <div class="stat-num">2</div>
+      <div class="stat-label">Annual BPC conferences for undergraduate and graduate researchers</div>
+    </div>
+    <div>
+      <div class="stat-num">1</div>
+      <div class="stat-label">Public seminar series open to students, faculty, and the community</div>
+    </div>
+  </div>
+</div>
+
+<!-- COMMITMENTS -->
+<section class="commitments">
+  <div class="wrap">
+    <div class="sec-head">
+      <div><h2>What We're Building Toward</h2></div>
+      <p class="sec-sub">Five commitments that guide how DISCoVER works, not just what it researches.</p>
+    </div>
+    <div class="impact-list">
+      <div class="impact-row">
+        <span class="impact-num">01</span>
+        <div class="impact-text">
+          <h4>Broaden participation at every career stage</h4>
+          <p>From first research experiences as an undergraduate through the transition into a faculty career, DISCoVER builds pathways rather than one-off opportunities — including joint majors, M.S. research scholar tracks, and mentoring into the professoriate.</p>
+        </div>
+      </div>
+      <div class="impact-row">
+        <span class="impact-num">02</span>
+        <div class="impact-text">
+          <h4>Open, collaborative research</h4>
+          <p>Tools, methods, and findings are shared openly across our seven partner institutions and beyond, so people outside the immediate collaboration can build on the work.</p>
+        </div>
+      </div>
+      <div class="impact-row">
+        <span class="impact-num">03</span>
+        <div class="impact-text">
+          <h4>Equal access to opportunity</h4>
+          <p>We study the barriers that keep talented people out of computing research and act on what we find — from redesigning intro coursework to partnering directly with HBCUs, HSIs, and other minority-serving institutions.</p>
+        </div>
+      </div>
+      <div class="impact-row">
+        <span class="impact-num">04</span>
+        <div class="impact-text">
+          <h4>A culture of collaboration across difference</h4>
+          <p>Progress in superconductor electronics depends on people with different training and perspectives working together — across institutions, disciplines, and backgrounds.</p>
+        </div>
+      </div>
+      <div class="impact-row">
+        <span class="impact-num">05</span>
+        <div class="impact-text">
+          <h4>Public engagement, not just publication</h4>
+          <p>Research findings reach the public through an open seminar series and ongoing outreach, not only through journals and conferences.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WAYS TO GET INVOLVED -->
+<section id="get-involved">
+  <div class="wrap">
+    <div class="sec-head">
+      <div><h2>Ways to Get Involved</h2></div>
+      <p class="sec-sub">Whatever stage you're at, there's a way into the work.</p>
+    </div>
+    <div class="audience-grid">
+      <div class="audience-card">
+        <div class="audience-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M22 10v6M2 10l10-5 10 5-10 5-10-5z"/><path d="M6 12v5c0 1.5 2.5 3 6 3s6-1.5 6-3v-5"/></svg>
+        </div>
+        <h3>Undergraduate Students</h3>
+        <ul>
+          <li>Paid research experiences in DISCoVER labs, including through partnerships with existing NSF REU programs</li>
+          <li>Introductory CS coursework redesigned to build confidence and community regardless of background</li>
+          <li>Joint majors pairing CS with fields like biology or business</li>
+          <li>The annual DISCoVER Undergraduate BPC Conference, where past participants share their experience with the next cohort</li>
+        </ul>
+      </div>
+      <div class="audience-card">
+        <div class="audience-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2l9 4.5-9 4.5-9-4.5L12 2z"/><path d="M3 6.5v6c0 2 4 5 9 5s9-3 9-5v-6"/></svg>
+        </div>
+        <h3>Graduate Students &amp; Postdocs</h3>
+        <ul>
+          <li>New M.S. Research Scholars pathways encouraging students from underserved communities toward doctoral study</li>
+          <li>Direct mentoring on academic careers, including workshops for underrepresented senior graduate students</li>
+          <li>The annual DISCoVER Graduate (and Beyond) BPC Conference for sharing ideas across institutions</li>
+          <li>A structured pipeline into postdoctoral and early-career faculty roles</li>
+        </ul>
+      </div>
+      <div class="audience-card">
+        <div class="audience-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="M8 21h8M12 18v3"/></svg>
+        </div>
+        <h3>Faculty</h3>
+        <ul>
+          <li>Cross-institutional collaboration spanning devices, circuits, architecture, and applications across seven universities</li>
+          <li>Kickoff and year-three workshops to shape joint research directions with colleagues across academia and industry</li>
+          <li>Opportunities to mentor early-career faculty and expand the pipeline to the professoriate</li>
+          <li>Access to shared tools, datasets, and open-source research infrastructure</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- OPEN TO EVERYONE -->
+<section class="public" id="public">
+  <div class="wrap public-layout">
+    <div>
+      <span class="eyebrow"><span class="sq"></span>OPEN TO EVERYONE</span>
+      <h2 style="font-family:var(--font-display);font-size:clamp(28px,3.4vw,38px);font-weight:600;margin-bottom:16px;line-height:1.2;">You don't need to be part of the lab to be part of this.</h2>
+      <p>Superconductor electronics will shape how AI, medicine, and climate science scale in the next decade. We think that's worth explaining clearly, not just publishing quietly — so a meaningful part of DISCoVER's work is making the research legible to anyone who's curious.</p>
+      <a href="discover-media.html" class="link-arrow">
+        Browse the Media Hub
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+      </a>
+    </div>
+    <div class="public-list">
+      <div class="public-item">
+        <div class="pi-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg></div>
+        <div>
+          <h4>Monthly public seminar series</h4>
+          <p>Hosted by Prof. Roman Sobolewski, open to students, faculty, and anyone with an interest in superconductor electronics — no lab affiliation required.</p>
+        </div>
+      </div>
+      <div class="public-item">
+        <div class="pi-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M8 3v4M16 3v4M4 9h16M5 5h14a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1z"/></svg></div>
+        <div>
+          <h4>Social media &amp; "Ask an Engineer"</h4>
+          <p>An ongoing initiative connecting the public with our researchers to answer questions about computing, engineering, and what it's like to work in the field.</p>
+        </div>
+      </div>
+      <div class="public-item">
+        <div class="pi-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></div>
+        <div>
+          <h4>Open publications &amp; open-source tools</h4>
+          <p>Research findings and select design tools are shared openly, so people outside the collaboration can learn from and build on the work.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SEMINAR TEASER -->
+<section class="seminar-teaser">
+  <div class="wrap">
+    <div class="sec-head">
+      <div><h2>Next Public Seminar</h2></div>
+      <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center;">
+        <a href="discover-media.html#seminars" class="btn btn-primary">Join the Next Seminar</a>
+        <a href="discover-media.html#seminars" class="btn btn-outline">View Previous Seminars</a>
+      </div>
+    </div>
+    <div class="seminar-card">
+      <div class="seminar-date">
+        <span class="d-day">17</span>
+        <span class="d-mon">JUN</span>
+      </div>
+      <div class="seminar-body">
+        <h4>Reciprocal Quantum Logic: Controlled Dual Rail Qubit Architecture</h4>
+        <div class="s-meta">
+          <span>Dr. Anthony Przybysz</span>
+          <span>Northrop Grumman Corporation</span>
+          <span>7:12 PM PT · Zoom · Open to the public</span>
+        </div>
+      </div>
+      <div class="seminar-actions">
+        <a href="discover-media.html#seminars" class="btn btn-primary">▶ Watch</a>
+        <a href="discover-media.html#seminars" class="btn btn-outline">Slides ↓</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- GET INVOLVED CTA -->
+<section class="students" id="contact">
+  <div class="wrap students-inner">
+    <div>
+      <h2>Hardware this fundamental needs more people working on it.</h2>
+      <p>Superconductor electronics hasn't had its breakout moment yet — which means there's still room to define the field, not just join it. DISCoVER is a seven-university collaboration built around education and open participation, and welcomes contributors at every stage.</p>
+      <div class="check-list">
+        <div class="check-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>
+          <span><strong>Undergraduate &amp; graduate students</strong> — research areas spanning circuit design, devices, and architecture, with mentorship from faculty publishing in IEEE and DATE proceedings</span>
+        </div>
+        <div class="check-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>
+          <span><strong>Faculty &amp; staff</strong> — collaboration across seven partner universities working across devices, circuits, architecture, and applications</span>
+        </div>
+        <div class="check-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>
+          <span><strong>Curious members of the public</strong> — open seminars, social media outreach, and shared publications, no application required</span>
+        </div>
+      </div>
+      <a href="#" class="btn btn-primary btn-lg">Contact us →</a>
+      <div class="uni-cloud">
+        <span class="uni-chip">USC</span><span class="uni-chip">Auburn</span>
+        <span class="uni-chip">Cornell</span><span class="uni-chip">Northeastern</span>
+        <span class="uni-chip">Northwestern</span><span class="uni-chip">Rochester</span>
+        <span class="uni-chip">Yokohama National</span>
+      </div>
+    </div>
+    <div class="students-card">
+      <div class="img-area">
+        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#67627a" stroke-width="1.3"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="3"/><path d="M12 3v3M12 18v3M3 12h3M18 12h3"/></svg>
+      </div>
+      <div class="caption">
+        <h4>Education &amp; outreach</h4>
+        <p>One of DISCoVER's five founding commitments is building a culture of collaboration and opportunity through education, open to all — not just those who already work in computing.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="wrap">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="index.html" class="logo">          NSF DISCoVER
+        </a>
+        <p>An NSF Expeditions in Computing project exploring superconductor electronics as a post-CMOS computing technology. Led by USC Viterbi.</p>
+      </div>
+      <div class="footer-col">
+        <h5>Explore</h5>
+        <a href="index.html">About the Expedition</a>
+        <a href="discover-research.html">Research</a>
+        <a href="discover-media.html">Media Hub</a>
+        <a href="discover-impact.html">Impact</a>
+        <a href="discover-media.html#publications">Publications</a>
+      </div>
+      <div class="footer-col">
+        <h5>People</h5>
+        <a href="discover-team.html#leadership">Faculty &amp; Team</a>
+        <a href="discover-team.html#researchers">Student Researchers</a>
+        <a href="discover-team.html#partner-institutions">Partner Universities</a>
+        <a href="index.html#join-us">Join Us</a>
+      </div>
+      <div class="footer-col">
+        <h5>Stay Current</h5>
+        <a href="discover-media.html#seminars">Upcoming Seminars</a>
+        <a href="#">NSF Award #2124453</a>
+        <a href="#">Contact</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 DISCoVER Expedition · University of Southern California</p>
+      <div class="socials">
+        <a href="#" aria-label="YouTube"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M22 8.5s-.2-1.6-.8-2.3c-.8-.9-1.7-.9-2.1-1C16.3 5 12 5 12 5s-4.3 0-7.1.2c-.4.1-1.3.1-2.1 1C2.2 6.9 2 8.5 2 8.5S1.8 10.4 1.8 12.3v1.8c0 1.9.2 3.8.2 3.8s.2 1.6.8 2.3c.8.9 1.9.9 2.4 1 1.7.2 7.3 0 7.3 0s4.3 0 7.1-.2c.4-.1 1.3-.1 2.1-1 .6-.7.8-2.3.8-2.3s.2-1.9.2-3.8v-1.8c0-1.9-.2-3.8-.2-3.8z"/><path d="M9.7 15.3V9.4l5.1 3z"/></svg></a>
+        <a href="#" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="3.5"/><circle cx="17.5" cy="6.5" r="0.8" fill="currentColor"/></svg></a>
+        <a href="#" aria-label="LinkedIn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M7 10v7M7 7v.5M12 17v-4.5a2.5 2.5 0 0 1 5 0V17M12 12.5V17"/></svg></a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  const header = document.querySelector('header');
+  const SCROLL_THRESHOLD = 40;
+  function handleScroll() {
+    if (window.scrollY > SCROLL_THRESHOLD) {
+      header.classList.add('scrolled');
+    } else {
+      header.classList.remove('scrolled');
+    }
+  }
+  window.addEventListener('scroll', handleScroll, { passive: true });
+  handleScroll();
+
+  // Bulletin carousel — rotates announcement slides automatically
+  (function(){
+    const slides = document.querySelectorAll('.bulletin-slide');
+    const dots = document.querySelectorAll('.b-dot');
+    if (slides.length < 2) return;
+    let current = 0;
+    let paused = false;
+    const INTERVAL_MS = 5000;
+    let lastSwitch = performance.now();
+
+    function showSlide(i) {
+      slides.forEach((s, idx) => s.classList.toggle('active', idx === i));
+      dots.forEach((d, idx) => d.classList.toggle('active', idx === i));
+      current = i;
+    }
+
+    const bulletin = document.querySelector('.bulletin');
+    bulletin.addEventListener('mousemove', () => paused = true);
+    bulletin.addEventListener('mouseleave', () => paused = false);
+
+    function tick(now) {
+      if (!paused && now - lastSwitch >= INTERVAL_MS) {
+        showSlide((current + 1) % slides.length);
+        lastSwitch = now;
+      }
+      requestAnimationFrame(tick);
+    }
+    requestAnimationFrame(tick);
+  })();
+</script>
+
+</body>
+</html>

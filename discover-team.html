@@ -1,0 +1,939 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Team — DISCoVER Expedition</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,500;8..60,600;8..60,700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0A0A0F; --bg-raised:#100F18; --bg-card:#14131C;
+    --line:#2A2832; --line-soft:#1E1C26;
+    --cardinal:#C43D4E; --gold:#C99B3C; --violet:#6B74E0;
+    --white:#F2F0EC; --slate:#9A95A6; --slate-dim:#67627a;
+    --font-display:'Source Serif 4',Georgia,serif;
+    --font-body:'Inter',sans-serif;
+    --font-mono:'IBM Plex Mono',monospace;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{background:var(--bg);color:var(--white);font-family:var(--font-body);line-height:1.5;-webkit-font-smoothing:antialiased;overflow-x:hidden;}
+  a{color:inherit;text-decoration:none;}
+  @media(prefers-reduced-motion:reduce){*{animation-duration:.001ms!important;transition-duration:.001ms!important;}}
+  :focus-visible{outline:2px solid var(--cardinal);outline-offset:3px;border-radius:2px;}
+  .wrap{max-width:1200px;margin:0 auto;padding:0 32px;}
+
+  /* BULLETIN */
+  .bulletin{background:#0D0C12;border-bottom:1px solid var(--line);font-family:var(--font-mono);font-size:11.5px;color:var(--slate-dim);}
+  .bulletin .wrap{display:flex;align-items:center;gap:12px;padding:7px 32px;flex-wrap:nowrap;overflow:hidden;}
+  .bulletin .tag{color:var(--cardinal);border:1px solid var(--line);border-radius:2px;padding:1px 6px;font-size:10px;letter-spacing:.05em;flex-shrink:0;}
+  .bulletin a{color:var(--slate);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0;flex-shrink:1;}
+  .bulletin a:hover{color:var(--white);text-decoration:underline;}
+  .bulletin .sep{color:var(--line);flex-shrink:0;}
+  .bulletin .wrap span:not(.tag):not(.sep){flex-shrink:0;white-space:nowrap;}
+
+  /* MASTHEAD */
+  header{position:sticky;top:0;z-index:40;background:rgba(10,10,15,.98);border-bottom:1px solid var(--line);}
+  .masthead-row{display:flex;align-items:center;justify-content:space-between;padding:14px 32px 10px;}
+  .masthead-spacer{width:170px;flex-shrink:0;}
+  .logo{display:flex;align-items:center;gap:10px;font-family:var(--font-display);font-weight:600;font-size:24px;letter-spacing:.005em;margin:0 auto;}
+  .logo small{display:block;font-family:var(--font-mono);font-weight:400;font-size:8.5px;letter-spacing:.1em;color:var(--slate);margin-top:2px;text-align:center;}
+  .masthead-utility{display:flex;align-items:center;gap:14px;flex-shrink:0;width:170px;justify-content:flex-end;}
+  .nav-row{border-top:1px solid var(--line-soft);}
+  .nav-links{display:flex;align-items:center;justify-content:center;gap:38px;font-size:13px;font-weight:500;padding:13px 32px;text-transform:uppercase;letter-spacing:.04em;}
+  .nav-links a{color:var(--slate);padding:4px 0;border-bottom:2px solid transparent;transition:color .2s,border-color .2s;}
+  .nav-links a:hover{color:var(--white);}
+  .nav-links a.active{color:var(--white);border-bottom-color:var(--cardinal);}
+
+  /* BUTTONS */
+  .btn{font-family:var(--font-body);font-weight:600;font-size:12.5px;padding:7px 14px;border-radius:4px;cursor:pointer;border:1px solid transparent;transition:background .15s,border-color .15s,color .15s;display:inline-flex;align-items:center;gap:8px;white-space:nowrap;}
+  .btn-primary{background:var(--cardinal);color:#FBF8F4;}
+  .btn-primary:hover{background:#AC3140;}
+  .btn-outline{border-color:var(--line);color:var(--white);}
+  .btn-outline:hover{border-color:var(--cardinal);color:var(--cardinal);}
+  .btn-ghost{color:var(--slate);font-weight:500;font-size:13px;}
+  .btn-ghost:hover{color:var(--white);}
+  .btn-sm{padding:5px 11px;font-size:12px;}
+  .link-arrow{display:inline-flex;align-items:center;gap:7px;font-weight:600;font-size:14px;color:var(--white);border-bottom:1px solid var(--slate-dim);padding-bottom:2px;transition:border-color .2s;}
+  .link-arrow:hover{border-color:var(--cardinal);}
+  .link-arrow svg{width:13px;height:13px;}
+
+  /* PAGE HEADER */
+  .page-header{padding:64px 32px 40px;border-bottom:1px solid var(--line);}
+  .page-header .eyebrow-label{font-family:var(--font-mono);font-size:12px;color:var(--cardinal);letter-spacing:.1em;text-transform:uppercase;display:block;margin-bottom:16px;}
+  .page-header h1{font-family:var(--font-display);font-size:clamp(48px,7vw,84px);font-weight:600;letter-spacing:-.02em;line-height:1;margin-bottom:18px;}
+  .page-header p{color:var(--slate);font-size:17px;max-width:620px;line-height:1.6;}
+
+  /* SEARCH (reused pattern from media.html) */
+  .global-search{padding:20px 32px;background:var(--bg-raised);border-bottom:1px solid var(--line);}
+  .search-box{display:flex;align-items:center;gap:16px;}
+  .search-wrap{flex:1;display:flex;align-items:center;gap:10px;background:var(--bg-card);border:1px solid var(--line);border-radius:6px;padding:10px 14px;transition:border-color .2s;}
+  .search-wrap:focus-within{border-color:var(--cardinal);}
+  .search-wrap svg{width:17px;height:17px;color:var(--slate-dim);flex-shrink:0;}
+  .search-wrap input{flex:1;background:none;border:none;outline:none;color:var(--white);font-family:var(--font-body);font-size:14px;}
+  .search-wrap input::placeholder{color:var(--slate-dim);}
+  .search-count{font-family:var(--font-mono);font-size:12px;color:var(--slate-dim);white-space:nowrap;}
+
+  /* SECTION HEAD (reused pattern) */
+  .sec-head{display:flex;align-items:flex-end;justify-content:space-between;gap:24px;padding:48px 0 28px;border-bottom:1px solid var(--line);margin-bottom:36px;flex-wrap:wrap;}
+  .sec-head h2{font-family:var(--font-display);font-size:30px;font-weight:600;letter-spacing:-.01em;}
+  .sec-sub{color:var(--slate);font-size:14.5px;max-width:440px;}
+
+  
+
+  /* ── LEADERSHIP GRID ──────────────────────────────────────────────────── */
+  section#leadership{padding-bottom:24px;}
+  .leader-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;}
+  .leader-card{border:1px solid var(--line);border-radius:10px;background:var(--bg-card);overflow:hidden;transition:border-color .2s,transform .2s;display:block;}
+  .leader-card:hover{border-color:var(--slate-dim);transform:translateY(-2px);}
+  .leader-card[data-hidden="true"]{display:none;}
+  .leader-photo{aspect-ratio:4/5;position:relative;background:linear-gradient(155deg,#1c1a26,#0d0c12);overflow:hidden;}
+  .leader-photo img{width:100%;height:100%;object-fit:cover;display:block;}
+  .leader-card.is-director .leader-photo{background:linear-gradient(155deg,#241621,#0d0c12);}
+  .leader-role-pin{position:absolute;top:14px;left:14px;font-family:var(--font-mono);font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:#FBF8F4;background:var(--cardinal);border-radius:3px;padding:4px 9px;z-index:2;}
+  .leader-card.is-director .leader-role-pin{background:var(--gold);color:#1A1408;}
+  .leader-body{padding:18px 20px 22px;}
+  .leader-body h3{font-family:var(--font-display);font-size:19px;font-weight:600;margin-bottom:4px;line-height:1.25;}
+  .leader-role{font-size:13px;color:var(--cardinal);font-weight:600;margin-bottom:6px;}
+  .leader-card.is-director .leader-role{color:var(--gold);}
+  .leader-inst{font-size:12.5px;color:var(--slate);display:flex;align-items:center;gap:6px;margin-bottom:12px;}
+  .leader-inst svg{width:13px;height:13px;flex-shrink:0;}
+  .leader-bio{font-size:13px;color:var(--slate);line-height:1.55;}
+  .leader-links{display:flex;gap:10px;margin-top:14px;}
+  .leader-links a{display:flex;align-items:center;justify-content:center;width:30px;height:30px;border-radius:50%;border:1px solid var(--line);color:var(--slate);transition:border-color .15s,color .15s;}
+  .leader-links a:hover{border-color:var(--cardinal);color:var(--cardinal);}
+  .leader-links svg{width:14px;height:14px;}
+
+  /* ── RESEARCHER ROW LIST ──────────────────────────────────────────────── */
+  .researcher-list{border-top:1px solid var(--line);}
+  .researcher-row{display:flex;align-items:center;gap:18px;padding:18px 0;border-bottom:1px solid var(--line);transition:background .15s;}
+  .researcher-row[data-hidden="true"]{display:none;}
+  .researcher-row:hover{background:rgba(255,255,255,.015);}
+  .researcher-photo{width:52px;height:52px;border-radius:50%;flex-shrink:0;background:linear-gradient(155deg,#1c1a26,#0d0c12);border:1px solid var(--line-soft);overflow:hidden;position:relative;}
+  .researcher-photo img{width:100%;height:100%;object-fit:cover;display:block;position:absolute;inset:0;}
+  .researcher-body{flex:1;min-width:0;}
+  .researcher-body h4{font-family:var(--font-display);font-size:15.5px;font-weight:600;margin-bottom:3px;}
+  .researcher-meta{font-size:12.5px;color:var(--slate);display:flex;flex-wrap:wrap;gap:8px;align-items:center;}
+  .inst-chip{font-family:var(--font-mono);font-size:10.5px;letter-spacing:.04em;text-transform:uppercase;border-radius:20px;padding:3px 10px;flex-shrink:0;border:1px solid;}
+  /* Color-coded institution chips */
+  .inst-chip.usc        {color:#FF6B35;border-color:rgba(255,107,53,.35);background:rgba(255,107,53,.08);}
+  .inst-chip.rochester  {color:#F5A623;border-color:rgba(245,166,35,.35);background:rgba(245,166,35,.08);}
+  .inst-chip.cornell    {color:#E8423A;border-color:rgba(232,66,58,.35);background:rgba(232,66,58,.08);}
+  .inst-chip.northeastern{color:#CC0000;border-color:rgba(204,0,0,.35);background:rgba(204,0,0,.08);}
+  .inst-chip.auburn     {color:#E87722;border-color:rgba(232,119,34,.35);background:rgba(232,119,34,.08);}
+  .inst-chip.northwestern{color:#6B2D8B;border-color:rgba(107,45,139,.35);background:rgba(107,45,139,.1);}
+  .inst-chip.yokohama   {color:#5BA4CF;border-color:rgba(91,164,207,.35);background:rgba(91,164,207,.08);}
+  .inst-chip.seeqc      {color:#6B74E0;border-color:rgba(107,116,224,.35);background:rgba(107,116,224,.1);}
+
+  /* Researcher row social links */
+  .researcher-links{display:flex;gap:8px;flex-shrink:0;}
+  .researcher-links a{display:flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:50%;border:1px solid var(--line);color:var(--slate-dim);transition:border-color .15s,color .15s;}
+  .researcher-links a:hover{border-color:var(--cardinal);color:var(--cardinal);}
+  .researcher-links svg{width:13px;height:13px;}
+  .no-results{display:none;padding:48px 0;text-align:center;color:var(--slate-dim);font-size:14px;}
+  .no-results.visible{display:block;}
+
+  /* ── PARTNER INSTITUTIONS ─────────────────────────────────────────────── */
+  .institutions{background:var(--bg-raised);border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:56px 0 0;}
+  .inst-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:32px;}
+  .inst-card{border:1px solid var(--line);border-radius:10px;background:var(--bg-card);overflow:hidden;display:flex;flex-direction:column;}
+  .inst-card-seal{height:120px;display:flex;align-items:center;justify-content:center;border-bottom:1px solid var(--line);position:relative;overflow:hidden;}
+  .inst-card-seal svg{width:88px;height:88px;opacity:.75;}
+  .inst-card.usc         .inst-card-seal{background:rgba(153,0,0,.12);}
+  .inst-card.usc         .inst-card-seal svg{color:#FF6B35;}
+  .inst-card.rochester   .inst-card-seal{background:rgba(245,166,35,.08);}
+  .inst-card.rochester   .inst-card-seal svg{color:#F5A623;}
+  .inst-card.cornell     .inst-card-seal{background:rgba(179,27,27,.1);}
+  .inst-card.cornell     .inst-card-seal svg{color:#E8423A;}
+  .inst-card.northeastern .inst-card-seal{background:rgba(204,0,0,.1);}
+  .inst-card.northeastern .inst-card-seal svg{color:#CC0000;}
+  .inst-card.auburn      .inst-card-seal{background:rgba(232,119,34,.1);}
+  .inst-card.auburn      .inst-card-seal svg{color:#E87722;}
+  .inst-card.northwestern .inst-card-seal{background:rgba(78,42,132,.12);}
+  .inst-card.northwestern .inst-card-seal svg{color:#9B59D0;}
+  .inst-card.yokohama    .inst-card-seal{background:rgba(0,91,161,.1);}
+  .inst-card.yokohama    .inst-card-seal svg{color:#5BA4CF;}
+  .inst-card.seeqc       .inst-card-seal{background:rgba(107,116,224,.1);}
+  .inst-card.seeqc       .inst-card-seal svg{color:#6B74E0;}
+  .inst-card-body{padding:14px 16px 16px;display:flex;flex-direction:column;gap:5px;flex:1;}
+  .inst-card-body h4{font-family:var(--font-display);font-size:14px;font-weight:600;line-height:1.3;}
+  .inst-card .role-tag{font-family:var(--font-mono);font-size:10px;letter-spacing:.04em;text-transform:uppercase;border-radius:20px;padding:2px 9px;border:1px solid;display:inline-block;align-self:flex-start;}
+  /* color-coded role tags matching inst-chip */
+  .inst-card.usc          .role-tag{color:#FF6B35;border-color:rgba(255,107,53,.35);background:rgba(255,107,53,.08);}
+  .inst-card.rochester    .role-tag{color:#F5A623;border-color:rgba(245,166,35,.35);background:rgba(245,166,35,.08);}
+  .inst-card.cornell      .role-tag{color:#E8423A;border-color:rgba(232,66,58,.35);background:rgba(232,66,58,.08);}
+  .inst-card.northeastern .role-tag{color:#CC0000;border-color:rgba(204,0,0,.35);background:rgba(204,0,0,.08);}
+  .inst-card.auburn       .role-tag{color:#E87722;border-color:rgba(232,119,34,.35);background:rgba(232,119,34,.08);}
+  .inst-card.northwestern .role-tag{color:#9B59D0;border-color:rgba(107,45,139,.35);background:rgba(107,45,139,.1);}
+  .inst-card.yokohama     .role-tag{color:#5BA4CF;border-color:rgba(91,164,207,.35);background:rgba(91,164,207,.08);}
+  .inst-card.seeqc        .role-tag{color:#6B74E0;border-color:rgba(107,116,224,.35);background:rgba(107,116,224,.1);}
+  .inst-card .count{font-size:12px;color:var(--slate-dim);line-height:1.4;}
+
+  /* Emblem parade strip — large tinted seals scrolling across the bottom */
+  .emblem-strip{margin-top:48px;overflow:hidden;padding:32px 0;border-top:1px solid var(--line);mask-image:linear-gradient(to right,transparent 0%,black 8%,black 92%,transparent 100%);-webkit-mask-image:linear-gradient(to right,transparent 0%,black 8%,black 92%,transparent 100%);}
+  .emblem-track{display:flex;gap:48px;width:max-content;animation:emblem-scroll 30s linear infinite;}
+  .emblem-track:hover{animation-play-state:paused;}
+  @keyframes emblem-scroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+  .emblem{width:130px;height:130px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:80px;line-height:1;flex-shrink:0;border:2px solid;opacity:.55;transition:opacity .2s;}
+  .emblem:hover{opacity:.85;}
+  .emblem.usc         {border-color:rgba(153,0,0,.4);  background:rgba(153,0,0,.06);}
+  .emblem.rochester   {border-color:rgba(245,166,35,.4);background:rgba(245,166,35,.06);}
+  .emblem.cornell     {border-color:rgba(179,27,27,.4); background:rgba(179,27,27,.06);}
+  .emblem.northeastern{border-color:rgba(204,0,0,.4);   background:rgba(204,0,0,.06);}
+  .emblem.auburn      {border-color:rgba(232,119,34,.4); background:rgba(232,119,34,.06);}
+  .emblem.northwestern{border-color:rgba(78,42,132,.4);  background:rgba(78,42,132,.06);}
+  .emblem.yokohama    {border-color:rgba(0,91,161,.4);   background:rgba(0,91,161,.06);}
+  .emblem.seeqc       {border-color:rgba(107,116,224,.4);background:rgba(107,116,224,.06);}
+
+  /* ── JOIN US CTA ───────────────────────────────────────────────────────── */
+  .join-cta{padding:64px 0 80px;text-align:center;}
+  .join-cta h2{font-family:var(--font-display);font-size:34px;font-weight:600;margin-bottom:14px;}
+  .join-cta p{color:var(--slate);font-size:15.5px;max-width:520px;margin:0 auto 28px;line-height:1.6;}
+  .join-cta .btn{padding:13px 26px;font-size:14px;}
+
+  /* FOOTER */
+  footer{background:var(--bg-raised);border-top:1px solid var(--line);padding:56px 32px 32px;}
+  .footer-grid{display:grid;grid-template-columns:1.6fr 1fr 1fr 1fr;gap:40px;padding-bottom:40px;}
+  .footer-brand .logo{margin:0 0 14px;justify-content:flex-start;}
+  .footer-brand p{font-size:13px;color:var(--slate);line-height:1.6;max-width:280px;}
+  .footer-col h5{font-family:var(--font-mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--slate-dim);margin-bottom:14px;}
+  .footer-col a{display:block;font-size:13.5px;color:var(--slate);padding:5px 0;transition:color .15s;}
+  .footer-col a:hover{color:var(--white);}
+  .footer-bottom{display:flex;align-items:center;justify-content:space-between;padding-top:24px;border-top:1px solid var(--line);font-size:12.5px;color:var(--slate-dim);flex-wrap:wrap;gap:16px;}
+  .socials{display:flex;gap:14px;}
+  .socials a{width:32px;height:32px;border-radius:50%;border:1px solid var(--line);display:flex;align-items:center;justify-content:center;color:var(--slate);transition:border-color .15s,color .15s;}
+  .socials a:hover{border-color:var(--cardinal);color:var(--cardinal);}
+  .socials svg{width:15px;height:15px;}
+
+  /* RESPONSIVE */
+  @media(max-width:980px){
+    .leader-grid{grid-template-columns:repeat(2,1fr);}
+    .inst-grid{grid-template-columns:repeat(2,1fr);}
+    .footer-grid{grid-template-columns:1fr 1fr;}
+  }
+  @media(max-width:640px){
+    .nav-links{gap:20px;font-size:11.5px;padding:13px 16px;overflow-x:auto;justify-content:flex-start;}
+    .page-header{padding:40px 20px 28px;}
+    .leader-grid{grid-template-columns:1fr;}
+    .inst-grid{grid-template-columns:1fr;}
+    .footer-grid{grid-template-columns:1fr;gap:28px;}
+    .researcher-row{flex-wrap:wrap;}
+  }
+</style>
+</head>
+<body>
+
+<!--
+  ====================================================================
+  HOW TO EDIT THE TEAM PAGE
+  ====================================================================
+  This page has three groups of people, each with its own swap pattern:
+
+  1. LEADERSHIP (Director, Associate Director, Thrust Leaders)
+     Each person is one ".leader-card" block in the #leadership section.
+     - Photo: replace the <img src="images/..."> inside .leader-photo.
+       If no photo exists yet, delete the <img> tag and it falls back
+       to a dark gradient placeholder automatically (onerror does this
+       for you too — broken image paths just disappear).
+     - Role pin (top-left badge): edit the text inside .leader-role-pin.
+     - Name / role / institution / bio: edit the text inside .leader-body.
+     - Social links: edit the href values inside .leader-links (LinkedIn,
+       email, Google Scholar icons are provided — delete any you don't need).
+     - data-topic on the card controls which filter pill shows it. Use:
+         director | thrust-leader
+     - data-title is used by the search box — keep it roughly matching
+       the visible name + role + institution so search results make sense.
+
+  2. AFFILIATED RESEARCHERS (the row list below Leadership)
+     Each person is one ".researcher-row" block in #researchers.
+     - Photo: same pattern as above, inside .researcher-photo.
+     - Name / role / institution: edit the text inside .researcher-body.
+     - To add a new researcher, copy an existing .researcher-row block.
+
+  3. PARTNER INSTITUTIONS (the strip near the bottom)
+     Each ".inst-card" is one university/company. Edit name, role tag,
+     and headcount text directly — no images needed here.
+
+  Everything above is wired into the search box at the top of the page
+  the same way the Media page search works: type a name, role, or
+  institution and only matching people stay visible, with empty
+  sections collapsing automatically (heading included) so there's no
+  confusing leftover content. See the page-bottom <script> if you need
+  to adjust that behavior.
+  ====================================================================
+-->
+
+<!-- BULLETIN STRIP -->
+<div class="bulletin">
+  <div class="wrap">
+    <span class="tag">JOIN US</span>
+    <span>We're recruiting graduate researchers for Fall 2026</span>
+    <span class="sep">—</span>
+    <a href="#join-us">See open positions →</a>
+  </div>
+</div>
+
+<!-- MASTHEAD -->
+<header>
+  <div class="masthead-row wrap">
+    <span class="masthead-spacer" aria-hidden="true"></span>
+    <a href="index.html" class="logo">      <span>NSF DISCoVER<small>EXPEDITION</small></span>
+    </a>
+    <div class="masthead-utility">
+      <a href="#" class="btn btn-outline">Log in</a>
+    </div>
+  </div>
+  <div class="nav-row">
+    <div class="nav-links">
+      <a href="index.html">About</a>
+      <a href="discover-research.html">Research</a>
+      <a href="discover-media.html">Media</a>
+      <a href="discover-team.html" class="active">Team</a>
+      <a href="discover-impact.html">Impact</a>
+    </div>
+  </div>
+</header>
+
+<!-- PAGE HEADER -->
+<div class="page-header">
+  <div class="wrap">
+    <span class="eyebrow-label">NSF DISCoVER Expedition</span>
+    <h1>Our Team</h1>
+    <p>A vertically integrated, multi-institution team spanning circuit design, device physics, computer architecture, and socioeconomic impact — working together to build a fully operational superconductive computing system.</p>
+  </div>
+</div>
+
+<!-- SEARCH -->
+<div class="global-search">
+  <div class="wrap">
+    <div class="search-box">
+      <div class="search-wrap">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+        <input type="text" id="global-search" placeholder="Search by name, role, or institution…" autocomplete="off">
+      </div>
+      <span class="search-count" id="search-count"></span>
+    </div>
+  </div>
+</div>
+
+<!-- LEADERSHIP -->
+<section id="leadership">
+  <div class="wrap">
+    <div class="sec-head">
+      <div>
+        <h2>Leadership</h2>
+      </div>
+      <p class="sec-sub">The Director, Associate Director, and Thrust Leaders guiding DISCoVER's five research thrusts.</p>
+    </div>
+
+    <div class="leader-grid" id="leader-grid">
+
+      <!-- DIRECTOR -->
+      <div class="leader-card is-director" data-topic="director" data-title="Massoud Pedram Director University of Southern California">
+        <div class="leader-photo">
+          <span class="leader-role-pin">Director</span>
+          <!-- replace src with the real photo, or delete this <img> to use the default gradient -->
+          <img src="images/team-massoud-pedram.jpg" alt="Massoud Pedram" onerror="this.remove()">
+        </div>
+        <div class="leader-body">
+          <h3>Massoud Pedram</h3>
+          <div class="leader-role">Director, DISCoVER Expedition</div>
+          <div class="leader-inst">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 3 2 8l10 5 10-5-10-5z"/><path d="M6 10v6c0 1 3 3 6 3s6-2 6-3v-6"/></svg>
+            University of Southern California
+          </div>
+          <p class="leader-bio">Research expertise in green computing, low-power electronics, and post-CMOS technologies. Leads the overall DISCoVER program.</p>
+          <div class="leader-links">
+            <a href="#" aria-label="Email"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg></a>
+            <a href="#" aria-label="LinkedIn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M7 10v7M7 7v.5M12 17v-4.5a2.5 2.5 0 0 1 5 0V17M12 12.5V17"/></svg></a>
+            <a href="#" aria-label="Google Scholar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 4 2 9l10 5 10-5-10-5z"/><path d="M6 11v5c0 1.5 2.7 3 6 3s6-1.5 6-3v-5"/></svg></a>
+          </div>
+        </div>
+      </div>
+
+      <!-- ASSOCIATE DIRECTOR / THRUST LEADER — CIRCUITS & ARCHITECTURE -->
+      <div class="leader-card" data-topic="thrust-leader" data-title="Eby Friedman Associate Director Thrust Leader Circuits and Architecture University of Rochester">
+        <div class="leader-photo">
+          <span class="leader-role-pin">Thrust Leader</span>
+          <img src="images/team-eby-friedman.jpg" alt="Eby G. Friedman" onerror="this.remove()">
+        </div>
+        <div class="leader-body">
+          <h3>Eby G. Friedman</h3>
+          <div class="leader-role">Associate Director · Thrust Leader, Circuits &amp; Architecture</div>
+          <div class="leader-inst">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 3 2 8l10 5 10-5-10-5z"/><path d="M6 10v6c0 1 3 3 6 3s6-2 6-3v-6"/></svg>
+            University of Rochester
+          </div>
+          <p class="leader-bio">Distinguished professor of electrical and computer engineering, leading design methodologies and circuits for superconductive systems.</p>
+          <div class="leader-links">
+            <a href="#" aria-label="Email"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg></a>
+            <a href="#" aria-label="LinkedIn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M7 10v7M7 7v.5M12 17v-4.5a2.5 2.5 0 0 1 5 0V17M12 12.5V17"/></svg></a>
+            <a href="#" aria-label="Google Scholar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 4 2 9l10 5 10-5-10-5z"/><path d="M6 11v5c0 1.5 2.7 3 6 3s6-1.5 6-3v-5"/></svg></a>
+          </div>
+        </div>
+      </div>
+
+      <!-- THRUST LEADER — SUPERSOCC DESIGN -->
+      <div class="leader-card" data-topic="thrust-leader" data-title="Murali Annavaram Thrust Leader SuperSoCC Design University of Southern California">
+        <div class="leader-photo">
+          <span class="leader-role-pin">Thrust Leader</span>
+          <img src="images/team-murali-annavaram.jpg" alt="Murali Annavaram" onerror="this.remove()">
+        </div>
+        <div class="leader-body">
+          <h3>Murali Annavaram</h3>
+          <div class="leader-role">Thrust Leader, SuperSoCC Design</div>
+          <div class="leader-inst">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 3 2 8l10 5 10-5-10-5z"/><path d="M6 10v6c0 1 3 3 6 3s6-2 6-3v-6"/></svg>
+            University of Southern California
+          </div>
+          <p class="leader-bio">Professor of electrical and computer engineering and computer science, focused on the architectural implications of superconductive electronics.</p>
+          <div class="leader-links">
+            <a href="#" aria-label="Email"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg></a>
+            <a href="#" aria-label="LinkedIn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M7 10v7M7 7v.5M12 17v-4.5a2.5 2.5 0 0 1 5 0V17M12 12.5V17"/></svg></a>
+            <a href="#" aria-label="Google Scholar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 4 2 9l10 5 10-5-10-5z"/><path d="M6 11v5c0 1.5 2.7 3 6 3s6-1.5 6-3v-5"/></svg></a>
+          </div>
+        </div>
+      </div>
+
+      <!-- THRUST LEADER — DEVICES & MATERIALS -->
+      <div class="leader-card" data-topic="thrust-leader" data-title="Grace Xing Thrust Leader Devices and Materials Cornell University">
+        <div class="leader-photo">
+          <span class="leader-role-pin">Thrust Leader</span>
+          <img src="images/team-grace-xing.jpg" alt="Grace Xing" onerror="this.remove()">
+        </div>
+        <div class="leader-body">
+          <h3>Grace Xing</h3>
+          <div class="leader-role">Thrust Leader, Devices &amp; Materials</div>
+          <div class="leader-inst">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 3 2 8l10 5 10-5-10-5z"/><path d="M6 10v6c0 1 3 3 6 3s6-2 6-3v-6"/></svg>
+            Cornell University
+          </div>
+          <p class="leader-bio">Leads research into novel device structures and materials, including Josephson junction fabrication for cryogenic systems.</p>
+          <div class="leader-links">
+            <a href="#" aria-label="Email"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg></a>
+            <a href="#" aria-label="LinkedIn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M7 10v7M7 7v.5M12 17v-4.5a2.5 2.5 0 0 1 5 0V17M12 12.5V17"/></svg></a>
+            <a href="#" aria-label="Google Scholar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 4 2 9l10 5 10-5-10-5z"/><path d="M6 11v5c0 1.5 2.7 3 6 3s6-1.5 6-3v-5"/></svg></a>
+          </div>
+        </div>
+      </div>
+
+      <!-- THRUST LEADER — BUSINESS & SOCIOECONOMIC IMPACTS -->
+      <div class="leader-card" data-topic="thrust-leader" data-title="Yanzhi Wang Thrust Leader Business and Socioeconomic Impacts Northeastern University">
+        <div class="leader-photo">
+          <span class="leader-role-pin">Thrust Leader</span>
+          <img src="images/team-yanzhi-wang.jpg" alt="Yanzhi Wang" onerror="this.remove()">
+        </div>
+        <div class="leader-body">
+          <h3>Yanzhi Wang</h3>
+          <div class="leader-role">Thrust Leader, Business &amp; Socioeconomic Impacts</div>
+          <div class="leader-inst">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 3 2 8l10 5 10-5-10-5z"/><path d="M6 10v6c0 1 3 3 6 3s6-2 6-3v-6"/></svg>
+            Northeastern University
+          </div>
+          <p class="leader-bio">Associate professor focused on design automation and ultra-energy-efficient deep learning frameworks using AQFP superconducting technology.</p>
+          <div class="leader-links">
+            <a href="#" aria-label="Email"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg></a>
+            <a href="#" aria-label="LinkedIn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M7 10v7M7 7v.5M12 17v-4.5a2.5 2.5 0 0 1 5 0V17M12 12.5V17"/></svg></a>
+            <a href="#" aria-label="Google Scholar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 4 2 9l10 5 10-5-10-5z"/><path d="M6 11v5c0 1.5 2.7 3 6 3s6-1.5 6-3v-5"/></svg></a>
+          </div>
+        </div>
+      </div>
+
+      <!-- THRUST LEADER — INTEGRATION & INTERFACES -->
+      <div class="leader-card" data-topic="thrust-leader" data-title="Michael Hamilton Thrust Leader Integration and Interfaces Auburn University">
+        <div class="leader-photo">
+          <span class="leader-role-pin">Thrust Leader</span>
+          <img src="images/team-michael-hamilton.jpg" alt="Michael C. Hamilton" onerror="this.remove()">
+        </div>
+        <div class="leader-body">
+          <h3>Michael C. Hamilton</h3>
+          <div class="leader-role">Thrust Leader, Integration &amp; Interfaces</div>
+          <div class="leader-inst">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 3 2 8l10 5 10-5-10-5z"/><path d="M6 10v6c0 1 3 3 6 3s6-2 6-3v-6"/></svg>
+            Auburn University
+          </div>
+          <p class="leader-bio">Leads research on interconnects and devices for superconductive systems, including signal integrity at cryogenic temperatures.</p>
+          <div class="leader-links">
+            <a href="#" aria-label="Email"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg></a>
+            <a href="#" aria-label="LinkedIn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M7 10v7M7 7v.5M12 17v-4.5a2.5 2.5 0 0 1 5 0V17M12 12.5V17"/></svg></a>
+            <a href="#" aria-label="Google Scholar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 4 2 9l10 5 10-5-10-5z"/><path d="M6 11v5c0 1.5 2.7 3 6 3s6-1.5 6-3v-5"/></svg></a>
+          </div>
+        </div>
+      </div>
+
+      <!-- ADD NEW LEADERSHIP CARDS HERE: copy one of the .leader-card blocks above -->
+      <div class="no-results" id="leader-no-results">No leadership profiles match your search or filter.</div>
+    </div>
+  </div>
+</section>
+
+<!-- AFFILIATED RESEARCHERS -->
+<section id="researchers">
+  <div class="wrap">
+    <div class="sec-head">
+      <div>
+        <h2>Affiliated Researchers</h2>
+      </div>
+      <p class="sec-sub">Faculty and industry collaborators across the consortium contributing to DISCoVER's research thrusts.</p>
+    </div>
+
+    <div class="researcher-list" id="researcher-list">
+      <!--
+        EACH ROW BELOW = one researcher.
+        - Photo: replace <img src> or delete for gradient placeholder.
+        - inst-chip class: use one of usc | rochester | cornell | northeastern
+                           | auburn | northwestern | yokohama | seeqc
+        - Social links: replace href="#" with real URLs; delete any you don't need.
+      -->
+      <div class="researcher-row" data-title="Ivan Petrovich Nevirkovets Northwestern University">
+        <div class="researcher-photo">
+          <img src="images/team-ivan-nevirkovets.jpg" alt="Ivan Petrovich Nevirkovets" onerror="this.remove()">
+        </div>
+        <div class="researcher-body">
+          <h4>Ivan Petrovich Nevirkovets</h4>
+          <div class="researcher-meta">Research faculty, device physics</div>
+        </div>
+        <span class="inst-chip northwestern">Northwestern</span>
+        <div class="researcher-links">
+          <a href="#" aria-label="Email"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg></a>
+          <a href="#" aria-label="LinkedIn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M7 10v7M7 7v.5M12 17v-4.5a2.5 2.5 0 0 1 5 0V17M12 12.5V17"/></svg></a>
+        </div>
+      </div>
+      <div class="researcher-row" data-title="Julia Albright University of Southern California">
+        <div class="researcher-photo">
+          <img src="images/team-julia-albright.jpg" alt="Julia Albright" onerror="this.remove()">
+        </div>
+        <div class="researcher-body">
+          <h4>Julia Albright</h4>
+          <div class="researcher-meta">Program &amp; outreach coordination</div>
+        </div>
+        <span class="inst-chip usc">USC</span>
+        <div class="researcher-links">
+          <a href="#" aria-label="Email"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg></a>
+          <a href="#" aria-label="LinkedIn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M7 10v7M7 7v.5M12 17v-4.5a2.5 2.5 0 0 1 5 0V17M12 12.5V17"/></svg></a>
+        </div>
+      </div>
+      <div class="researcher-row" data-title="Mark Bocko University of Rochester">
+        <div class="researcher-photo">
+          <img src="images/team-mark-bocko.jpg" alt="Mark Bocko" onerror="this.remove()">
+        </div>
+        <div class="researcher-body">
+          <h4>Mark Bocko</h4>
+          <div class="researcher-meta">Professor, electrical &amp; computer engineering</div>
+        </div>
+        <span class="inst-chip rochester">Rochester</span>
+        <div class="researcher-links">
+          <a href="#" aria-label="Email"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg></a>
+          <a href="#" aria-label="LinkedIn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M7 10v7M7 7v.5M12 17v-4.5a2.5 2.5 0 0 1 5 0V17M12 12.5V17"/></svg></a>
+        </div>
+      </div>
+      <div class="researcher-row" data-title="Nobuyuki Yoshikawa Yokohama National University">
+        <div class="researcher-photo">
+          <img src="images/team-nobuyuki-yoshikawa.jpg" alt="Nobuyuki Yoshikawa" onerror="this.remove()">
+        </div>
+        <div class="researcher-body">
+          <h4>Nobuyuki Yoshikawa</h4>
+          <div class="researcher-meta">Professor — AQFP superconductive circuits</div>
+        </div>
+        <span class="inst-chip yokohama">Yokohama Nat'l Univ.</span>
+        <div class="researcher-links">
+          <a href="#" aria-label="Email"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg></a>
+          <a href="#" aria-label="LinkedIn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M7 10v7M7 7v.5M12 17v-4.5a2.5 2.5 0 0 1 5 0V17M12 12.5V17"/></svg></a>
+        </div>
+      </div>
+      <div class="researcher-row" data-title="Christopher Ayala Yokohama National University">
+        <div class="researcher-photo">
+          <img src="images/team-christopher-ayala.jpg" alt="Christopher Ayala" onerror="this.remove()">
+        </div>
+        <div class="researcher-body">
+          <h4>Christopher Ayala</h4>
+          <div class="researcher-meta">Research faculty — AQFP large-scale integration</div>
+        </div>
+        <span class="inst-chip yokohama">Yokohama Nat'l Univ.</span>
+        <div class="researcher-links">
+          <a href="#" aria-label="Email"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg></a>
+          <a href="#" aria-label="LinkedIn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M7 10v7M7 7v.5M12 17v-4.5a2.5 2.5 0 0 1 5 0V17M12 12.5V17"/></svg></a>
+        </div>
+      </div>
+      <div class="researcher-row" data-title="Oleg Mukhanov SeeQC Inc.">
+        <div class="researcher-photo">
+          <img src="images/team-oleg-mukhanov.jpg" alt="Oleg Mukhanov" onerror="this.remove()">
+        </div>
+        <div class="researcher-body">
+          <h4>Oleg Mukhanov</h4>
+          <div class="researcher-meta">Industry partner — high-density memory systems</div>
+        </div>
+        <span class="inst-chip seeqc">SeeQC Inc.</span>
+        <div class="researcher-links">
+          <a href="#" aria-label="Email"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg></a>
+          <a href="#" aria-label="LinkedIn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M7 10v7M7 7v.5M12 17v-4.5a2.5 2.5 0 0 1 5 0V17M12 12.5V17"/></svg></a>
+        </div>
+      </div>
+      <div class="researcher-row" data-title="Selcuk Kose University of Rochester">
+        <div class="researcher-photo">
+          <img src="images/team-selcuk-kose.jpg" alt="Selçuk Köse" onerror="this.remove()">
+        </div>
+        <div class="researcher-body">
+          <h4>Selçuk Köse</h4>
+          <div class="researcher-meta">Professor, electrical &amp; computer engineering</div>
+        </div>
+        <span class="inst-chip rochester">Rochester</span>
+        <div class="researcher-links">
+          <a href="#" aria-label="Email"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg></a>
+          <a href="#" aria-label="LinkedIn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M7 10v7M7 7v.5M12 17v-4.5a2.5 2.5 0 0 1 5 0V17M12 12.5V17"/></svg></a>
+        </div>
+      </div>
+      <div class="researcher-row" data-title="Sasan Razmkhah University of Southern California">
+        <div class="researcher-photo">
+          <img src="images/team-sasan-razmkhah.jpg" alt="Sasan Razmkhah" onerror="this.remove()">
+        </div>
+        <div class="researcher-body">
+          <h4>Sasan Razmkhah</h4>
+          <div class="researcher-meta">Researcher, circuits &amp; architecture</div>
+        </div>
+        <span class="inst-chip usc">USC</span>
+        <div class="researcher-links">
+          <a href="#" aria-label="Email"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg></a>
+          <a href="#" aria-label="LinkedIn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M7 10v7M7 7v.5M12 17v-4.5a2.5 2.5 0 0 1 5 0V17M12 12.5V17"/></svg></a>
+        </div>
+      </div>
+      <!-- ADD NEW RESEARCHERS HERE: copy one of the .researcher-row blocks above -->
+    </div>
+    <div class="no-results" id="researcher-no-results">No researchers match your search.</div>
+  </div>
+</section>
+
+<!-- PARTNER INSTITUTIONS -->
+<section class="institutions">
+  <div class="wrap">
+    <div class="sec-head" style="border-bottom:none;margin-bottom:0;padding-top:0;">
+      <div>
+        <h2>Partner Institutions</h2>
+      </div>
+      <p class="sec-sub">DISCoVER is a consortium effort across seven institutions, led by USC.</p>
+    </div>
+    <div class="inst-grid">
+
+      <div class="inst-card usc">
+        <div class="inst-card-seal">
+          <!-- USC: torch shield -->
+          <svg viewBox="0 0 88 88" fill="none" stroke="currentColor" stroke-width="1.4">
+            <path d="M44 10 L72 22 L72 52 C72 66 58 76 44 80 C30 76 16 66 16 52 L16 22 Z" stroke-width="1.8"/>
+            <line x1="44" y1="28" x2="44" y2="62" stroke-width="1.6"/>
+            <path d="M38 28 L44 24 L50 28" stroke-width="1.6"/>
+            <path d="M40 28 Q44 22 48 28" stroke-width="1.2" stroke-linecap="round"/>
+            <ellipse cx="44" cy="50" rx="9" ry="7" stroke-width="1.2"/>
+            <text x="44" y="72" font-size="7" text-anchor="middle" fill="currentColor" stroke="none" font-family="serif" letter-spacing="1">USC</text>
+          </svg>
+        </div>
+        <div class="inst-card-body">
+          <h4>University of Southern California</h4>
+          <span class="role-tag">Lead Institution</span>
+          <span class="count">Director · SuperSoCC Design Thrust</span>
+        </div>
+      </div>
+
+      <div class="inst-card rochester">
+        <div class="inst-card-seal">
+          <!-- Rochester: meliora shield -->
+          <svg viewBox="0 0 88 88" fill="none" stroke="currentColor" stroke-width="1.4">
+            <path d="M44 10 L66 18 L66 50 C66 63 56 72 44 76 C32 72 22 63 22 50 L22 18 Z" stroke-width="1.8"/>
+            <path d="M32 32 L32 54 M32 32 L44 43 L56 32 L56 54" stroke-width="1.4"/>
+            <text x="44" y="68" font-size="6.5" text-anchor="middle" fill="currentColor" stroke="none" font-family="serif" letter-spacing="1">MELIORA</text>
+          </svg>
+        </div>
+        <div class="inst-card-body">
+          <h4>University of Rochester</h4>
+          <span class="role-tag">Consortium Partner</span>
+          <span class="count">Circuits &amp; Architecture Thrust</span>
+        </div>
+      </div>
+
+      <div class="inst-card cornell">
+        <div class="inst-card-seal">
+          <!-- Cornell: stacked C shield -->
+          <svg viewBox="0 0 88 88" fill="none" stroke="currentColor" stroke-width="1.4">
+            <path d="M44 10 L68 20 L68 52 C68 65 58 74 44 78 C30 74 20 65 20 52 L20 20 Z" stroke-width="1.8"/>
+            <path d="M52 32 Q44 27 36 32 Q31 37 31 44 Q31 51 36 56 Q44 61 52 56" stroke-width="1.6" stroke-linecap="round"/>
+            <text x="44" y="70" font-size="6.5" text-anchor="middle" fill="currentColor" stroke="none" font-family="serif" letter-spacing="1">CORNELL</text>
+          </svg>
+        </div>
+        <div class="inst-card-body">
+          <h4>Cornell University</h4>
+          <span class="role-tag">Consortium Partner</span>
+          <span class="count">Devices &amp; Materials Thrust</span>
+        </div>
+      </div>
+
+      <div class="inst-card northeastern">
+        <div class="inst-card-seal">
+          <!-- Northeastern: N monogram in circle -->
+          <svg viewBox="0 0 88 88" fill="none" stroke="currentColor" stroke-width="1.4">
+            <circle cx="44" cy="44" r="28" stroke-width="1.8"/>
+            <circle cx="44" cy="44" r="24" stroke-width=".7"/>
+            <path d="M34 58 L34 30 L54 58 L54 30" stroke-width="2.2" stroke-linejoin="round" stroke-linecap="round"/>
+            <text x="44" y="82" font-size="6" text-anchor="middle" fill="currentColor" stroke="none" font-family="serif" letter-spacing="1">NEU</text>
+          </svg>
+        </div>
+        <div class="inst-card-body">
+          <h4>Northeastern University</h4>
+          <span class="role-tag">Consortium Partner</span>
+          <span class="count">Business &amp; Socioeconomic Impacts Thrust</span>
+        </div>
+      </div>
+
+      <div class="inst-card auburn">
+        <div class="inst-card-seal">
+          <!-- Auburn: A in circle -->
+          <svg viewBox="0 0 88 88" fill="none" stroke="currentColor" stroke-width="1.4">
+            <circle cx="44" cy="44" r="28" stroke-width="1.8"/>
+            <circle cx="44" cy="44" r="23" stroke-width=".7"/>
+            <path d="M30 58 L44 28 L58 58" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+            <line x1="35" y1="47" x2="53" y2="47" stroke-width="1.6"/>
+            <text x="44" y="82" font-size="6" text-anchor="middle" fill="currentColor" stroke="none" font-family="serif" letter-spacing="1">AUBURN</text>
+          </svg>
+        </div>
+        <div class="inst-card-body">
+          <h4>Auburn University</h4>
+          <span class="role-tag">Consortium Partner</span>
+          <span class="count">Integration &amp; Interfaces Thrust</span>
+        </div>
+      </div>
+
+      <div class="inst-card northwestern">
+        <div class="inst-card-seal">
+          <!-- Northwestern: NU circle seal -->
+          <svg viewBox="0 0 88 88" fill="none" stroke="currentColor" stroke-width="1.4">
+            <circle cx="44" cy="44" r="28" stroke-width="1.8"/>
+            <circle cx="44" cy="44" r="22" stroke-width=".7"/>
+            <path d="M31 57 L31 32 L44 57 L57 32 L57 57" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+            <text x="44" y="82" font-size="6" text-anchor="middle" fill="currentColor" stroke="none" font-family="serif" letter-spacing="1">NU</text>
+          </svg>
+        </div>
+        <div class="inst-card-body">
+          <h4>Northwestern University</h4>
+          <span class="role-tag">Consortium Partner</span>
+          <span class="count">Device Physics</span>
+        </div>
+      </div>
+
+      <div class="inst-card yokohama">
+        <div class="inst-card-seal">
+          <!-- Yokohama: Y in octagonal frame -->
+          <svg viewBox="0 0 88 88" fill="none" stroke="currentColor" stroke-width="1.4">
+            <polygon points="44,12 64,20 74,40 74,52 64,68 44,76 24,68 14,52 14,40 24,20" stroke-width="1.8"/>
+            <path d="M34 30 L44 46 L54 30" stroke-width="2.2" stroke-linejoin="round" stroke-linecap="round"/>
+            <line x1="44" y1="46" x2="44" y2="62" stroke-width="2.2" stroke-linecap="round"/>
+            <text x="44" y="82" font-size="5" text-anchor="middle" fill="currentColor" stroke="none" font-family="serif" letter-spacing=".5">YOKOHAMA</text>
+          </svg>
+        </div>
+        <div class="inst-card-body">
+          <h4>Yokohama National University</h4>
+          <span class="role-tag">International Partner</span>
+          <span class="count">AQFP Superconductive Circuits</span>
+        </div>
+      </div>
+
+      <div class="inst-card seeqc">
+        <div class="inst-card-seal">
+          <!-- SeeQC: quantum-dot motif -->
+          <svg viewBox="0 0 88 88" fill="none" stroke="currentColor" stroke-width="1.4">
+            <circle cx="44" cy="44" r="20" stroke-width="1.8"/>
+            <circle cx="44" cy="44" r="5" stroke-width="1.2"/>
+            <line x1="44" y1="18" x2="44" y2="30" stroke-width="1.4"/>
+            <line x1="44" y1="58" x2="44" y2="70" stroke-width="1.4"/>
+            <line x1="18" y1="44" x2="30" y2="44" stroke-width="1.4"/>
+            <line x1="58" y1="44" x2="70" y2="44" stroke-width="1.4"/>
+            <line x1="26" y1="26" x2="35" y2="35" stroke-width="1.1"/>
+            <line x1="53" y1="53" x2="62" y2="62" stroke-width="1.1"/>
+            <line x1="62" y1="26" x2="53" y2="35" stroke-width="1.1"/>
+            <line x1="35" y1="53" x2="26" y2="62" stroke-width="1.1"/>
+            <text x="44" y="82" font-size="7" text-anchor="middle" fill="currentColor" stroke="none" font-family="sans-serif" letter-spacing="1">SeeQC</text>
+          </svg>
+        </div>
+        <div class="inst-card-body">
+          <h4>SeeQC Inc.</h4>
+          <span class="role-tag">Industry Partner</span>
+          <span class="count">High-Density Memory Systems</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!--
+    EMBLEM STRIP — paste real university seal <img> tags inside each .emblem div
+    to replace the emoji placeholders. Recommended: circular PNG/SVG at 130×130px.
+    The strip loops automatically and pauses on hover.
+    Example: <img src="images/seal-usc.png" alt="USC seal" style="width:70%;height:70%;object-fit:contain;">
+  -->
+  <div class="emblem-strip">
+    <div class="emblem-track" id="emblem-track">
+      <!-- first set — replace <img> inside each .emblem div with a real seal PNG when available -->
+      <div class="emblem usc"         title="University of Southern California"><svg viewBox="0 0 88 88" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M44 10 L72 22 L72 52 C72 66 58 76 44 80 C30 76 16 66 16 52 L16 22 Z"/><line x1="44" y1="28" x2="44" y2="62" stroke-width="1.8"/><path d="M38 28 L44 24 L50 28"/><ellipse cx="44" cy="50" rx="9" ry="7" stroke-width="1.4"/></svg></div>
+      <div class="emblem rochester"   title="University of Rochester"><svg viewBox="0 0 88 88" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M44 10 L66 18 L66 50 C66 63 56 72 44 76 C32 72 22 63 22 50 L22 18 Z"/><path d="M32 32 L32 54 M32 32 L44 43 L56 32 L56 54" stroke-width="1.6"/></svg></div>
+      <div class="emblem cornell"     title="Cornell University"><svg viewBox="0 0 88 88" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M44 10 L68 20 L68 52 C68 65 58 74 44 78 C30 74 20 65 20 52 L20 20 Z"/><path d="M52 32 Q44 27 36 32 Q31 37 31 44 Q31 51 36 56 Q44 61 52 56" stroke-linecap="round"/></svg></div>
+      <div class="emblem northeastern" title="Northeastern University"><svg viewBox="0 0 88 88" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="44" cy="44" r="28"/><circle cx="44" cy="44" r="24" stroke-width=".8"/><path d="M34 58 L34 30 L54 58 L54 30" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round"/></svg></div>
+      <div class="emblem auburn"      title="Auburn University"><svg viewBox="0 0 88 88" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="44" cy="44" r="28"/><path d="M30 58 L44 28 L58 58" stroke-width="2.2" stroke-linejoin="round" stroke-linecap="round"/><line x1="35" y1="47" x2="53" y2="47" stroke-width="1.8"/></svg></div>
+      <div class="emblem northwestern" title="Northwestern University"><svg viewBox="0 0 88 88" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="44" cy="44" r="28"/><path d="M31 57 L31 32 L44 57 L57 32 L57 57" stroke-width="2.2" stroke-linejoin="round" stroke-linecap="round"/></svg></div>
+      <div class="emblem yokohama"    title="Yokohama National University"><svg viewBox="0 0 88 88" fill="none" stroke="currentColor" stroke-width="1.6"><polygon points="44,12 64,20 74,40 74,52 64,68 44,76 24,68 14,52 14,40 24,20"/><path d="M34 30 L44 46 L54 30" stroke-width="2.2" stroke-linejoin="round" stroke-linecap="round"/><line x1="44" y1="46" x2="44" y2="62" stroke-width="2.2" stroke-linecap="round"/></svg></div>
+      <div class="emblem seeqc"       title="SeeQC Inc."><svg viewBox="0 0 88 88" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="44" cy="44" r="20"/><circle cx="44" cy="44" r="5" stroke-width="1.4"/><line x1="44" y1="18" x2="44" y2="30"/><line x1="44" y1="58" x2="44" y2="70"/><line x1="18" y1="44" x2="30" y2="44"/><line x1="58" y1="44" x2="70" y2="44"/><line x1="26" y1="26" x2="35" y2="35" stroke-width="1.2"/><line x1="53" y1="53" x2="62" y2="62" stroke-width="1.2"/><line x1="62" y1="26" x2="53" y2="35" stroke-width="1.2"/><line x1="35" y1="53" x2="26" y2="62" stroke-width="1.2"/></svg></div>
+      <!-- duplicate set for seamless loop -->
+      <div class="emblem usc"         title="University of Southern California"><svg viewBox="0 0 88 88" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M44 10 L72 22 L72 52 C72 66 58 76 44 80 C30 76 16 66 16 52 L16 22 Z"/><line x1="44" y1="28" x2="44" y2="62" stroke-width="1.8"/><path d="M38 28 L44 24 L50 28"/><ellipse cx="44" cy="50" rx="9" ry="7" stroke-width="1.4"/></svg></div>
+      <div class="emblem rochester"   title="University of Rochester"><svg viewBox="0 0 88 88" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M44 10 L66 18 L66 50 C66 63 56 72 44 76 C32 72 22 63 22 50 L22 18 Z"/><path d="M32 32 L32 54 M32 32 L44 43 L56 32 L56 54" stroke-width="1.6"/></svg></div>
+      <div class="emblem cornell"     title="Cornell University"><svg viewBox="0 0 88 88" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M44 10 L68 20 L68 52 C68 65 58 74 44 78 C30 74 20 65 20 52 L20 20 Z"/><path d="M52 32 Q44 27 36 32 Q31 37 31 44 Q31 51 36 56 Q44 61 52 56" stroke-linecap="round"/></svg></div>
+      <div class="emblem northeastern" title="Northeastern University"><svg viewBox="0 0 88 88" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="44" cy="44" r="28"/><circle cx="44" cy="44" r="24" stroke-width=".8"/><path d="M34 58 L34 30 L54 58 L54 30" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round"/></svg></div>
+      <div class="emblem auburn"      title="Auburn University"><svg viewBox="0 0 88 88" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="44" cy="44" r="28"/><path d="M30 58 L44 28 L58 58" stroke-width="2.2" stroke-linejoin="round" stroke-linecap="round"/><line x1="35" y1="47" x2="53" y2="47" stroke-width="1.8"/></svg></div>
+      <div class="emblem northwestern" title="Northwestern University"><svg viewBox="0 0 88 88" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="44" cy="44" r="28"/><path d="M31 57 L31 32 L44 57 L57 32 L57 57" stroke-width="2.2" stroke-linejoin="round" stroke-linecap="round"/></svg></div>
+      <div class="emblem yokohama"    title="Yokohama National University"><svg viewBox="0 0 88 88" fill="none" stroke="currentColor" stroke-width="1.6"><polygon points="44,12 64,20 74,40 74,52 64,68 44,76 24,68 14,52 14,40 24,20"/><path d="M34 30 L44 46 L54 30" stroke-width="2.2" stroke-linejoin="round" stroke-linecap="round"/><line x1="44" y1="46" x2="44" y2="62" stroke-width="2.2" stroke-linecap="round"/></svg></div>
+      <div class="emblem seeqc"       title="SeeQC Inc."><svg viewBox="0 0 88 88" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="44" cy="44" r="20"/><circle cx="44" cy="44" r="5" stroke-width="1.4"/><line x1="44" y1="18" x2="44" y2="30"/><line x1="44" y1="58" x2="44" y2="70"/><line x1="18" y1="44" x2="30" y2="44"/><line x1="58" y1="44" x2="70" y2="44"/><line x1="26" y1="26" x2="35" y2="35" stroke-width="1.2"/><line x1="53" y1="53" x2="62" y2="62" stroke-width="1.2"/><line x1="62" y1="26" x2="53" y2="35" stroke-width="1.2"/><line x1="35" y1="53" x2="26" y2="62" stroke-width="1.2"/></svg></div>
+    </div>
+  </div>
+</section>
+
+<!-- JOIN US -->
+<section class="join-cta" id="join-us">
+  <div class="wrap">
+    <h2>Join the Expedition</h2>
+    <p>We're recruiting graduate researchers, postdocs, and collaborators across circuit design, device fabrication, computer architecture, and socioeconomic impact research.</p>
+    <a href="#" class="btn btn-primary btn-lg">See Open Positions</a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="wrap">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="index.html" class="logo">          NSF DISCoVER
+        </a>
+        <p>An NSF Expeditions in Computing project exploring superconductor electronics as a post-CMOS computing technology. Led by USC Viterbi.</p>
+      </div>
+      <div class="footer-col">
+        <h5>Explore</h5>
+        <a href="index.html">About the Expedition</a>
+        <a href="discover-research.html">Research</a>
+        <a href="discover-media.html">Media Hub</a>
+        <a href="discover-impact.html">Impact</a>
+        <a href="discover-media.html#publications">Publications</a>
+      </div>
+      <div class="footer-col">
+        <h5>People</h5>
+        <a href="discover-team.html#leadership">Faculty &amp; Team</a>
+        <a href="discover-team.html#researchers">Affiliated Researchers</a>
+        <a href="discover-team.html#partner-institutions">Partner Universities</a>
+        <a href="#join-us">Join Us</a>
+      </div>
+      <div class="footer-col">
+        <h5>Stay Current</h5>
+        <a href="discover-media.html#seminars">Upcoming Seminars</a>
+        <a href="#">NSF Award #2124453</a>
+        <a href="#">Contact</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 DISCoVER Expedition · University of Southern California</p>
+      <div class="socials">
+        <a href="#" aria-label="YouTube"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M22 8.5s-.2-1.6-.8-2.3c-.8-.9-1.7-.9-2.1-1C16.3 5 12 5 12 5s-4.3 0-7.1.2c-.4.1-1.3.1-2.1 1C2.2 6.9 2 8.5 2 8.5S1.8 10.4 1.8 12.3v1.8c0 1.9.2 3.8.2 3.8s.2 1.6.8 2.3c.8.9 1.9.9 2.4 1 1.7.2 7.3 0 7.3 0s4.3 0 7.1-.2c.4-.1 1.3-.1 2.1-1 .6-.7.8-2.3.8-2.3s.2-1.9.2-3.8v-1.8c0-1.9-.2-3.8-.2-3.8z"/><path d="M9.7 15.3V9.4l5.1 3z"/></svg></a>
+        <a href="#" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="3.5"/><circle cx="17.5" cy="6.5" r="0.8" fill="currentColor"/></svg></a>
+        <a href="#" aria-label="LinkedIn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M7 10v7M7 7v.5M12 17v-4.5a2.5 2.5 0 0 1 5 0V17M12 12.5V17"/></svg></a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // ── Header scroll shadow (matches other pages) ────────────────────────────
+  const header = document.querySelector('header');
+  function handleScroll() {
+    header.classList.toggle('scrolled', window.scrollY > 40);
+  }
+  window.addEventListener('scroll', handleScroll, { passive: true });
+  handleScroll();
+
+  // ── Helper: normalize text for matching ───────────────────────────────────
+  function normalize(str) {
+    return str.toLowerCase().replace(/[^a-z0-9 ]/g, ' ');
+  }
+
+  // ── Leadership search (search-only, no topic filter pills) ───────────────
+  function applyLeaderFilter() {
+    const q = normalize(currentQuery);
+    const cards = document.querySelectorAll('#leader-grid .leader-card');
+    let visible = 0;
+    cards.forEach(card => {
+      const visibleText = normalize(card.textContent || '');
+      const show = !q || visibleText.includes(q);
+      card.dataset.hidden = show ? 'false' : 'true';
+      if (show) visible++;
+    });
+    document.getElementById('leader-no-results').classList.toggle('visible', visible === 0);
+  }
+
+  // ── Affiliated researchers search ─────────────────────────────────────────
+  function applyResearcherFilter() {
+    const q = normalize(currentQuery);
+    const rows = document.querySelectorAll('#researcher-list .researcher-row');
+    let visible = 0;
+    rows.forEach(row => {
+      const visibleText = normalize(row.textContent || '');
+      const show = !q || visibleText.includes(q);
+      row.dataset.hidden = show ? 'false' : 'true';
+      if (show) visible++;
+    });
+    document.getElementById('researcher-no-results').classList.toggle('visible', visible === 0);
+  }
+
+  // ── Global search wiring ───────────────────────────────────────────────────
+  let currentQuery = '';
+  let searchTimeout;
+  const searchInput = document.getElementById('global-search');
+  const searchCountEl = document.getElementById('search-count');
+
+  searchInput.addEventListener('input', () => {
+    clearTimeout(searchTimeout);
+    searchTimeout = setTimeout(() => {
+      currentQuery = searchInput.value.trim();
+      applyLeaderFilter();
+      applyResearcherFilter();
+      updateSearchCount();
+      toggleEmptySections();
+    }, 180);
+  });
+
+  function updateSearchCount() {
+    if (!currentQuery) {
+      searchCountEl.textContent = '';
+      return;
+    }
+    const leaderVisible = [...document.querySelectorAll('#leader-grid .leader-card')].filter(el => el.dataset.hidden !== 'true').length;
+    const researcherVisible = [...document.querySelectorAll('#researcher-list .researcher-row')].filter(el => el.dataset.hidden !== 'true').length;
+    const total = leaderVisible + researcherVisible;
+    searchCountEl.textContent = total === 0 ? 'No results' : `${total} result${total === 1 ? '' : 's'}`;
+  }
+
+  // Hide an entire section (heading + all) while a search is active and it
+  // has zero visible people, so there's no dangling empty heading.
+  function toggleEmptySections() {
+    const sectionsToCheck = [
+      { selector: '#leadership', items: '#leader-grid .leader-card' },
+      { selector: '#researchers', items: '#researcher-list .researcher-row' },
+    ];
+    sectionsToCheck.forEach(({ selector, items }) => {
+      const section = document.querySelector(selector);
+      if (!section) return;
+      if (!currentQuery) {
+        section.style.display = '';
+        return;
+      }
+      const visibleCount = [...section.querySelectorAll(items)]
+        .filter(el => el.dataset.hidden !== 'true').length;
+      section.style.display = visibleCount === 0 ? 'none' : '';
+    });
+  }
+</script>
+
+</body>
+</html>
