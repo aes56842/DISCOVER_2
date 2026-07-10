@@ -111,7 +111,8 @@
   .cred-label{font-family:var(--font-mono);font-size:10.5px;letter-spacing:.08em;color:var(--slate-dim);text-transform:uppercase;display:block;margin-bottom:14px;}
   .people-row{display:flex;gap:18px;flex-wrap:wrap;align-items:center;}
   .person{display:flex;align-items:center;gap:9px;}
-  .person-photo{width:34px;height:34px;border-radius:50%;flex-shrink:0;background:var(--bg-card);border:1px solid var(--line);}
+  .person-photo{width:34px;height:34px;border-radius:50%;flex-shrink:0;background:var(--bg-card);border:1px solid var(--line);overflow:hidden;}
+  .person-photo img{width:100%;height:100%;object-fit:cover;display:block;}
   .person div{display:flex;flex-direction:column;}
   .person strong{font-size:13px;font-weight:600;color:var(--white);}
   .person span{font-size:11.5px;color:var(--slate-dim);}
@@ -484,22 +485,22 @@
       <span class="cred-label">Led by</span>
       <div class="people-row">
         <div class="person">
-          <div class="person-photo" aria-hidden="true"></div>
+          <div class="person-photo"><img src="massoud_pedram.jpeg" alt="Massoud Pedram" onerror="this.remove()"></div>
           <div><strong>Massoud Pedram</strong><span>Director · USC</span></div>
         </div>
         <div class="person">
-          <div class="person-photo" aria-hidden="true"></div>
+          <div class="person-photo"><img src="eby_g_friedman.jpg" alt="Eby G. Friedman" onerror="this.remove()"></div>
           <div><strong>Eby G. Friedman</strong><span>Assoc. Director · U. Rochester</span></div>
         </div>
         <div class="person">
-          <div class="person-photo" aria-hidden="true"></div>
+          <div class="person-photo"><img src="huili-grace-xing.jpg" alt="Grace Xing" onerror="this.remove()"></div>
           <div><strong>Grace Xing</strong><span>Devices &amp; Materials · Cornell</span></div>
         </div>
         <div class="person">
-          <div class="person-photo" aria-hidden="true"></div>
+          <div class="person-photo"><img src="dr_yanzhi_wang.jpeg" alt="Yanzhi Wang" onerror="this.remove()"></div>
           <div><strong>Yanzhi Wang</strong><span>Impacts · Northeastern</span></div>
         </div>
-        <a href="#" class="person person-more">+ 5 more →</a>
+        <a href="discover-team.html" class="person person-more">+ 5 more →</a>
       </div>
     </div>
     <p class="cred-claim">DISCoVER's superconducting chips are projected to deliver <strong>100× the energy efficiency</strong> of CMOS at comparable performance, and <strong>10× the processing speed</strong> at equal power draw — net of cryogenic cooling costs.<sup>1</sup></p>
