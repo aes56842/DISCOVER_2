@@ -92,12 +92,16 @@
   .leader-photo{aspect-ratio:4/5;position:relative;background:linear-gradient(155deg,#1c1a26,#0d0c12);overflow:hidden;}
   .leader-photo img{width:100%;height:100%;object-fit:cover;display:block;}
   .leader-card.is-director .leader-photo{background:linear-gradient(155deg,#241621,#0d0c12);}
+  .leader-card.is-manager .leader-photo{background:linear-gradient(155deg,#1a1c2e,#0d0c12);}
   .leader-role-pin{position:absolute;top:14px;left:14px;font-family:var(--font-mono);font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:#FBF8F4;background:var(--cardinal);border-radius:3px;padding:4px 9px;z-index:2;}
   .leader-card.is-director .leader-role-pin{background:var(--gold);color:#1A1408;}
+  .leader-card.is-manager .leader-role-pin{background:var(--violet);color:#12111c;}
+  .leader-card.is-manager{border-color:rgba(107,116,224,.4);}
   .leader-body{padding:18px 20px 22px;}
   .leader-body h3{font-family:var(--font-display);font-size:19px;font-weight:600;margin-bottom:4px;line-height:1.25;}
   .leader-role{font-size:13px;color:var(--cardinal);font-weight:600;margin-bottom:6px;}
   .leader-card.is-director .leader-role{color:var(--gold);}
+  .leader-card.is-manager .leader-role{color:var(--violet);}
   .leader-inst{font-size:12.5px;color:var(--slate);display:flex;align-items:center;gap:6px;margin-bottom:12px;}
   .leader-inst svg{width:13px;height:13px;flex-shrink:0;}
   .leader-bio{font-size:13px;color:var(--slate);line-height:1.55;}
@@ -156,7 +160,6 @@
   .inst-card.yokohama    .inst-card-seal{background:rgba(0,91,161,.1);}
   .inst-card.yokohama    .inst-card-seal svg{color:#5BA4CF;}
   .inst-card.seeqc       .inst-card-seal{background:rgba(107,116,224,.1);}
-  .inst-card.seeqc       .inst-card-seal svg{color:#6B74E0;}
   .inst-card-body{padding:14px 16px 16px;display:flex;flex-direction:column;gap:5px;flex:1;}
   .inst-card-body h4{font-family:var(--font-display);font-size:14px;font-weight:600;line-height:1.3;}
   .inst-card .role-tag{font-family:var(--font-mono);font-size:10px;letter-spacing:.04em;text-transform:uppercase;border-radius:20px;padding:2px 9px;border:1px solid;display:inline-block;align-self:flex-start;}
@@ -242,7 +245,7 @@
      - Social links: edit the href values inside .leader-links (LinkedIn,
        email, Google Scholar icons are provided — delete any you don't need).
      - data-topic on the card controls which filter pill shows it. Use:
-         director | thrust-leader
+         director | thrust-leader | senior-researcher
      - data-title is used by the search box — keep it roughly matching
        the visible name + role + institution so search results make sense.
 
@@ -325,7 +328,7 @@
       <div>
         <h2>Leadership</h2>
       </div>
-      <p class="sec-sub">The Director, Associate Director, and Thrust Leaders guiding DISCoVER's five research thrusts.</p>
+      <p class="sec-sub">The Director, Associate Director, Senior Researcher, and Thrust Leaders guiding DISCoVER's five research thrusts.</p>
     </div>
 
     <div class="leader-grid" id="leader-grid">
@@ -367,6 +370,50 @@
             University of Rochester
           </div>
           <p class="leader-bio">Distinguished professor of electrical and computer engineering, leading design methodologies and circuits for superconductive systems.</p>
+          <div class="leader-links">
+            <a href="#" aria-label="Email"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg></a>
+            <a href="#" aria-label="LinkedIn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M7 10v7M7 7v.5M12 17v-4.5a2.5 2.5 0 0 1 5 0V17M12 12.5V17"/></svg></a>
+            <a href="#" aria-label="Google Scholar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 4 2 9l10 5 10-5-10-5z"/><path d="M6 11v5c0 1.5 2.7 3 6 3s6-1.5 6-3v-5"/></svg></a>
+          </div>
+        </div>
+      </div>
+
+      <!-- SENIOR RESEARCHER — OVERALL PROJECT MANAGEMENT (highlighted) -->
+      <div class="leader-card is-manager" data-topic="senior-researcher" data-title="Sasan Razmkhah Senior Researcher Project Manager University of Southern California">
+        <div class="leader-photo">
+          <span class="leader-role-pin">Senior Researcher</span>
+          <img src="images/team-sasan-razmkhah.jpg" alt="Sasan Razmkhah" onerror="this.remove()">
+        </div>
+        <div class="leader-body">
+          <h3>Sasan Razmkhah</h3>
+          <div class="leader-role">Senior Researcher · Overall Project Management</div>
+          <div class="leader-inst">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 3 2 8l10 5 10-5-10-5z"/><path d="M6 10v6c0 1 3 3 6 3s6-2 6-3v-6"/></svg>
+            University of Southern California
+          </div>
+          <p class="leader-bio">Coordinates day-to-day operations across DISCoVER's five research thrusts, working directly with the Director to keep the overall project on track.</p>
+          <div class="leader-links">
+            <a href="#" aria-label="Email"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg></a>
+            <a href="#" aria-label="LinkedIn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M7 10v7M7 7v.5M12 17v-4.5a2.5 2.5 0 0 1 5 0V17M12 12.5V17"/></svg></a>
+            <a href="#" aria-label="Google Scholar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 4 2 9l10 5 10-5-10-5z"/><path d="M6 11v5c0 1.5 2.7 3 6 3s6-1.5 6-3v-5"/></svg></a>
+          </div>
+        </div>
+      </div>
+
+      <!-- THRUST LEADER — INTEGRATION & INTERFACES -->
+      <div class="leader-card" data-topic="thrust-leader" data-title="Michael Hamilton Thrust Leader Integration and Interfaces Auburn University">
+        <div class="leader-photo">
+          <span class="leader-role-pin">Thrust Leader</span>
+          <img src="images/team-michael-hamilton.jpg" alt="Michael C. Hamilton" onerror="this.remove()">
+        </div>
+        <div class="leader-body">
+          <h3>Michael C. Hamilton</h3>
+          <div class="leader-role">Thrust Leader, Integration &amp; Interfaces</div>
+          <div class="leader-inst">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 3 2 8l10 5 10-5-10-5z"/><path d="M6 10v6c0 1 3 3 6 3s6-2 6-3v-6"/></svg>
+            Auburn University
+          </div>
+          <p class="leader-bio">Leads research on interconnects and devices for superconductive systems, including signal integrity at cryogenic temperatures.</p>
           <div class="leader-links">
             <a href="#" aria-label="Email"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg></a>
             <a href="#" aria-label="LinkedIn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M7 10v7M7 7v.5M12 17v-4.5a2.5 2.5 0 0 1 5 0V17M12 12.5V17"/></svg></a>
@@ -441,28 +488,6 @@
         </div>
       </div>
 
-      <!-- THRUST LEADER — INTEGRATION & INTERFACES -->
-      <div class="leader-card" data-topic="thrust-leader" data-title="Michael Hamilton Thrust Leader Integration and Interfaces Auburn University">
-        <div class="leader-photo">
-          <span class="leader-role-pin">Thrust Leader</span>
-          <img src="images/team-michael-hamilton.jpg" alt="Michael C. Hamilton" onerror="this.remove()">
-        </div>
-        <div class="leader-body">
-          <h3>Michael C. Hamilton</h3>
-          <div class="leader-role">Thrust Leader, Integration &amp; Interfaces</div>
-          <div class="leader-inst">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 3 2 8l10 5 10-5-10-5z"/><path d="M6 10v6c0 1 3 3 6 3s6-2 6-3v-6"/></svg>
-            Auburn University
-          </div>
-          <p class="leader-bio">Leads research on interconnects and devices for superconductive systems, including signal integrity at cryogenic temperatures.</p>
-          <div class="leader-links">
-            <a href="#" aria-label="Email"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg></a>
-            <a href="#" aria-label="LinkedIn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M7 10v7M7 7v.5M12 17v-4.5a2.5 2.5 0 0 1 5 0V17M12 12.5V17"/></svg></a>
-            <a href="#" aria-label="Google Scholar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 4 2 9l10 5 10-5-10-5z"/><path d="M6 11v5c0 1.5 2.7 3 6 3s6-1.5 6-3v-5"/></svg></a>
-          </div>
-        </div>
-      </div>
-
       <!-- ADD NEW LEADERSHIP CARDS HERE: copy one of the .leader-card blocks above -->
       <div class="no-results" id="leader-no-results">No leadership profiles match your search or filter.</div>
     </div>
@@ -486,7 +511,64 @@
         - inst-chip class: use one of usc | rochester | cornell | northeastern
                            | auburn | northwestern | yokohama | seeqc
         - Social links: replace href="#" with real URLs; delete any you don't need.
+        - Order below reflects current priority (most active participants first).
       -->
+      <div class="researcher-row" data-title="Oleg Mukhanov SeeQC Inc.">
+        <div class="researcher-photo">
+          <img src="images/team-oleg-mukhanov.jpg" alt="Oleg Mukhanov" onerror="this.remove()">
+        </div>
+        <div class="researcher-body">
+          <h4>Oleg Mukhanov</h4>
+          <div class="researcher-meta">Industry partner — high-density memory systems</div>
+        </div>
+        <span class="inst-chip seeqc">SeeQC Inc.</span>
+        <div class="researcher-links">
+          <a href="#" aria-label="Email"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg></a>
+          <a href="#" aria-label="LinkedIn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M7 10v7M7 7v.5M12 17v-4.5a2.5 2.5 0 0 1 5 0V17M12 12.5V17"/></svg></a>
+        </div>
+      </div>
+      <div class="researcher-row" data-title="Selcuk Kose University of Rochester">
+        <div class="researcher-photo">
+          <img src="images/team-selcuk-kose.jpg" alt="Selçuk Köse" onerror="this.remove()">
+        </div>
+        <div class="researcher-body">
+          <h4>Selçuk Köse</h4>
+          <div class="researcher-meta">Professor, electrical &amp; computer engineering</div>
+        </div>
+        <span class="inst-chip rochester">Rochester</span>
+        <div class="researcher-links">
+          <a href="#" aria-label="Email"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg></a>
+          <a href="#" aria-label="LinkedIn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M7 10v7M7 7v.5M12 17v-4.5a2.5 2.5 0 0 1 5 0V17M12 12.5V17"/></svg></a>
+        </div>
+      </div>
+      <div class="researcher-row" data-title="Roman Sobolewski University of Rochester seminar series outreach Electrical Computer Engineering Physics Astronomy Materials Science Laboratory for Laser Energetics">
+        <div class="researcher-photo">
+          <img src="images/team-roman-sobolewski.jpg" alt="Roman Sobolewski" onerror="this.remove()">
+        </div>
+        <div class="researcher-body">
+          <h4>Prof. Dr. Roman Sobolewski</h4>
+          <div class="researcher-meta">Professor, ECE, Physics &amp; Astronomy, and Materials Science · Senior Scientist, Laboratory for Laser Energetics — Seminar Series &amp; Outreach</div>
+        </div>
+        <span class="inst-chip rochester">Rochester</span>
+        <div class="researcher-links">
+          <a href="mailto:roman.sobolewski@rochester.edu" aria-label="Email"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg></a>
+          <a href="http://www.ece.rochester.edu/users/roman/" target="_blank" rel="noopener noreferrer" aria-label="Website"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.5 4 5.5 4 9s-1.5 6.5-4 9c-2.5-2.5-4-5.5-4-9s1.5-6.5 4-9z"/></svg></a>
+        </div>
+      </div>
+      <div class="researcher-row" data-title="Julie Albright University of Southern California">
+        <div class="researcher-photo">
+          <img src="images/team-julia-albright.jpg" alt="Julie Albright" onerror="this.remove()">
+        </div>
+        <div class="researcher-body">
+          <h4>Julie Albright</h4>
+          <div class="researcher-meta">Program &amp; outreach coordination</div>
+        </div>
+        <span class="inst-chip usc">USC</span>
+        <div class="researcher-links">
+          <a href="#" aria-label="Email"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg></a>
+          <a href="#" aria-label="LinkedIn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M7 10v7M7 7v.5M12 17v-4.5a2.5 2.5 0 0 1 5 0V17M12 12.5V17"/></svg></a>
+        </div>
+      </div>
       <div class="researcher-row" data-title="Ivan Petrovich Nevirkovets Northwestern University">
         <div class="researcher-photo">
           <img src="images/team-ivan-nevirkovets.jpg" alt="Ivan Petrovich Nevirkovets" onerror="this.remove()">
@@ -496,20 +578,6 @@
           <div class="researcher-meta">Research faculty, device physics</div>
         </div>
         <span class="inst-chip northwestern">Northwestern</span>
-        <div class="researcher-links">
-          <a href="#" aria-label="Email"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg></a>
-          <a href="#" aria-label="LinkedIn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M7 10v7M7 7v.5M12 17v-4.5a2.5 2.5 0 0 1 5 0V17M12 12.5V17"/></svg></a>
-        </div>
-      </div>
-      <div class="researcher-row" data-title="Julia Albright University of Southern California">
-        <div class="researcher-photo">
-          <img src="images/team-julia-albright.jpg" alt="Julia Albright" onerror="this.remove()">
-        </div>
-        <div class="researcher-body">
-          <h4>Julia Albright</h4>
-          <div class="researcher-meta">Program &amp; outreach coordination</div>
-        </div>
-        <span class="inst-chip usc">USC</span>
         <div class="researcher-links">
           <a href="#" aria-label="Email"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg></a>
           <a href="#" aria-label="LinkedIn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M7 10v7M7 7v.5M12 17v-4.5a2.5 2.5 0 0 1 5 0V17M12 12.5V17"/></svg></a>
@@ -552,48 +620,6 @@
           <div class="researcher-meta">Research faculty — AQFP large-scale integration</div>
         </div>
         <span class="inst-chip yokohama">Yokohama Nat'l Univ.</span>
-        <div class="researcher-links">
-          <a href="#" aria-label="Email"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg></a>
-          <a href="#" aria-label="LinkedIn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M7 10v7M7 7v.5M12 17v-4.5a2.5 2.5 0 0 1 5 0V17M12 12.5V17"/></svg></a>
-        </div>
-      </div>
-      <div class="researcher-row" data-title="Oleg Mukhanov SeeQC Inc.">
-        <div class="researcher-photo">
-          <img src="images/team-oleg-mukhanov.jpg" alt="Oleg Mukhanov" onerror="this.remove()">
-        </div>
-        <div class="researcher-body">
-          <h4>Oleg Mukhanov</h4>
-          <div class="researcher-meta">Industry partner — high-density memory systems</div>
-        </div>
-        <span class="inst-chip seeqc">SeeQC Inc.</span>
-        <div class="researcher-links">
-          <a href="#" aria-label="Email"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg></a>
-          <a href="#" aria-label="LinkedIn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M7 10v7M7 7v.5M12 17v-4.5a2.5 2.5 0 0 1 5 0V17M12 12.5V17"/></svg></a>
-        </div>
-      </div>
-      <div class="researcher-row" data-title="Selcuk Kose University of Rochester">
-        <div class="researcher-photo">
-          <img src="images/team-selcuk-kose.jpg" alt="Selçuk Köse" onerror="this.remove()">
-        </div>
-        <div class="researcher-body">
-          <h4>Selçuk Köse</h4>
-          <div class="researcher-meta">Professor, electrical &amp; computer engineering</div>
-        </div>
-        <span class="inst-chip rochester">Rochester</span>
-        <div class="researcher-links">
-          <a href="#" aria-label="Email"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg></a>
-          <a href="#" aria-label="LinkedIn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M7 10v7M7 7v.5M12 17v-4.5a2.5 2.5 0 0 1 5 0V17M12 12.5V17"/></svg></a>
-        </div>
-      </div>
-      <div class="researcher-row" data-title="Sasan Razmkhah University of Southern California">
-        <div class="researcher-photo">
-          <img src="images/team-sasan-razmkhah.jpg" alt="Sasan Razmkhah" onerror="this.remove()">
-        </div>
-        <div class="researcher-body">
-          <h4>Sasan Razmkhah</h4>
-          <div class="researcher-meta">Researcher, circuits &amp; architecture</div>
-        </div>
-        <span class="inst-chip usc">USC</span>
         <div class="researcher-links">
           <a href="#" aria-label="Email"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg></a>
           <a href="#" aria-label="LinkedIn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M7 10v7M7 7v.5M12 17v-4.5a2.5 2.5 0 0 1 5 0V17M12 12.5V17"/></svg></a>
