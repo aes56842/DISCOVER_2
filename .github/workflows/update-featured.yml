@@ -2,9 +2,14 @@ name: Update Featured Section
 
 on:
   schedule:
-    # Runs at the top of every hour (GitHub's cron is "best effort" —
-    # usually within a few minutes of the hour, occasionally later).
-    - cron: "0 * * * *"
+    # Runs at :13 past every hour — NOT on the exact hour. GitHub's own docs
+    # warn that scheduled workflows are delayed most during high-load periods,
+    # and the single busiest moment across all of GitHub Actions is :00 (the
+    # top of the hour), since that's when everyone else's cron jobs fire too.
+    # Offsetting to :13 avoids that pileup and keeps this much closer to a
+    # true hourly cadence. Still "best effort," per GitHub — occasional delays
+    # of a few minutes are normal and fine.
+    - cron: "13 * * * *"
   # Lets you trigger it manually from the Actions tab to test it any time.
   workflow_dispatch: {}
 
