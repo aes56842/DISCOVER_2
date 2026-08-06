@@ -1,0 +1,44 @@
+name: Update Featured Section
+
+on:
+  schedule:
+    # Runs at :13 past every hour — NOT on the exact hour. GitHub's own docs
+    # warn that scheduled workflows are delayed most during high-load periods,
+    # and the single busiest moment across all of GitHub Actions is :00 (the
+    # top of the hour), since that's when everyone else's cron jobs fire too.
+    # Offsetting to :13 avoids that pileup and keeps this much closer to a
+    # true hourly cadence. Still "best effort," per GitHub — occasional delays
+    # of a few minutes are normal and fine.
+    - cron: "13 * * * *"
+  # Lets you trigger it manually from the Actions tab to test it any time.
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+jobs:
+  update-featured:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repo
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Run update script
+        run: python3 scripts/update_featured.py
+
+      - name: Commit changes if anything updated
+        run: |
+          git config user.name "discover-featured-bot"
+          git config user.email "actions@users.noreply.github.com"
+          if git diff --quiet -- discover-media.html; then
+            echo "No changes — featured section already up to date."
+          else
+            git add discover-media.html
+            git commit -m "Auto-update Featured section [skip ci]"
+            git push
+          fi
