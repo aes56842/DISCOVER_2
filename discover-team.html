@@ -94,8 +94,11 @@
   .leader-card.is-director .leader-photo{background:linear-gradient(155deg,#241621,#0d0c12);}
   .leader-card.is-manager .leader-photo{background:linear-gradient(155deg,#1a1c2e,#0d0c12);}
   .leader-role-pin{position:absolute;top:14px;left:14px;font-family:var(--font-mono);font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:#FBF8F4;background:var(--cardinal);border-radius:3px;padding:4px 9px;z-index:2;}
-  .leader-card.is-director .leader-role-pin{background:var(--gold);color:#1A1408;}
-  .leader-card.is-manager .leader-role-pin{background:var(--violet);color:#12111c;}
+
+.leader-card.is-director .leader-role-pin{background:var(--gold);color:#1A1408;}
+.leader-card[data-title*="Eby Friedman"] .leader-role-pin{background:var(--gold);color:#1A1408;}
+.leader-card.is-manager .leader-role-pin{background:var(--violet);color:#12111c;}
+  
   .leader-card.is-manager{border-color:rgba(107,116,224,.4);}
   .leader-body{padding:18px 20px 22px;}
   .leader-body h3{font-family:var(--font-display);font-size:19px;font-weight:600;margin-bottom:4px;line-height:1.25;}
