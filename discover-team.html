@@ -141,11 +141,31 @@
 
   /* ── GRADUATE STUDENTS ─────────────────────────────────────────────────── */
   .grad-students{
-    background:var(--bg-raised);
-    border-top:1px solid var(--line);
-    border-bottom:1px solid var(--line);
-    padding-bottom:56px;
-  }
+  position:relative;
+  background:var(--bg-raised);
+  border-top:1px solid var(--line);
+  border-bottom:1px solid var(--line);
+  padding-top:28px;
+  padding-bottom:56px;
+  margin-top:48px;
+}
+
+/* Second divider line above Graduate Students */
+.grad-students::before{
+  content:"";
+  position:absolute;
+  top:-9px;
+  left:0;
+  width:100%;
+  height:1px;
+  background:var(--line);
+}
+
+/* Extra breathing room above the Graduate Students title */
+.grad-students .sec-head{
+  padding-top:52px;
+}
+  
   .gradstu-grid{
     display:grid;
     grid-template-columns:repeat(2,minmax(0,1fr));
