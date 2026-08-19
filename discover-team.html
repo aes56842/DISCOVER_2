@@ -272,6 +272,178 @@
     .gradstu-card{min-height:220px;}
   }
 
+
+  /* ── DISCOVER ALUMNI ───────────────────────────────────────────────── */
+
+.discover-alumni{
+  position:relative;
+  background:var(--bg);
+  border-top:1px solid var(--line);
+  border-bottom:1px solid var(--line);
+  padding:64px 0 72px;
+}
+/* Subtle second divider so Alumni feels connected to the section above */
+.discover-alumni::before{
+  content:"";
+  position:absolute;
+  top:-9px;
+  left:0;
+  width:100%;
+  height:1px;
+  background:var(--line);
+}
+/* Section heading */
+.alumni-head{
+  display:flex;
+  align-items:flex-end;
+  justify-content:space-between;
+  gap:24px;
+  padding-bottom:28px;
+  margin-bottom:32px;
+  border-bottom:1px solid var(--line);
+}
+.alumni-head h2{
+  font-family:var(--font-display);
+  font-size:30px;
+  font-weight:600;
+  letter-spacing:-.01em;
+}
+.alumni-kicker{
+  display:block;
+  font-family:var(--font-mono);
+  font-size:11px;
+  letter-spacing:.1em;
+  text-transform:uppercase;
+  color:var(--gold);
+  margin-bottom:10px;
+}
+.alumni-sub{
+  max-width:440px;
+  color:var(--slate);
+  font-size:14.5px;
+  line-height:1.6;
+}
+/* Alumni card grid */
+.alumni-grid{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:20px;
+}
+/* Individual alumni card */
+.alumni-card{
+  position:relative;
+  overflow:hidden;
+  border:1px solid var(--line);
+  border-radius:10px;
+  background:var(--bg-card);
+  padding:26px 28px;
+  transition:
+    border-color .2s ease,
+    transform .2s ease,
+    background .2s ease;
+}
+.alumni-card:hover{
+  border-color:var(--slate-dim);
+  background:#171620;
+  transform:translateY(-2px);
+}
+/* Small status label */
+.alumni-status{
+  display:inline-block;
+  font-family:var(--font-mono);
+  font-size:10px;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+  color:var(--gold);
+  border:1px solid rgba(201,155,60,.35);
+  border-radius:20px;
+  padding:3px 9px;
+  margin-bottom:16px;
+}
+/* Name */
+.alumni-card h3{
+  font-family:var(--font-display);
+  font-size:21px;
+  font-weight:600;
+  line-height:1.3;
+  color:var(--white);
+  margin-bottom:5px;
+}
+/* Former role */
+.alumni-role{
+  font-size:12.5px;
+  color:var(--slate);
+  margin-bottom:20px;
+}
+/* Current position */
+.alumni-now{
+  border-left:2px solid var(--gold);
+  padding-left:14px;
+  margin-bottom:20px;
+}
+.alumni-now-label{
+  font-family:var(--font-mono);
+  font-size:10px;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+  color:var(--slate-dim);
+  margin-bottom:4px;
+}
+.alumni-now strong{
+  display:block;
+  font-size:14px;
+  line-height:1.5;
+  font-weight:500;
+  color:var(--white);
+}
+/* Alumni story / impact */
+.alumni-story{
+  border-top:1px solid var(--line);
+  padding-top:16px;
+  font-family:var(--font-display);
+  font-size:15px;
+  line-height:1.6;
+  color:var(--slate);
+}
+/* Optional "DISCoVER impact" label */
+.alumni-impact-label{
+  display:block;
+  font-family:var(--font-mono);
+  font-size:10px;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+  color:var(--slate-dim);
+  margin-bottom:5px;
+}
+/* Responsive */
+@media(max-width:800px){
+  .alumni-grid{
+    grid-template-columns:1fr;
+  }
+  .alumni-head{
+    align-items:flex-start;
+    flex-direction:column;
+  }
+}
+@media(max-width:640px){
+  .discover-alumni{
+    padding:48px 0 56px;
+  }
+  .alumni-card{
+    padding:22px 20px;
+  }
+}
+
+
+
+
+
+
+
+
+
+  
+
   /* ── PARTNER INSTITUTIONS ─────────────────────────────────────────────── */
   .institutions{background:var(--bg-raised);border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:56px 0 0;}
   .inst-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:32px;}
@@ -892,6 +1064,82 @@
     </div>
   </div>
 </section>
+
+
+
+<!-- DISCOVER ALUMNI SECTION -->
+<section class="discover-alumni" id="discover-alumni">
+  <div class="wrap">
+    <div class="alumni-head">
+      <div>
+        <span class="alumni-kicker">The DISCoVER Network</span>
+        <h2>Discover Alumni</h2>
+      </div>
+      <p class="alumni-sub">
+        Students who have moved beyond the project and into the next
+        chapter of their careers, carrying the experience and perspective
+        they developed through DISCoVER.
+      </p>
+    </div>
+    <div class="alumni-grid">
+      <!-- ALUMNUS 1 -->
+      <article class="alumni-card">
+        <span class="alumni-status">
+          DISCoVER Alumni
+        </span>
+        <h3>Student Name</h3>
+        <div class="alumni-role">
+          Former Graduate Researcher · University Name
+        </div>
+        <div class="alumni-now">
+          <div class="alumni-now-label">
+            Now
+          </div>
+          <strong>
+            Current Position · Current Organization
+          </strong>
+        </div>
+        <div class="alumni-story">
+          <span class="alumni-impact-label">
+            DISCoVER Impact
+          </span>
+          "Add a short quote or description explaining how
+          participating in DISCoVER influenced this student's
+          research, career, or perspective."
+        </div>
+      </article>
+      <!-- ALUMNUS 2 -->
+      <article class="alumni-card">
+        <span class="alumni-status">
+          DISCoVER Alumni
+        </span>
+        <h3>Student Name</h3>
+        <div class="alumni-role">
+          Former Graduate Researcher · University Name
+        </div>
+        <div class="alumni-now">
+          <div class="alumni-now-label">
+            Now
+          </div>
+          <strong>
+            Current Position · Current Organization
+          </strong>
+        </div>
+        <div class="alumni-story">
+          <span class="alumni-impact-label">
+            DISCoVER Impact
+          </span>
+          "Add a short quote or description explaining how
+          participating in DISCoVER influenced this student's
+          research, career, or perspective."
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+
+  
 
 <!-- PARTNER INSTITUTIONS -->
 <section class="institutions">
