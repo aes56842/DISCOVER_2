@@ -123,17 +123,43 @@
   .researcher-body{flex:1;min-width:0;}
   .researcher-body h4{font-family:var(--font-display);font-size:16.5px;font-weight:600;margin-bottom:3px;}
   .researcher-meta{font-size:12.5px;color:var(--slate);display:flex;flex-wrap:wrap;gap:8px;align-items:center;}
-  .inst-chip{font-family:var(--font-mono);font-size:10.5px;letter-spacing:.04em;text-transform:uppercase;border-radius:20px;padding:3px 10px;flex-shrink:0;border:1px solid;}
-  /* Color-coded institution chips */
-  .inst-chip.usc        {color:#FF6B35;border-color:rgba(255,107,53,.35);background:rgba(255,107,53,.08);}
-  .inst-chip.rochester  {color:#F5A623;border-color:rgba(245,166,35,.35);background:rgba(245,166,35,.08);}
-  .inst-chip.cornell    {color:#E8423A;border-color:rgba(232,66,58,.35);background:rgba(232,66,58,.08);}
-  .inst-chip.northeastern{color:#CC0000;border-color:rgba(204,0,0,.35);background:rgba(204,0,0,.08);}
-  .inst-chip.auburn     {color:#E87722;border-color:rgba(232,119,34,.35);background:rgba(232,119,34,.08);}
-  .inst-chip.northwestern{color:#6B2D8B;border-color:rgba(107,45,139,.35);background:rgba(107,45,139,.1);}
-  .inst-chip.yokohama   {color:#5BA4CF;border-color:rgba(91,164,207,.35);background:rgba(91,164,207,.08);}
-  .inst-chip.seeqc      {color:#6B74E0;border-color:rgba(107,116,224,.35);background:rgba(107,116,224,.1);}
 
+  
+  
+ /* Institution chips — monochrome */
+.inst-chip{
+  font-family:var(--font-mono);
+  font-size:10.5px;
+  letter-spacing:.04em;
+  text-transform:uppercase;
+
+  color:var(--slate);
+  background:transparent;
+
+  border:1px solid var(--line);
+  border-radius:20px;
+
+  padding:3px 10px;
+  flex-shrink:0;
+
+  transition:
+    color .15s,
+    border-color .15s,
+    background .15s;
+}
+
+/* Subtle monochrome hover */
+.researcher-row:hover .inst-chip{
+  color:var(--white);
+  border-color:var(--slate-dim);
+  background:rgba(255,255,255,.025);
+}
+
+
+
+
+
+  
   /* Researcher row social links */
   .researcher-links{display:flex;gap:8px;flex-shrink:0;}
   .researcher-links a{display:flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:50%;border:1px solid var(--line);color:var(--slate-dim);transition:border-color .15s,color .15s;}
