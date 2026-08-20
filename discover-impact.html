@@ -45,8 +45,18 @@
   header{position:sticky;top:0;z-index:40;background:rgba(22,22,26,.98);border-bottom:1px solid var(--line);transition:background .3s ease;}
   .masthead-row{display:flex;align-items:center;justify-content:space-between;padding:24px 32px 18px;position:relative;transition:padding .3s ease;}
   .masthead-spacer{width:170px;flex-shrink:0;}
-  .logo{display:flex;align-items:center;gap:12px;font-family:var(--font-display);font-weight:600;font-size:30px;letter-spacing:.005em;margin:0 auto;transition:font-size .3s ease;}
-  .logo small{display:block;font-family:var(--font-mono);font-weight:400;font-size:9.5px;letter-spacing:.1em;color:var(--slate);margin-top:2px;text-align:center;transition:font-size .3s ease;}
+  .logo{
+  display:flex;
+  align-items:center;
+  margin:0 auto;
+}
+
+.logo img{
+  display:block;
+  width:220px;
+  height:auto;
+  transition:width .3s ease;
+}
   .masthead-utility{display:flex;align-items:center;gap:14px;flex-shrink:0;width:170px;justify-content:flex-end;}
   .nav-row{border-top:1px solid var(--line-soft);}
   .nav-links{display:flex;align-items:center;justify-content:center;gap:38px;font-size:13px;font-weight:500;padding:13px 32px;text-transform:uppercase;letter-spacing:.04em;transition:padding .3s ease;}
@@ -54,8 +64,9 @@
   .nav-links a:hover{color:var(--white);}
   .nav-links a.active{color:var(--white);border-bottom-color:var(--cardinal);}
   header.scrolled .masthead-row{padding:12px 32px 8px;}
-  header.scrolled .logo{font-size:21px;}
-  header.scrolled .logo small{font-size:0;opacity:0;}
+  header.scrolled .logo img{
+  width:170px;
+}
   header.scrolled .nav-links{padding:9px 32px;}
   header.scrolled{background:rgba(22,22,26,.99);box-shadow:0 4px 20px rgba(0,0,0,.3);}
 
@@ -184,8 +195,13 @@
     .nav-links{gap:20px;font-size:11.5px;padding:13px 16px;overflow-x:auto;justify-content:flex-start;}
     .masthead-row{padding:16px 16px 14px;}
     .masthead-spacer{display:none;}
-    .logo{font-size:17px;margin:0;}
-    .logo small{display:none;}
+    .logo{
+  margin:0;
+}
+
+.logo img{
+  width:155px;
+}
     .masthead-utility .btn-ghost{display:none;}
     .masthead-utility{width:auto;}
     .btn-outline{font-size:11.5px;padding:8px 13px;}
@@ -242,8 +258,9 @@
 <header>
   <div class="masthead-row wrap">
     <span class="masthead-spacer" aria-hidden="true"></span>
-    <a href="index.html" class="logo">      <span>NSF DISCoVER<small>EXPEDITION</small></span>
-    </a>
+    <a href="index.html" class="logo">
+  <img src="discover-expedition-logo.png" alt="DISCoVER Expedition">
+</a>
     <div class="masthead-utility">
       <a href="#" class="btn btn-ghost">Log in</a>
       <a href="index.html#join-us" class="btn btn-outline">Join Us</a>
@@ -560,8 +577,9 @@
   <div class="wrap">
     <div class="footer-grid">
       <div class="footer-brand">
-        <a href="index.html" class="logo">          NSF DISCoVER
-        </a>
+       <a href="index.html" class="logo">
+  <img src="discover-expedition-logo.png" alt="DISCoVER Expedition">
+</a>
         <p>An NSF Expeditions in Computing project exploring superconductor electronics as a post-CMOS computing technology. Led by USC Viterbi.</p>
       </div>
       <div class="footer-col">
