@@ -146,6 +146,66 @@
   .product-meta{font-size:11.5px;color:var(--slate-dim);font-family:var(--font-mono);margin-bottom:16px;padding-top:14px;border-top:1px solid var(--line-soft);}
   .placeholder-flag{display:inline-flex;align-items:center;gap:5px;font-family:var(--font-mono);font-size:9.5px;color:var(--gold);letter-spacing:.04em;text-transform:uppercase;margin-bottom:12px;}
   .placeholder-flag svg{width:11px;height:11px;}
+  /* ── PRODUCT SELECTION ───────────────────────────────────────────── */
+
+.product-select-btn{
+  width:100%;
+  justify-content:center;
+  background:transparent;
+  border:1px solid var(--line);
+  color:var(--white);
+  cursor:pointer;
+}
+
+.product-select-btn:hover{
+  border-color:var(--cardinal);
+  color:var(--white);
+}
+
+/* Selected state */
+.product-select-btn.selected{
+  background:var(--cardinal);
+  border-color:var(--cardinal);
+  color:#FBF8F4;
+}
+
+.product-select-btn.selected:hover{
+  background:#AC3140;
+  border-color:#AC3140;
+}
+
+.product-select-btn .select-icon{
+  font-family:var(--font-mono);
+  font-size:14px;
+}
+
+
+/* ── PRODUCT SELECTION BAR ───────────────────────────────────────── */
+.selection-bar{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:16px;
+  margin-bottom:20px;
+  padding:12px 16px;
+  border:1px solid var(--line);
+  border-radius:6px;
+  background:var(--bg-card);
+}
+.selection-count{
+  font-family:var(--font-mono);
+  font-size:11px;
+  color:var(--slate);
+}
+.selection-actions{
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+#request-selected:disabled{
+  opacity:.4;
+  cursor:not-allowed;
+}
 
   /* HOW TO REQUEST — numbered steps */
   .access-steps{border-top:1px solid var(--line);}
@@ -302,619 +362,60 @@
     </div>
 
     <div class="filter-bar" id="product-filters">
-      <button class="filter-btn active" data-filter="all">All</button>
-      <span class="filter-sep"></span>
-      <button class="filter-btn" data-filter="software">Software</button>
-      <button class="filter-btn" data-filter="cell-library">Cell Libraries</button>
-      <button class="filter-btn" data-filter="design-tool">Design Tools</button>
-      <button class="filter-btn" data-filter="dataset">Datasets</button>
-    </div>
+  <button class="filter-btn active" data-filter="all">All</button>
+  <span class="filter-sep"></span>
+  <button class="filter-btn" data-filter="software">Software</button>
+  <button class="filter-btn" data-filter="cell-library">Cell Libraries</button>
+  <button class="filter-btn" data-filter="design-tool">Design Tools</button>
+  <button class="filter-btn" data-filter="dataset">Datasets</button>
+</div>
 
-    <div class="product-grid" id="product-grid">
+
+<!-- PRODUCT SELECTION BAR -->
+<div class="selection-bar" id="selection-bar">
+  <span class="selection-count" id="selection-count"> 0 products selected</span>
+  <div class="selection-actions">
+    <button
+      type="button"
+      class="btn btn-ghost"
+      id="clear-selection">Clear</button>
+    <button type="button" class="btn btn-primary" id="request-selected" disabled> Request Selected Products → </button>
+  </div>
+</div>
+<div class="product-grid" id="product-grid">
 
       <!-- PRODUCT 1 (placeholder) -->
-      <div class="product-card" data-topic="cell-library">
-        <div class="product-top">
-          <span class="product-type-badge cell-library">Cell Library</span>
-          <span class="product-status">Coming soon</span>
-        </div>
-        <h3>A Superconducting Hybrid SpikingOscillatory Neural Network Using State-Reconﬁgurable Flux Oscillator</h3>
-        <p>[One or two sentences describing what the library contains and what soemone would use it for.]</p>
-        <div class="product-meta">License: [TBD] · Latest Report: 2025-2026</div>
-        <!--· Format: [TBD] -->
-        <a href="#access" class="btn btn-outline btn-full">Request Access</a>
-      </div>
+      <div class="product-card" data-topic="cell-library" data-access="coming-soon">
+  <div class="product-top">
+    <span class="product-type-badge cell-library"> Cell Library </span>
+    <span class="product-status"> Coming soon </span>
+  </div>
+  <h3> A Superconducting Hybrid SpikingOscillatory Neural Network Using State-Reconfigurable Flux Oscillator </h3>
+  <p>[One or two sentences describing what the library contains and what someone would use it for.] </p>
+  <div class="product-meta"> License: [TBD] · Latest Report: 2025-2026 </div>
+  <button type="button" class="btn product-select-btn" data-product="A Superconducting Hybrid SpikingOscillatory Neural Network Using State-Reconfigurable Flux Oscillator" disabled>
+    <span class="select-icon">—</span>
+    <span class="select-text">Coming Soon</span></button>
+</div>
+
+  <!-- PRODUCT 2 (placeholder) -->
+      <div class="product-card" data-topic="cell-library" data-access="coming-soon">
+  <div class="product-top">
+    <span class="product-type-badge cell-library"> Cell Library </span>
+    <span class="product-status"> Coming soon </span>
+  </div>
+  <h3> A Superconducting Hybrid SpikingOscillatory Neural Network Using State-Reconfigurable Flux Oscillator </h3>
+  <p>[One or two sentences describing what the library contains and what someone would use it for.] </p>
+  <div class="product-meta"> License: [TBD] · Latest Report: 2025-2026 </div>
+  <button type="button" class="btn product-select-btn" data-product="A Superconducting Hybrid SpikingOscillatory Neural Network Using State-Reconfigurable Flux Oscillator" disabled>
+    <span class="select-icon">—</span>
+    <span class="select-text">Coming Soon</span></button>
+</div>
+
+  
 
 
 
-
-      
-      <!-- PRODUCT 2 (placeholder) -->
-      <div class="product-card" data-topic="cell-library">
-        <div class="product-top">
-          <span class="product-type-badge cell-library">Cell Library</span>
-          <span class="product-status">Coming soon</span>
-        </div>
-        <h3>AC-Biased Bistable Vor- tex Memory Using -Junctions for Scalable Superconducting Memory Arrays</h3>
-        <p>[One or two sentences describing what the library contains and what soemone would use it for.]</p>
-        <div class="product-meta">License: [TBD] · Latest Report: 2025-2026</div>
-        <!--· Format: [TBD] -->
-        <a href="#access" class="btn btn-outline btn-full">Request Access</a>
-      </div>
-
-
-      <!-- PRODUCT 3 (placeholder) -->
-      <div class="product-card" data-topic="software">
-      <!--  <span class="placeholder-flag"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 9v4M12 17h.01M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/></svg>PLACEHOLDER</span> -->
-        <div class="product-top">
-          <span class="product-type-badge software">Software</span>
-          <span class="product-status">Available now</span>
-        </div>
-        <h3>Clock Distribution Networks for Serial Biasing of SFQ Circuits</h3>
-        <p>[One or two sentences describing what the tool is and what soemone would use it for.]</p>
-        <div class="product-meta">License: [TBD] · Latest Report: 2025-2026</div>
-        <a href="#access" class="btn btn-outline btn-full">Request Access</a>
-      </div>
-
-      <!-- PRODUCT 4 (placeholder) -->
-      <div class="product-card" data-topic="cell-library">
-      <!--  <span class="placeholder-flag"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 9v4M12 17h.01M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/></svg>PLACEHOLDER</span> -->
-        <div class="product-top">
-          <span class="product-type-badge cell-library">Cell Library</span>
-          <span class="product-status">By request</span>
-        </div>
-        <h3>Compact AC Power Delivery Method for RSFQ and FPL</h3>
-        <p>[One or two sentences describing what the tool is and what soemone would use it for.]</p>
-        <div class="product-meta">License: [TBD] · Latest Report: 2025-2026</div>
-        <a href="#access" class="btn btn-outline btn-full">Request Access</a>
-      </div>
-
-      <!-- PRODUCT 5 (placeholder) -->
-      <div class="product-card" data-topic="dataset">
-        <!-- <span class="placeholder-flag"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 9v4M12 17h.01M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/></svg>PLACEHOLDER</span> -->
-        <div class="product-top">
-          <span class="product-type-badge dataset">Dataset</span>
-          <span class="product-status">Coming soon</span>
-        </div>
-        <h3>Comparison of EM simulation-based RLGC extraction and an- alytic RLGC models for superconducting transmission lines</h3>
-        <p>[Describe the dataset and how its intended to be used]</p>
-        <div class="product-meta">License: [TBD] · Latest Report: 2025-2026</div>
-        <a href="#access" class="btn btn-outline btn-full">Request Access</a>
-      </div>
-
-      <!-- PRODUCT 6 (placeholder) -->
-      <div class="product-card" data-topic="software">
-    <!--     <span class="placeholder-flag"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 9v4M12 17h.01M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/></svg>PLACEHOLDER</span> -->
-        <div class="product-top">
-          <span class="product-type-badge software">Software</span>
-          <span class="product-status">Available now</span>
-        </div>
-        <h3>Dynamic Single Flux Quantum Half-Adder</h3>
-        <p>[Describe the tool.]</p>
-        <div class="product-meta">License: [TBD] · Repository: [TBD] · Latest Report: 2025-2026 </div>
-
-        <a href="#access" class="btn btn-outline btn-full">Request Access</a>
-      </div>
-
-      <!-- PRODUCT 7 (placeholder) -->
-      <div class="product-card" data-topic="dataset">
-        <!-- <span class="placeholder-flag"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 9v4M12 17h.01M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/></svg>PLACEHOLDER</span> -->
-        <div class="product-top">
-          <span class="product-type-badge dataset">Dataset</span>
-          <span class="product-status">Coming soon</span>
-        </div>
-        <h3>Epitaxial growth of δ -NbN on MgO(001) by PAMBE</h3>
-        <p>[Describe the dataset and how its intended to be used]</p>
-        <div class="product-meta">License: [TBD] · Latest Report: 2025-2026</div>
-        <a href="#access" class="btn btn-outline btn-full">Request Access</a>
-      </div>
-
-      <!-- PRODUCT 8 (placeholder) -->
-      <div class="product-card" data-topic="dataset">
-        <!-- <span class="placeholder-flag"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 9v4M12 17h.01M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/></svg>PLACEHOLDER</span> -->
-        <div class="product-top">
-          <span class="product-type-badge dataset">Dataset</span>
-          <span class="product-status">Coming soon</span>
-        </div>
-        <h3>High-performance Cryo-CMOS SRAM array for SFQ circuits</h3>
-        <p>[Describe the dataset and how its intended to be used]</p>
-        <div class="product-meta">License: [TBD] · Latest Report: 2025-2026</div>
-        <a href="#access" class="btn btn-outline btn-full">Request Access</a>
-      </div>
-
-      <!-- PRODUCT 9 (placeholder) -->
-      <div class="product-card" data-topic="dataset">
-        <!-- <span class="placeholder-flag"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 9v4M12 17h.01M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/></svg>PLACEHOLDER</span> -->
-        <div class="product-top">
-          <span class="product-type-badge dataset">Dataset</span>
-          <span class="product-status">Coming soon</span>
-        </div>
-        <h3>Icy-Hot: Decoupled Compute Paradigm to- wards a General-Purpose Superconducting CPU Design</h3>
-        <p>[Describe the dataset and how its intended to be used]</p>
-        <div class="product-meta">License: [TBD] · Latest Report: 2025-2026</div>
-        <a href="#access" class="btn btn-outline btn-full">Request Access</a>
-      </div>
-
-      <!-- PRODUCT 10 (placeholder) -->
-      <div class="product-card" data-topic="dataset">
-        <!-- <span class="placeholder-flag"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 9v4M12 17h.01M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/></svg>PLACEHOLDER</span> -->
-        <div class="product-top">
-          <span class="product-type-badge dataset">Dataset</span>
-          <span class="product-status">Coming soon</span>
-        </div>
-        <h3>Modelling of Multi-Photon Events of a Super- conducting Single-Photon Nanostripe Detector for Photon Number Resolution Experiments</h3>
-        <p>[Describe the dataset and how its intended to be used]</p>
-        <div class="product-meta">License: [TBD] · Latest Report: 2025-2026</div>
-        <a href="#access" class="btn btn-outline btn-full">Request Access</a>
-      </div>
-
-      <!-- PRODUCT 11 (placeholder) -->
-      <div class="product-card" data-topic="dataset">
-        <!-- <span class="placeholder-flag"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 9v4M12 17h.01M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/></svg>PLACEHOLDER</span> -->
-        <div class="product-top">
-          <span class="product-type-badge dataset">Dataset</span>
-          <span class="product-status">Coming soon</span>
-        </div>
-        <h3>Lightweight error-correction code encoders in superconducting elec- tronic systems</h3>
-        <p>[Describe the dataset and how its intended to be used]</p>
-        <div class="product-meta">License: [TBD] · Latest Report: 2025-2026</div>
-        <a href="#access" class="btn btn-outline btn-full">Request Access</a>
-      </div>
-
-      <!-- PRODUCT 12 (placeholder) -->
-      <div class="product-card" data-topic="dataset">
-        <!-- <span class="placeholder-flag"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 9v4M12 17h.01M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/></svg>PLACEHOLDER</span> -->
-        <div class="product-top">
-          <span class="product-type-badge dataset">Dataset</span>
-          <span class="product-status">Coming soon</span>
-        </div>
-        <h3>Operating Margin and Robustness of AC-Biased Superconductive Logic Under Non-Ideal Bias Distribution</h3>
-        <p>[Describe the dataset and how its intended to be used]</p>
-        <div class="product-meta">License: [TBD] · Latest Report: 2025-2026</div>
-        <a href="#access" class="btn btn-outline btn-full">Request Access</a>
-      </div>
-
-      <!-- PRODUCT 13 (placeholder) -->
-      <div class="product-card" data-topic="dataset">
-        <!-- <span class="placeholder-flag"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 9v4M12 17h.01M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/></svg>PLACEHOLDER</span> -->
-        <div class="product-top">
-          <span class="product-type-badge dataset">Dataset</span>
-          <span class="product-status">Coming soon</span>
-        </div>
-        <h3>Photon-Number-Resolving Readout for a Large-Area Superconductor Nanostripe Single-Photon Detector</h3>
-        <p>[Describe the dataset and how its intended to be used]</p>
-        <div class="product-meta">License: [TBD] · Latest Report: 2025-2026</div>
-        <a href="#access" class="btn btn-outline btn-full">Request Access</a>
-      </div>
-
-      <!-- PRODUCT 14 (placeholder) -->
-      <div class="product-card" data-topic="dataset">
-        <!-- <span class="placeholder-flag"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 9v4M12 17h.01M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/></svg>PLACEHOLDER</span> -->
-        <div class="product-top">
-          <span class="product-type-badge dataset">Dataset</span>
-          <span class="product-status">Coming soon</span>
-        </div>
-        <h3>Post-Placement Timing Closure for AQFP Circuits via MaxMin Clock Margin Optimization</h3>
-        <p>[Describe the dataset and how its intended to be used]</p>
-        <div class="product-meta">License: [TBD] · Latest Report: 2025-2026</div>
-        <a href="#access" class="btn btn-outline btn-full">Request Access</a>
-      </div>
-
-      <!-- PRODUCT 15 (placeholder) -->
-      <div class="product-card" data-topic="dataset">
-        <!-- <span class="placeholder-flag"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 9v4M12 17h.01M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/></svg>PLACEHOLDER</span> -->
-        <div class="product-top">
-          <span class="product-type-badge dataset">Dataset</span>
-          <span class="product-status">Coming soon</span>
-        </div>
-        <h3>Scalable Superconducting Neural Network: A Bit-Parallel Approach using RQL-RSFQ Hybrid Logic</h3>
-        <p>[Describe the dataset and how its intended to be used]</p>
-        <div class="product-meta">License: [TBD] · Latest Report: 2025-2026</div>
-        <a href="#access" class="btn btn-outline btn-full">Request Access</a>
-      </div>
-
-      <!-- PRODUCT 16 (placeholder) -->
-      <div class="product-card" data-topic="dataset">
-        <!-- <span class="placeholder-flag"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 9v4M12 17h.01M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/></svg>PLACEHOLDER</span> -->
-        <div class="product-top">
-          <span class="product-type-badge dataset">Dataset</span>
-          <span class="product-status">Coming soon</span>
-        </div>
-        <h3>Simulation and optimization of SFQ interface circuit operating margins for data link</h3>
-        <p>[Describe the dataset and how its intended to be used]</p>
-        <div class="product-meta">License: [TBD] · Latest Report: 2025-2026</div>
-        <a href="#access" class="btn btn-outline btn-full">Request Access</a>
-      </div>
-
-      <!-- PRODUCT 17 (placeholder) -->
-      <div class="product-card" data-topic="dataset">
-        <!-- <span class="placeholder-flag"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 9v4M12 17h.01M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/></svg>PLACEHOLDER</span> -->
-        <div class="product-top">
-          <span class="product-type-badge dataset">Dataset</span>
-          <span class="product-status">Coming soon</span>
-        </div>
-        <h3>Spiking-Hopﬁeld Neural Networks with SFQ Logic</h3>
-        <p>[Describe the dataset and how its intended to be used]</p>
-        <div class="product-meta">License: [TBD] · Latest Report: 2025-2026</div>
-        <a href="#access" class="btn btn-outline btn-full">Request Access</a>
-      </div>
-
-      <!-- PRODUCT 18 (placeholder) -->
-      <div class="product-card" data-topic="dataset">
-        <!-- <span class="placeholder-flag"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 9v4M12 17h.01M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/></svg>PLACEHOLDER</span> -->
-        <div class="product-top">
-          <span class="product-type-badge dataset">Dataset</span>
-          <span class="product-status">Coming soon</span>
-        </div>
-        <h3>Superconducting Echo State Network for High-Speed SQUID Readout</h3>
-        <p>[Describe the dataset and how its intended to be used]</p>
-        <div class="product-meta">License: [TBD] · Latest Report: 2025-2026</div>
-        <a href="#access" class="btn btn-outline btn-full">Request Access</a>
-      </div>
-
-      <!-- PRODUCT 19 (placeholder) -->
-      <div class="product-card" data-topic="dataset">
-        <!-- <span class="placeholder-flag"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 9v4M12 17h.01M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/></svg>PLACEHOLDER</span> -->
-        <div class="product-top">
-          <span class="product-type-badge dataset">Dataset</span>
-          <span class="product-status">Coming soon</span>
-        </div>
-        <h3>Superconductor Systolic Array Implementation with Novel Trans- mission Gate</h3>
-        <p>[Describe the dataset and how its intended to be used]</p>
-        <div class="product-meta">License: [TBD] · Latest Report: 2025-2026</div>
-        <a href="#access" class="btn btn-outline btn-full">Request Access</a>
-      </div>
-
-      <!-- PRODUCT 20 (placeholder) -->
-      <div class="product-card" data-topic="dataset">
-        <!-- <span class="placeholder-flag"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 9v4M12 17h.01M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/></svg>PLACEHOLDER</span> -->
-        <div class="product-top">
-          <span class="product-type-badge dataset">Dataset</span>
-          <span class="product-status">Coming soon</span>
-        </div>
-        <h3>AC Biased SFQ Clock Splitters for Current Mitigation</h3>
-        <p>[Describe the dataset and how its intended to be used]</p>
-        <div class="product-meta">License: [TBD] · Latest Report: 2025-2026</div>
-        <a href="#access" class="btn btn-outline btn-full">Request Access</a>
-      </div>
-
-      <!-- PRODUCT 21 (placeholder) -->
-      <div class="product-card" data-topic="dataset">
-        <!-- <span class="placeholder-flag"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 9v4M12 17h.01M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/></svg>PLACEHOLDER</span> -->
-        <div class="product-top">
-          <span class="product-type-badge dataset">Dataset</span>
-          <span class="product-status">Coming soon</span>
-        </div>
-        <h3>AC Power Delivery for Fast Phase Logic</h3>
-        <p>[Describe the dataset and how its intended to be used]</p>
-        <div class="product-meta">License: [TBD] · Latest Report: 2025-2026</div>
-        <a href="#access" class="btn btn-outline btn-full">Request Access</a>
-      </div>
-
-      <!-- PRODUCT 22 (placeholder) -->
-      <div class="product-card" data-topic="dataset">
-        <!-- <span class="placeholder-flag"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 9v4M12 17h.01M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/></svg>PLACEHOLDER</span> -->
-        <div class="product-top">
-          <span class="product-type-badge dataset">Dataset</span>
-          <span class="product-status">Coming soon</span>
-        </div>
-        <h3>An On-Chip Control and Readout Circuit Design for an Ising Annealer</h3>
-        <p>[Describe the dataset and how its intended to be used]</p>
-        <div class="product-meta">License: [TBD] · Latest Report: 2025-2026</div>
-        <a href="#access" class="btn btn-outline btn-full">Request Access</a>
-      </div>
-
-      <!-- PRODUCT 23 (placeholder) -->
-      <div class="product-card" data-topic="dataset">
-        <!-- <span class="placeholder-flag"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 9v4M12 17h.01M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/></svg>PLACEHOLDER</span> -->
-        <div class="product-top">
-          <span class="product-type-badge dataset">Dataset</span>
-          <span class="product-status">Coming soon</span>
-        </div>
-        <h3>Characteristics of Nb-Based Josephson Junctions With TaNx and TaNx/(Pd-Ni) Barriers</h3>
-        <p>[Describe the dataset and how its intended to be used]</p>
-        <div class="product-meta">License: [TBD] · Latest Report: 2025-2026</div>
-        <a href="#access" class="btn btn-outline btn-full">Request Access</a>
-      </div>
-
-      <!-- PRODUCT 24 (placeholder) -->
-      <div class="product-card" data-topic="dataset">
-        <!-- <span class="placeholder-flag"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 9v4M12 17h.01M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/></svg>PLACEHOLDER</span> -->
-        <div class="product-top">
-          <span class="product-type-badge dataset">Dataset</span>
-          <span class="product-status">Coming soon</span>
-        </div>
-        <h3>Compact Model and Circuit Behavior of Bistable 2ϕ-Josephson Junctions</h3>
-        <p>[Describe the dataset and how its intended to be used]</p>
-        <div class="product-meta">License: [TBD] · Latest Report: 2025-2026</div>
-        <a href="#access" class="btn btn-outline btn-full">Request Access</a>
-      </div>
-
-      <!-- PRODUCT 25 (placeholder) -->
-      <div class="product-card" data-topic="dataset">
-        <!-- <span class="placeholder-flag"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 9v4M12 17h.01M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/></svg>PLACEHOLDER</span> -->
-        <div class="product-top">
-          <span class="product-type-badge dataset">Dataset</span>
-          <span class="product-status">Coming soon</span>
-        </div>
-        <h3>Current Recycling in Heterogeneous RSFQ Circuits</h3>
-        <p>[Describe the dataset and how its intended to be used]</p>
-        <div class="product-meta">License: [TBD] · Latest Report: 2025-2026</div>
-        <a href="#access" class="btn btn-outline btn-full">Request Access</a>
-      </div>
-
-      <!-- PRODUCT 26 (placeholder) -->
-      <div class="product-card" data-topic="dataset">
-        <!-- <span class="placeholder-flag"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 9v4M12 17h.01M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/></svg>PLACEHOLDER</span> -->
-        <div class="product-top">
-          <span class="product-type-badge dataset">Dataset</span>
-          <span class="product-status">Coming soon</span>
-        </div>
-        <h3>Design Guidelines for Superconducting Digital Circuits Employing π-JJs with Ferromagnetic Barriers</h3>
-        <p>[Describe the dataset and how its intended to be used]</p>
-        <div class="product-meta">License: [TBD] · Latest Report: 2025-2026</div>
-        <a href="#access" class="btn btn-outline btn-full">Request Access</a>
-      </div>
-
-      <!-- PRODUCT 27 (placeholder) -->
-      <div class="product-card" data-topic="dataset">
-        <!-- <span class="placeholder-flag"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 9v4M12 17h.01M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/></svg>PLACEHOLDER</span> -->
-        <div class="product-top">
-          <span class="product-type-badge dataset">Dataset</span>
-          <span class="product-status">Coming soon</span>
-        </div>
-        <h3>Epitaxial Growth and Phase Stabilization of δ-NbN on MgO by PAMBE</h3>
-        <p>[Describe the dataset and how its intended to be used]</p>
-        <div class="product-meta">License: [TBD] · Latest Report: 2025-2026</div>
-        <a href="#access" class="btn btn-outline btn-full">Request Access</a>
-      </div>
-
-      <!-- PRODUCT 28 (placeholder) -->
-      <div class="product-card" data-topic="dataset">
-        <!-- <span class="placeholder-flag"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 9v4M12 17h.01M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/></svg>PLACEHOLDER</span> -->
-        <div class="product-top">
-          <span class="product-type-badge dataset">Dataset</span>
-          <span class="product-status">Coming soon</span>
-        </div>
-        <h3>Fabrication and Characteristics of Self-Shunted Nb/TaNx/Nb Josephson Junctions</h3>
-        <p>[Describe the dataset and how its intended to be used]</p>
-        <div class="product-meta">License: [TBD] · Latest Report: 2025-2026</div>
-        <a href="#access" class="btn btn-outline btn-full">Request Access</a>
-      </div>
-
-      <!-- PRODUCT 29 (placeholder) -->
-      <div class="product-card" data-topic="dataset">
-        <!-- <span class="placeholder-flag"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 9v4M12 17h.01M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/></svg>PLACEHOLDER</span> -->
-        <div class="product-top">
-          <span class="product-type-badge dataset">Dataset</span>
-          <span class="product-status">Coming soon</span>
-        </div>
-        <h3>Icy-Hot: Decoupled Compute Paradigm Towards a General-Purpose Superconducting CPU Design</h3>
-        <p>[Describe the dataset and how its intended to be used]</p>
-        <div class="product-meta">License: [TBD] · Latest Report: 2025-2026</div>
-        <a href="#access" class="btn btn-outline btn-full">Request Access</a>
-      </div>
-
-      <!-- PRODUCT 30 (placeholder) -->
-      <div class="product-card" data-topic="dataset">
-        <!-- <span class="placeholder-flag"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 9v4M12 17h.01M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/></svg>PLACEHOLDER</span> -->
-        <div class="product-top">
-          <span class="product-type-badge dataset">Dataset</span>
-          <span class="product-status">Coming soon</span>
-        </div>
-        <h3>Inductorless Dynamic Logic Based on 2ϕ-Josephson Junctions</h3>
-        <p>[Describe the dataset and how its intended to be used]</p>
-        <div class="product-meta">License: [TBD] · Latest Report: 2025-2026</div>
-        <a href="#access" class="btn btn-outline btn-full">Request Access</a>
-      </div>
-
-      <!-- PRODUCT 31 (placeholder) -->
-      <div class="product-card" data-topic="dataset">
-        <!-- <span class="placeholder-flag"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 9v4M12 17h.01M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/></svg>PLACEHOLDER</span> -->
-        <div class="product-top">
-          <span class="product-type-badge dataset">Dataset</span>
-          <span class="product-status">Coming soon</span>
-        </div>
-        <h3>Comparison of EM simulation-based RLGC extraction and an- alytic RLGC models for superconducting transmission lines</h3>
-        <p>[Describe the dataset and how its intended to be used]</p>
-        <div class="product-meta">License: [TBD] · Latest Report: 2025-2026</div>
-        <a href="#access" class="btn btn-outline btn-full">Request Access</a>
-      </div>
-
-      <!-- PRODUCT 32 (placeholder) -->
-      <div class="product-card" data-topic="dataset">
-        <!-- <span class="placeholder-flag"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 9v4M12 17h.01M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/></svg>PLACEHOLDER</span> -->
-        <div class="product-top">
-          <span class="product-type-badge dataset">Dataset</span>
-          <span class="product-status">Coming soon</span>
-        </div>
-        <h3>Comparison of EM simulation-based RLGC extraction and an- alytic RLGC models for superconducting transmission lines</h3>
-        <p>[Describe the dataset and how its intended to be used]</p>
-        <div class="product-meta">License: [TBD] · Latest Report: 2025-2026</div>
-        <a href="#access" class="btn btn-outline btn-full">Request Access</a>
-      </div>
-
-      <!-- PRODUCT 33 (placeholder) -->
-      <div class="product-card" data-topic="dataset">
-        <!-- <span class="placeholder-flag"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 9v4M12 17h.01M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/></svg>PLACEHOLDER</span> -->
-        <div class="product-top">
-          <span class="product-type-badge dataset">Dataset</span>
-          <span class="product-status">Coming soon</span>
-        </div>
-        <h3>Comparison of EM simulation-based RLGC extraction and an- alytic RLGC models for superconducting transmission lines</h3>
-        <p>[Describe the dataset and how its intended to be used]</p>
-        <div class="product-meta">License: [TBD] · Latest Report: 2025-2026</div>
-        <a href="#access" class="btn btn-outline btn-full">Request Access</a>
-      </div>
-
-      <!-- PRODUCT 34 (placeholder) -->
-      <div class="product-card" data-topic="dataset">
-        <!-- <span class="placeholder-flag"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 9v4M12 17h.01M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/></svg>PLACEHOLDER</span> -->
-        <div class="product-top">
-          <span class="product-type-badge dataset">Dataset</span>
-          <span class="product-status">Coming soon</span>
-        </div>
-        <h3>Comparison of EM simulation-based RLGC extraction and an- alytic RLGC models for superconducting transmission lines</h3>
-        <p>[Describe the dataset and how its intended to be used]</p>
-        <div class="product-meta">License: [TBD] · Latest Report: 2025-2026</div>
-        <a href="#access" class="btn btn-outline btn-full">Request Access</a>
-      </div>
-
-      <!-- PRODUCT 35 (placeholder) -->
-      <div class="product-card" data-topic="dataset">
-        <!-- <span class="placeholder-flag"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 9v4M12 17h.01M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/></svg>PLACEHOLDER</span> -->
-        <div class="product-top">
-          <span class="product-type-badge dataset">Dataset</span>
-          <span class="product-status">Coming soon</span>
-        </div>
-        <h3>Comparison of EM simulation-based RLGC extraction and an- alytic RLGC models for superconducting transmission lines</h3>
-        <p>[Describe the dataset and how its intended to be used]</p>
-        <div class="product-meta">License: [TBD] · Latest Report: 2025-2026</div>
-        <a href="#access" class="btn btn-outline btn-full">Request Access</a>
-      </div>
-
-      <!-- PRODUCT 36 (placeholder) -->
-      <div class="product-card" data-topic="dataset">
-        <!-- <span class="placeholder-flag"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 9v4M12 17h.01M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/></svg>PLACEHOLDER</span> -->
-        <div class="product-top">
-          <span class="product-type-badge dataset">Dataset</span>
-          <span class="product-status">Coming soon</span>
-        </div>
-        <h3>Comparison of EM simulation-based RLGC extraction and an- alytic RLGC models for superconducting transmission lines</h3>
-        <p>[Describe the dataset and how its intended to be used]</p>
-        <div class="product-meta">License: [TBD] · Latest Report: 2025-2026</div>
-        <a href="#access" class="btn btn-outline btn-full">Request Access</a>
-      </div>
-
-      <!-- PRODUCT 37 (placeholder) -->
-      <div class="product-card" data-topic="dataset">
-        <!-- <span class="placeholder-flag"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 9v4M12 17h.01M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/></svg>PLACEHOLDER</span> -->
-        <div class="product-top">
-          <span class="product-type-badge dataset">Dataset</span>
-          <span class="product-status">Coming soon</span>
-        </div>
-        <h3>Comparison of EM simulation-based RLGC extraction and an- alytic RLGC models for superconducting transmission lines</h3>
-        <p>[Describe the dataset and how its intended to be used]</p>
-        <div class="product-meta">License: [TBD] · Latest Report: 2025-2026</div>
-        <a href="#access" class="btn btn-outline btn-full">Request Access</a>
-      </div>
-
-      <!-- PRODUCT 38 (placeholder) -->
-      <div class="product-card" data-topic="dataset">
-        <!-- <span class="placeholder-flag"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 9v4M12 17h.01M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/></svg>PLACEHOLDER</span> -->
-        <div class="product-top">
-          <span class="product-type-badge dataset">Dataset</span>
-          <span class="product-status">Coming soon</span>
-        </div>
-        <h3>Comparison of EM simulation-based RLGC extraction and an- alytic RLGC models for superconducting transmission lines</h3>
-        <p>[Describe the dataset and how its intended to be used]</p>
-        <div class="product-meta">License: [TBD] · Latest Report: 2025-2026</div>
-        <a href="#access" class="btn btn-outline btn-full">Request Access</a>
-      </div>
-
-      <!-- PRODUCT 39 (placeholder) -->
-      <div class="product-card" data-topic="dataset">
-        <!-- <span class="placeholder-flag"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 9v4M12 17h.01M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/></svg>PLACEHOLDER</span> -->
-        <div class="product-top">
-          <span class="product-type-badge dataset">Dataset</span>
-          <span class="product-status">Coming soon</span>
-        </div>
-        <h3>Comparison of EM simulation-based RLGC extraction and an- alytic RLGC models for superconducting transmission lines</h3>
-        <p>[Describe the dataset and how its intended to be used]</p>
-        <div class="product-meta">License: [TBD] · Latest Report: 2025-2026</div>
-        <a href="#access" class="btn btn-outline btn-full">Request Access</a>
-      </div>
-
-      <!-- PRODUCT 40 (placeholder) -->
-      <div class="product-card" data-topic="dataset">
-        <!-- <span class="placeholder-flag"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 9v4M12 17h.01M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/></svg>PLACEHOLDER</span> -->
-        <div class="product-top">
-          <span class="product-type-badge dataset">Dataset</span>
-          <span class="product-status">Coming soon</span>
-        </div>
-        <h3>Comparison of EM simulation-based RLGC extraction and an- alytic RLGC models for superconducting transmission lines</h3>
-        <p>[Describe the dataset and how its intended to be used]</p>
-        <div class="product-meta">License: [TBD] · Latest Report: 2025-2026</div>
-        <a href="#access" class="btn btn-outline btn-full">Request Access</a>
-      </div>
-
-      <!-- PRODUCT _ (placeholder) -->
-      <div class="product-card" data-topic="dataset">
-        <!-- <span class="placeholder-flag"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 9v4M12 17h.01M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/></svg>PLACEHOLDER</span> -->
-        <div class="product-top">
-          <span class="product-type-badge dataset">Dataset</span>
-          <span class="product-status">Coming soon</span>
-        </div>
-        <h3>Comparison of EM simulation-based RLGC extraction and an- alytic RLGC models for superconducting transmission lines</h3>
-        <p>[Describe the dataset and how its intended to be used]</p>
-        <div class="product-meta">License: [TBD] · Latest Report: 2025-2026</div>
-        <a href="#access" class="btn btn-outline btn-full">Request Access</a>
-      </div>
-
-      <!-- PRODUCT _ (placeholder) -->
-      <div class="product-card" data-topic="dataset">
-        <!-- <span class="placeholder-flag"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 9v4M12 17h.01M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/></svg>PLACEHOLDER</span> -->
-        <div class="product-top">
-          <span class="product-type-badge dataset">Dataset</span>
-          <span class="product-status">Coming soon</span>
-        </div>
-        <h3>Comparison of EM simulation-based RLGC extraction and an- alytic RLGC models for superconducting transmission lines</h3>
-        <p>[Describe the dataset and how its intended to be used]</p>
-        <div class="product-meta">License: [TBD] · Latest Report: 2025-2026</div>
-        <a href="#access" class="btn btn-outline btn-full">Request Access</a>
-      </div>
-
-      <!-- PRODUCT _ (placeholder) -->
-      <div class="product-card" data-topic="dataset">
-        <!-- <span class="placeholder-flag"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 9v4M12 17h.01M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/></svg>PLACEHOLDER</span> -->
-        <div class="product-top">
-          <span class="product-type-badge dataset">Dataset</span>
-          <span class="product-status">Coming soon</span>
-        </div>
-        <h3>Comparison of EM simulation-based RLGC extraction and an- alytic RLGC models for superconducting transmission lines</h3>
-        <p>[Describe the dataset and how its intended to be used]</p>
-        <div class="product-meta">License: [TBD] · Latest Report: 2025-2026</div>
-        <a href="#access" class="btn btn-outline btn-full">Request Access</a>
-      </div>
-
-      <!-- PRODUCT _ (placeholder) -->
-      <div class="product-card" data-topic="dataset">
-        <!-- <span class="placeholder-flag"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 9v4M12 17h.01M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/></svg>PLACEHOLDER</span> -->
-        <div class="product-top">
-          <span class="product-type-badge dataset">Dataset</span>
-          <span class="product-status">Coming soon</span>
-        </div>
-        <h3>Comparison of EM simulation-based RLGC extraction and an- alytic RLGC models for superconducting transmission lines</h3>
-        <p>[Describe the dataset and how its intended to be used]</p>
-        <div class="product-meta">License: [TBD] · Latest Report: 2025-2026</div>
-        <a href="#access" class="btn btn-outline btn-full">Request Access</a>
-      </div>
-
-      <!-- PRODUCT _ (placeholder) -->
-      <div class="product-card" data-topic="dataset">
-        <!-- <span class="placeholder-flag"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 9v4M12 17h.01M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/></svg>PLACEHOLDER</span> -->
-        <div class="product-top">
-          <span class="product-type-badge dataset">Dataset</span>
-          <span class="product-status">Coming soon</span>
-        </div>
-        <h3>Comparison of EM simulation-based RLGC extraction and an- alytic RLGC models for superconducting transmission lines</h3>
-        <p>[Describe the dataset and how its intended to be used]</p>
-        <div class="product-meta">License: [TBD] · Latest Report: 2025-2026</div>
-        <a href="#access" class="btn btn-outline btn-full">Request Access</a>
-      </div>
-
-      <!-- PRODUCT _ (placeholder) -->
-      <div class="product-card" data-topic="dataset">
-        <!-- <span class="placeholder-flag"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 9v4M12 17h.01M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/></svg>PLACEHOLDER</span> -->
-        <div class="product-top">
-          <span class="product-type-badge dataset">Dataset</span>
-          <span class="product-status">Coming soon</span>
-        </div>
-        <h3>Comparison of EM simulation-based RLGC extraction and an- alytic RLGC models for superconducting transmission lines</h3>
-        <p>[Describe the dataset and how its intended to be used]</p>
-        <div class="product-meta">License: [TBD] · Latest Report: 2025-2026</div>
-        <a href="#access" class="btn btn-outline btn-full">Request Access</a>
-      </div>
 
       
 
