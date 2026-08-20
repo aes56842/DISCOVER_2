@@ -594,8 +594,27 @@
   .institutions{background:var(--bg-raised);border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:56px 0 0;}
   .inst-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:32px;}
   .inst-card{border:1px solid var(--line);border-radius:10px;background:var(--bg-card);overflow:hidden;display:flex;flex-direction:column;}
-  .inst-card-seal{height:120px;display:flex;align-items:center;justify-content:center;border-bottom:1px solid var(--line);position:relative;overflow:hidden;}
-  .inst-card-seal svg{width:88px;height:88px;opacity:.75;}
+  
+  .inst-card-seal{
+  height:120px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border-bottom:1px solid var(--line);
+  position:relative;
+  overflow:hidden;
+  padding:18px 24px;
+}
+
+/* Actual university logo */
+.inst-card-seal img{
+  width:100%;
+  height:100%;
+  max-width:150px;
+  max-height:90px;
+  object-fit:contain;
+  display:block;
+}
   .inst-card.usc         .inst-card-seal{background:rgba(153,0,0,.12);}
   .inst-card.usc         .inst-card-seal svg{color:#FF6B35;}
   .inst-card.rochester   .inst-card-seal{background:rgba(245,166,35,.08);}
@@ -1399,20 +1418,13 @@
 
       <div class="inst-card usc">
         <div class="inst-card-seal">
-          <!-- USC: torch shield -->
-          <svg viewBox="0 0 88 88" fill="none" stroke="currentColor" stroke-width="1.4">
-            <path d="M44 10 L72 22 L72 52 C72 66 58 76 44 80 C30 76 16 66 16 52 L16 22 Z" stroke-width="1.8"/>
-            <line x1="44" y1="28" x2="44" y2="62" stroke-width="1.6"/>
-            <path d="M38 28 L44 24 L50 28" stroke-width="1.6"/>
-            <path d="M40 28 Q44 22 48 28" stroke-width="1.2" stroke-linecap="round"/>
-            <ellipse cx="44" cy="50" rx="9" ry="7" stroke-width="1.2"/>
-            <text x="44" y="72" font-size="7" text-anchor="middle" fill="currentColor" stroke="none" font-family="serif" letter-spacing="1">USC</text>
-          </svg>
+          <!-- USC -->
+           <img src="usc-logo.png" alt="University of Southern California">
         </div>
         <div class="inst-card-body">
           <h4>University of Southern California</h4>
           <span class="role-tag">Lead Institution</span>
-          <span class="count">Director · SuperSoCC Design Thrust</span>
+        <!--  <span class="count">Director · SuperSoCC Design Thrust</span> -->
         </div>
       </div>
 
@@ -1427,8 +1439,8 @@
         </div>
         <div class="inst-card-body">
           <h4>University of Rochester</h4>
-          <span class="role-tag">Consortium Partner</span>
-          <span class="count">Circuits &amp; Architecture Thrust</span>
+         <!-- <span class="role-tag">Consortium Partner</span>
+          <span class="count">Circuits &amp; Architecture Thrust</span> -->
         </div>
       </div>
 
@@ -1443,8 +1455,8 @@
         </div>
         <div class="inst-card-body">
           <h4>Cornell University</h4>
-          <span class="role-tag">Consortium Partner</span>
-          <span class="count">Devices &amp; Materials Thrust</span>
+         <!-- <span class="role-tag">Consortium Partner</span>
+          <span class="count">Devices &amp; Materials Thrust</span> -->
         </div>
       </div>
 
@@ -1460,8 +1472,8 @@
         </div>
         <div class="inst-card-body">
           <h4>Northeastern University</h4>
-          <span class="role-tag">Consortium Partner</span>
-          <span class="count">Business &amp; Socioeconomic Impacts Thrust</span>
+         <!-- <span class="role-tag">Consortium Partner</span>
+          <span class="count">Business &amp; Socioeconomic Impacts Thrust</span> -->
         </div>
       </div>
 
@@ -1478,8 +1490,8 @@
         </div>
         <div class="inst-card-body">
           <h4>Auburn University</h4>
-          <span class="role-tag">Consortium Partner</span>
-          <span class="count">Integration &amp; Interfaces Thrust</span>
+         <!-- <span class="role-tag">Consortium Partner</span>
+          <span class="count">Integration &amp; Interfaces Thrust</span> -->
         </div>
       </div>
 
@@ -1495,8 +1507,8 @@
         </div>
         <div class="inst-card-body">
           <h4>Northwestern University</h4>
-          <span class="role-tag">Consortium Partner</span>
-          <span class="count">Device Physics</span>
+         <!-- <span class="role-tag">Consortium Partner</span>
+          <span class="count">Device Physics</span> -->
         </div>
       </div>
 
