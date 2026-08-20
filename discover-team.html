@@ -611,22 +611,21 @@
   .inst-card{border:1px solid var(--line);border-radius:10px;background:var(--bg-card);overflow:hidden;display:flex;flex-direction:column;}
   
   .inst-card-seal{
-  height:120px;
+  height:140px;
   display:flex;
   align-items:center;
   justify-content:center;
   border-bottom:1px solid var(--line);
   position:relative;
   overflow:hidden;
-  padding:18px 24px;
+  padding:0;
 }
 
-/* Actual university logo */
 .inst-card-seal img{
   width:100%;
   height:100%;
-  max-width:150px;
-  max-height:90px;
+  max-width:none;
+  max-height:none;
   object-fit:contain;
   display:block;
 }
@@ -1486,39 +1485,22 @@
       </div>
 
       <div class="inst-card auburn">
-        <div class="inst-card-seal">
-          <!-- Auburn: A in circle -->
-           <img src="northwestern-logo.png" alt="Northwestern University">
-            <circle cx="44" cy="44" r="28" stroke-width="1.8"/>
-            <circle cx="44" cy="44" r="23" stroke-width=".7"/>
-            <path d="M30 58 L44 28 L58 58" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
-            <line x1="35" y1="47" x2="53" y2="47" stroke-width="1.6"/>
-            <text x="44" y="82" font-size="6" text-anchor="middle" fill="currentColor" stroke="none" font-family="serif" letter-spacing="1">AUBURN</text>
-          </svg>
-        </div>
-        <div class="inst-card-body">
-          <h4>Auburn University</h4>
-         <!-- <span class="role-tag">Consortium Partner</span>
-          <span class="count">Integration &amp; Interfaces Thrust</span> -->
-        </div>
-      </div>
+  <div class="inst-card-seal">
+    <img src="auburn-logo.png" alt="Auburn University">
+  </div>
+  <div class="inst-card-body">
+    <h4>Auburn University</h4>
+  </div>
+</div>
 
-      <div class="inst-card northwestern">
-        <div class="inst-card-seal">
-          <!-- Northwestern: NU circle seal -->
-           <img src="auburn-logo.png" alt="Auburn University">
-            <circle cx="44" cy="44" r="28" stroke-width="1.8"/>
-            <circle cx="44" cy="44" r="22" stroke-width=".7"/>
-            <path d="M31 57 L31 32 L44 57 L57 32 L57 57" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
-            <text x="44" y="82" font-size="6" text-anchor="middle" fill="currentColor" stroke="none" font-family="serif" letter-spacing="1">NU</text>
-          </svg>
-        </div>
-        <div class="inst-card-body">
-          <h4>Northwestern University</h4>
-         <!-- <span class="role-tag">Consortium Partner</span>
-          <span class="count">Device Physics</span> -->
-        </div>
-      </div>
+<div class="inst-card northwestern">
+  <div class="inst-card-seal">
+    <img src="northwestern-logo.png" alt="Northwestern University">
+  </div>
+  <div class="inst-card-body">
+    <h4>Northwestern University</h4>
+  </div>
+</div>
 
       <div class="inst-card seeqc">
         <div class="inst-card-seal">
