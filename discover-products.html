@@ -95,7 +95,42 @@
   .filter-sep{width:1px;height:20px;background:var(--line);flex-shrink:0;}
 
   /* PRODUCT GRID */
-  .product-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;}
+.product-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:20px;
+  /* internal scrolling area */
+  max-height:750px;
+  overflow-y:auto;
+  /* defines room between cards and scrollbar */
+  padding-right:14px;
+  /* keeps scrolling contained */
+  overscroll-behavior:contain;
+}  
+  /* Product grid scrollbar */
+.product-grid{
+  scrollbar-width:thin;
+  scrollbar-color:var(--slate-dim) transparent;
+}
+.product-grid::-webkit-scrollbar{
+  width:8px;
+}
+.product-grid::-webkit-scrollbar-track{
+  background:transparent;
+}
+.product-grid::-webkit-scrollbar-thumb{
+  background:var(--line);
+  border-radius:20px;
+}
+.product-grid::-webkit-scrollbar-thumb:hover{
+  background:var(--slate-dim);
+}
+
+
+
+
+
+  
   .product-card{border:1px solid var(--line);border-radius:10px;background:var(--bg-card);padding:24px;display:flex;flex-direction:column;transition:border-color .2s;}
   .product-card:hover{border-color:var(--slate-dim);}
   .product-card[data-hidden="true"]{display:none;}
