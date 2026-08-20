@@ -310,11 +310,26 @@
     opacity:.9;
   }
   .gradstu-emblem img{width:100%;height:100%;object-fit:contain;display:block;}
-  .gradstu-card.usc .gradstu-emblem{width:235px;height:235px;right:-35px;bottom:-42px;}
-  .gradstu-card.rochester .gradstu-emblem{width:230px;height:230px;right:-32px;bottom:-38px;}
-  .gradstu-card.cornell .gradstu-emblem{width:215px;height:215px;right:-26px;bottom:-30px;}
-  .gradstu-card.auburn .gradstu-emblem{width:220px;height:220px;right:-28px;bottom:-32px;}
+  .gradstu-emblem{
+  position:absolute;
+  right:-35px;
+  bottom:-42px;
+  width:235px;
+  height:235px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  z-index:1;
+  pointer-events:none;
+  opacity:.9;
+}
 
+.gradstu-emblem img{
+  width:100%;
+  height:100%;
+  object-fit:contain;
+  display:block;
+}
   @media(max-width:800px){
     .gradstu-grid{grid-template-columns:1fr;gap:18px;}
     .gradstu-card{min-height:220px;}
