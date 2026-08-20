@@ -384,35 +384,77 @@
 </div>
 <div class="product-grid" id="product-grid">
 
-      <!-- PRODUCT 1 (placeholder) -->
-      <div class="product-card" data-topic="cell-library" data-access="coming-soon">
-  <div class="product-top">
-    <span class="product-type-badge cell-library"> Cell Library </span>
-    <span class="product-status"> Coming soon </span>
-  </div>
-  <h3> A Superconducting Hybrid SpikingOscillatory Neural Network Using State-Reconfigurable Flux Oscillator </h3>
-  <p>[One or two sentences describing what the library contains and what someone would use it for.] </p>
-  <div class="product-meta"> License: [TBD] · Latest Report: 2025-2026 </div>
-  <button type="button" class="btn product-select-btn" data-product="A Superconducting Hybrid SpikingOscillatory Neural Network Using State-Reconfigurable Flux Oscillator" disabled>
-    <span class="select-icon">—</span>
-    <span class="select-text">Coming Soon</span></button>
-</div>
+  
+<!-- PRODUCT — PUBLIC ACCESS -->
+<div class="product-card" data-topic="software" data-access="public" data-download="downloads/example-tool.zip">
 
-  <!-- PRODUCT 2 (placeholder) -->
-      <div class="product-card" data-topic="cell-library" data-access="coming-soon">
   <div class="product-top">
-    <span class="product-type-badge cell-library"> Cell Library </span>
-    <span class="product-status"> Coming soon </span>
-  </div>
-  <h3> A Superconducting Hybrid SpikingOscillatory Neural Network Using State-Reconfigurable Flux Oscillator </h3>
-  <p>[One or two sentences describing what the library contains and what someone would use it for.] </p>
-  <div class="product-meta"> License: [TBD] · Latest Report: 2025-2026 </div>
-  <button type="button" class="btn product-select-btn" data-product="A Superconducting Hybrid SpikingOscillatory Neural Network Using State-Reconfigurable Flux Oscillator" disabled>
-    <span class="select-icon">—</span>
-    <span class="select-text">Coming Soon</span></button>
+    <span class="product-type-badge software">Software</span>
+    <span class="product-status">Public</span>
+</div>
+<h3>Example Open Research Tool</h3>
+<p>Placeholder description of the software and what users
+    can do with it. </p>
+  <div class="product-meta"> License: [TBD] · Version: [TBD]</div>
+  <a href="downloads/example-tool.zip" class="btn btn-outline btn-full" download>Download →</a>
 </div>
 
   
+
+
+  <!-- PRODUCT — BY REQUEST -->
+  <!--Use this when a user needs to submit a request, but does not necessarily need to sign a waiver.-->
+<div class="product-card" data-topic="cell-library" data-access="request">
+  <div class="product-top">
+    <span class="product-type-badge cell-library"> Cell Library </span>
+    <span class="product-status">By Request</span>
+  </div>
+  <h3>Example Superconducting Cell Library</h3>
+  <p>
+    Placeholder description of what this product contains,
+    what it was developed for, and how researchers or
+    companies might use it.
+ </p>
+
+  <div class="product-meta"> License: [TBD] · Version: [TBD] </div>
+  <button type="button" class="btn product-select-btn" data-product="Example Superconducting Cell Library"> 
+    <span class="select-icon">+</span>
+    <span class="select-text">Select</span>
+  </button>
+</div>
+
+  <!-- PRODUCT — WAIVER REQUIRED -->
+  <!-- PRODUCT — WAIVER REQUIRED -->
+<div
+  class="product-card" data-topic="dataset" data-access="waiver">
+  <div class="product-top">
+    <span class="product-type-badge dataset">Dataset</span>
+    <span class="product-status">Waiver Required</span>
+  </div>
+  <h3>Example Cryogenic Device Dataset</h3>
+  <p>
+    Placeholder description of the dataset, its contents,
+    and the intended research or engineering use.
+  </p>
+  <div class="product-meta">License: [TBD] · Version: [TBD]</div>
+  <button type="button" class="btn product-select-btn" data-product="Example Cryogenic Device Dataset">
+    <span class="select-icon">+</span>
+    <span class="select-text">Select</span> </button> 
+</div>
+
+  <!-- PRODUCT — COMING SOON -->
+<div class="product-card" data-topic="dataset" data-access="coming-soon">
+  <div class="product-top">
+  <span class="product-type-badge dataset"> Dataset </span>
+  <span class="product-status"> Coming Soon </span>
+</div>
+  <h3> Example Future Dataset </h3>
+  <p> Placeholder description of the future resource. </p>
+  <div class="product-meta"> Expected release: [TBD] </div>
+  <button type="button" class="btn product-select-btn" disabled>
+    <span class="select-icon">—</span> 
+    <span class="select-text">Coming Soon</span> </button>
+</div>
 
 
 
@@ -525,29 +567,138 @@
 </footer>
 
 <script>
+
 // ── Product filter ─────────────────────────────────────────────────────────
+
 let activeProductFilter = 'all';
 
 document.querySelectorAll('#product-filters .filter-btn').forEach(btn => {
+
   btn.addEventListener('click', () => {
+
     activeProductFilter = btn.dataset.filter;
-    document.querySelectorAll('#product-filters .filter-btn').forEach(b => b.classList.remove('active'));
+
+    document
+      .querySelectorAll('#product-filters .filter-btn')
+      .forEach(b => b.classList.remove('active'));
+
     btn.classList.add('active');
+
     applyProductFilter();
+
   });
+
 });
 
+
 function applyProductFilter() {
-  const cards = document.querySelectorAll('#product-grid .product-card');
+
+  const cards =
+    document.querySelectorAll('#product-grid .product-card');
+
   let visible = 0;
+
   cards.forEach(card => {
+
     const topic = card.dataset.topic || '';
-    const show = activeProductFilter === 'all' || topic === activeProductFilter;
+
+    const show =
+      activeProductFilter === 'all' ||
+      topic === activeProductFilter;
+
     card.dataset.hidden = show ? 'false' : 'true';
-    if (show) visible++;
+
+    if(show) visible++;
+
   });
-  document.getElementById('product-no-results').style.display = visible === 0 ? 'block' : 'none';
+
+  document
+    .getElementById('product-no-results')
+    .style.display = visible === 0 ? 'block' : 'none';
+
 }
+
+
+// ── PRODUCT SELECTION ──────────────────────────────────────────────────────
+
+const selectedProducts = new Map();
+
+const selectionCountEl =
+  document.getElementById('selection-count');
+
+const clearSelectionBtn =
+  document.getElementById('clear-selection');
+
+const requestSelectedBtn =
+  document.getElementById('request-selected');
+
+
+function updateSelectionUI(){
+
+  const count = selectedProducts.size;
+
+  selectionCountEl.textContent =
+    `${count} product${count === 1 ? '' : 's'} selected`;
+
+  requestSelectedBtn.disabled = count === 0;
+  document
+    .querySelectorAll('.product-select-btn')
+    .forEach(button => {
+      if(button.disabled) return;
+      const productName = button.dataset.product;
+      const selected =
+        selectedProducts.has(productName);
+      button.classList.toggle(
+        'selected',
+        selected
+      );
+      const icon =
+        button.querySelector('.select-icon');
+      const text =
+        button.querySelector('.select-text');
+      if(icon){
+        icon.textContent =
+          selected ? '✓' : '+';
+      }
+      if(text){
+        text.textContent =
+          selected ? 'Selected' : 'Select';
+      }
+    });
+}
+// ── SELECT / DESELECT PRODUCTS ─────────────────────────────────────────────
+document
+  .querySelectorAll('.product-select-btn')
+  .forEach(button => {
+    button.addEventListener('click', () => {
+      if(button.disabled) return;
+      const card =
+        button.closest('.product-card');
+      const productName =
+        button.dataset.product;
+      const access =
+        card.dataset.access || 'request';
+      if(selectedProducts.has(productName)){
+        selectedProducts.delete(productName);
+      }else{
+        selectedProducts.set(productName, {
+          name: productName,
+          access: access
+        });
+      }
+      updateSelectionUI();
+    });
+  });
+// ── CLEAR ALL SELECTIONS ───────────────────────────────────────────────────
+clearSelectionBtn.addEventListener('click', () => {
+  selectedProducts.clear();
+  updateSelectionUI();
+});
+// ── INITIALIZE ─────────────────────────────────────────────────────────────
+
+applyProductFilter();
+updateSelectionUI();
+
 </script>
 
 </body>
