@@ -233,6 +233,19 @@
     padding:26px 28px;
     transition:border-color .2s ease,transform .2s ease,background .2s ease;
   }
+  
+/* Make USC card span the width of two cards */
+.gradstu-card.usc{
+  grid-column:span 2;
+}
+
+  .gradstu-card.usc ul{
+  display:grid;
+  grid-template-columns:repeat(2, 1fr);
+  gap:14px 40px;
+  max-width:70%;
+}
+  
   .gradstu-card:hover{
     border-color:var(--slate-dim);
     background:#171620;
@@ -589,15 +602,33 @@
   
 /* Responsive */
 @media(max-width:800px){
-  .alumni-grid{
+  .gradstu-grid{
+    grid-template-columns:1fr;
+    gap:18px;
+  }
+
+  .gradstu-card{
+    min-height:220px;
+  }
+
+  .gradstu-card.usc{
+    grid-column:span 1;
+  }
+
+  .gradstu-card.usc ul{
     grid-template-columns:1fr;
   }
-  .alumni-head{
-    align-items:flex-start;
-    flex-direction:column;
-  }
+}
+
+
+
+
+
+  
 }
 @media(max-width:640px){
+  
+
   .discover-alumni{
     padding:48px 0 56px;
   }
