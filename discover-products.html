@@ -712,6 +712,28 @@ clearSelectionBtn.addEventListener('click', () => {
   selectedProducts.clear();
   updateSelectionUI();
 });
+
+
+  // ── OPEN GOOGLE FORM WITH SELECTED PRODUCTS ─────────────────────────────────
+
+requestSelectedBtn.addEventListener('click', () => {
+
+  if (selectedProducts.size === 0) return;
+
+  const products = [...selectedProducts.values()]
+    .map(product => product.name)
+    .join('\n');
+
+  const googleFormUrl =
+    'https://docs.google.com/forms/d/e/1FAIpQLSeg33kuz4feBaJhVf96d8lV-SFHXqkvQ86eqwxiP8pS-UDBVA/viewform?usp=pp_url'
+    + '&entry.2054561971='
+    + encodeURIComponent(products);
+
+  window.open(googleFormUrl, '_blank');
+
+});
+
+  
 // ── INITIALIZE ─────────────────────────────────────────────────────────────
 
 applyProductFilter();
