@@ -744,7 +744,7 @@ requestSelectedBtn.addEventListener('click', () => {
     .map(product => product.name)
     .join('\n');
 
-  const googleFormUrl =
+   const googleFormUrl =
     'https://docs.google.com/forms/d/e/1FAIpQLSeg33kuz4feBaJhVf96d8lV-SFHXqkvQ86eqwxiP8pS-UDBVA/viewform?usp=pp_url'
     + '&entry.2054561971='
     + encodeURIComponent(products);
@@ -752,7 +752,6 @@ requestSelectedBtn.addEventListener('click', () => {
   window.open(googleFormUrl, '_blank');
 
 });
-
   
 // ── INITIALIZE ─────────────────────────────────────────────────────────────
 
