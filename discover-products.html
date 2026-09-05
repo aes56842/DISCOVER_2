@@ -2942,7 +2942,8 @@ function updateSelectionUI(){
     .querySelectorAll('.product-select-btn')
     .forEach(button => {
       if(button.disabled) return;
-      const productName = button.dataset.product;
+      const productName =
+  getProductName(button);
       const selected =
         selectedProducts.has(productName);
       button.classList.toggle(
