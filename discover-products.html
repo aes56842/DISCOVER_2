@@ -2917,6 +2917,17 @@ const clearSelectionBtn =
 
 const requestSelectedBtn =
   document.getElementById('request-selected');
+  //*the javascript below is to fix the value cards on each of the products added. Each of the products has the same value since
+  //*they use the same code. Because it'll take long to edit each, we will use the <h3> tags. Each <h3> tag is different, therefore
+  //*using the h3 tag creates a unique value
+  function getProductName(button){
+  const card = button.closest('.product-card');
+  const title = card.querySelector('h3');
+
+  return title
+    ? title.textContent.trim()
+    : 'Unnamed Product';
+}
 
 
 function updateSelectionUI(){
