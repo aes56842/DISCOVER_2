@@ -72,6 +72,64 @@
   header.scrolled .nav-links{padding:9px 32px;}
   header.scrolled{background:rgba(22,22,26,.99);box-shadow:0 4px 20px rgba(0,0,0,.3);}
 
+  
+/* IMPACT DROPDOWN CSS START */
+
+.nav-dropdown{
+  position:relative;
+}
+
+.nav-dropdown > a{
+  display:flex;
+  align-items:center;
+  gap:6px;
+}
+
+.dropdown-arrow{
+  font-size:15px;
+  transition:transform .2s ease;
+}
+
+.nav-dropdown-menu{
+  display:none;
+  position:absolute;
+  top:100%;
+  left:0;
+  min-width:220px;
+  padding:8px;
+  background:var(--bg-raised);
+  border:1px solid var(--line);
+  border-radius:6px;
+  box-shadow:0 12px 30px rgba(0,0,0,.35);
+  z-index:100;
+  flex-direction:column;
+}
+
+.nav-dropdown:hover .nav-dropdown-menu,
+.nav-dropdown:focus-within .nav-dropdown-menu{
+  display:flex;
+}
+
+.nav-dropdown:hover .dropdown-arrow{
+  transform:rotate(180deg);
+}
+
+.nav-dropdown-menu a{
+  display:block;
+  padding:10px 12px;
+  color:var(--slate);
+  font-size:12px;
+  white-space:nowrap;
+  border-radius:4px;
+}
+
+.nav-dropdown-menu a:hover{
+  color:var(--white);
+  background:var(--bg-card);
+}
+
+/* IMPACT DROPDOWN CSS END*/
+  
   /* BUTTONS */
   .btn{font-family:var(--font-body);font-weight:600;font-size:12.5px;padding:7px 14px;border-radius:4px;cursor:pointer;border:1px solid transparent;transition:background .15s,border-color .15s,color .15s;display:inline-flex;align-items:center;gap:8px;white-space:nowrap;}
   .btn-primary{background:var(--accent);color:#FBF8F4;}
